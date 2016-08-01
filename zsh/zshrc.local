@@ -1,0 +1,284 @@
+# zsh options {{{
+
+# dir change options
+# setopt auto_pushd
+# setopt pushd_ignore_dups
+# setopt pushd_silent
+# setopt auto_cd
+
+# setopt extended_glob # allows us to use ^ to negate globs
+# unsetopt nomatch # but when pattern matching fails, simply use the command as is. See robbyrussell/oh-my-zsh#449
+
+# defining word endings
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+
+# zplug config
+export ZPLUG_CLONE_DEPTH=1
+
+# ENHANCD customizations
+export ENHANCD_COMMAND=d
+# export ENHANCD_FILTER=fzf-tmux:fzf:percol
+
+# FZF customizations
+export FZF_DEFAULT_COMMAND='ag --hidden --path-to-agignore=~/.agignore -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
+
+# }}}
+
+
+# plugins {{{
+
+# # Zplug
+source ~/.zplug/init.zsh
+
+zplug "Tarrasch/zsh-bd"
+zplug "b4b4r07/enhancd", use:init.sh
+# zplug "felixr/docker-zsh-completion"
+# zplug "ninrod/nin-vi-mode"
+zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "supercrabtree/k"
+# zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+# zplug "plugins/pip", from:oh-my-zsh
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
+
+
+# }}}
+# alias {{{
+
+# Ag (the silver searcher)
+alias ag='ag --hidden --path-to-agignore=~/.agignore'
+
+# # alias for frequent commands
+alias ed='open -t'
+alias em='emacs -nw'
+alias e='mvim -v'
+alias v='mvim -v'
+alias b='cd ..'
+alias c='clear'
+alias cls='clear && la'
+alias q='exit'
+alias w='echo -e "$Blue $PWD ${Red}at ${Cyan}$(whoami)${Red}@${Yellow}$(hostname -s)$Red in $Yellow$0$Purple \$"'
+alias s='du -sm * | sort -nr | head -n 20'
+alias vi='mvim -v -u NONE -N'
+alias vim='mvim -v'
+alias vie='mvim -v -u ~/essential.vim -N'
+alias k='k -h'
+alias tarc='tar -zcvf file.tar.gz'
+alias tarx='tar -zxvf'
+alias finder='ranger'
+pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
+pcat() { pygmentize -O style=perldoc -f console256 -g }
+mod_view(){ stat -f "%OLp" $1 }
+# # working with pushd and popd
+# alias di='dirs -v | head -n 10'
+# alias dic='dirs -c'
+# alias po='popd'
+
+# # git alias
+# # alias gs='git status -sb'
+# # alias gg='git branch -vv'
+# # alias ga='git add'
+# # alias gal='git add -A'
+# # alias gc='git commit -v'
+# # alias gd='git diff'
+# # alias gds='git diff --stat'
+# # alias gf='git fetch'
+# # alias gm='git merge'
+# # alias gp='git push'
+# # alias gl='git log --pretty=format:"%C(yellow)%h%Creset %C(blue)%d%Creset %C(cyan)%ad%Creset %C(magenta)%an%Creset %C(white)%s%Creset " --date=relative --graph'
+# # alias glr='gl --reflog'
+# # alias gld='git log --pretty=format:"%C(yellow)%h%Creset %C(blue)%d%Creset %C(cyan)%ad%Creset %C(magenta)%an%Creset %s" --graph'
+# # alias glf='git log --follow -p -- '
+# # alias glnc='git log --pretty=format:"%h %ad %an %s" --date=short --graph'
+# # alias glsi='git ls-files -oiX .gitignore'
+# # alias gi='builtin cd $(git rev-parse --show-toplevel)'
+
+# my conf alias
+alias ptpy='ptpython'
+alias ipy='ipython'
+alias sha='shasum'
+# alias dgserver='python manage.py runserver_plus'
+# alias dgshell='python manage.py shell_plus'
+alias jdk8='export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"'
+alias jdk7='export JAVA_HOME="`/usr/libexec/java_home -v 1.7`"'
+alias jrepl='java -jar /Volumes/Home/App/java/repl/javarepl.jar'
+alias vscode='code'
+alias mdv='/Volumes/Home/App/terminal-md/terminal_markdown_viewer/mdv.py'
+# alias -s py=vim       # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
+alias -s js=vim
+alias -s c=vim
+alias -s java=vim
+alias -s txt=vim
+
+alias ghopen='hub browse'
+alias brew_home='cd ~/.favdir/brew_home'
+alias wkp='cd ~/.favdir/wk_python'
+alias wkx='cd ~/.favdir/wk_ios'
+alias wkg='cd ~/.favdir/wk_golang'
+alias wkw='cd ~/.favdir/wk_web'
+alias wkr='cd ~/.favdir/wk_ruby'
+
+alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
+alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
+alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
+
+# alias osx systemImages
+alias app_from_store="find /Applications -path '*Contents/_MASReceipt/receipt' -maxdepth 4 -print |\sed 's#.app/Contents/_MASReceipt/receipt#.app#g; s#/Applications/##'"
+alias repair_permissons='sudo diskutil repairPermissions /'
+alias disk_view_all='diskutil list'
+# Supported formats are plain text, rich text (rtf) and Microsoft Word (doc/docx).
+alias export_html='textutil -convert html file.ext'
+alias finder_all='defaults write com.apple.finder AppleShowAllFiles true'
+alias finder_hide='defaults write com.apple.finder AppleShowAllFiles false'
+alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
+alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
+alias ping='ping -o $@'
+alias pwdcp='pwd | pbcopy'
+
+alias fy='fanyi'
+
+# }}}
+
+export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Duser.timezone=GMT"
+# config QT
+export QT_HOME=${HOME}/Home/App/Qt5/5.6/clang_64
+export QT_QPA_PLATFORM_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins/platforms
+export QT_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins
+export PATH="$PATH:$QT_HOME/bin"
+
+# config Android
+export ANDROID_HOME=${HOME}/Home/App/Android/sdk
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
+# android source repo
+export PATH="${HOME}/Home/App/bin:$PATH"
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+export GRADLE_HOME=/usr/local/opt/gradle/libexec
+
+# Homebrew
+export HOMEBREW_GITHUB_API_TOKEN=beae5c6d64e91d958a839e7ccea368fb494d7fce
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+# caskroom
+export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
+
+# LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
+# if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
+    # source $LUNCHY_DIR/lunchy-completion.zsh
+# fi
+
+# MS.NET
+export DOT_NET_CORE=/usr/local/share/dotnet
+export PATH=$DOT_NET_CORE/bin:$PATH
+
+
+source ~/.config/tmuxinator/completion/tmuxinator.zsh
+
+# functions {{{
+
+# git_log_month: custom git log: 1 month worth of commits $1 months ago with $2 command {{{
+
+new_id () {
+  if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then
+    print "must be a number"
+    return 0
+  fi
+
+  NEWID=$(cat /dev/urandom | env LC_ALL=C LC_CTYPE=C tr -dc "a-zA-Z0-9@#$%^&*()_+?><~\`;'" | fold -w $1 | head -n 1)
+  # NEWID=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\`;'" | fold -w $1 | head -n 1)
+  echo $NEWID
+}
+
+git_log_month () {
+  if [[ -z $1 ]]; then
+    gl
+    return 0
+  fi
+
+  if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then
+    print "must be a number"
+    return 0
+  fi
+
+  local after=$(date "+%Y-%m-%d" --date="$1 month ago")
+  print "after = $after"
+
+  local git_command=gl
+  if [[ -n "$2" ]]; then
+    git_command=$2
+  fi
+
+  if [[ "$1" == "1" ]]; then
+    eval "$git_command --after=$after"
+    return 0
+  fi
+
+  local before=$(date "+%Y-%m-%d" --date="$(((${1}-1))) month ago")
+
+  print "before = $before"
+
+  eval "$git_command --after=$after --before=$before"
+}
+
+# }}}
+# md: faster dir creation {{{
+
+md () {
+  mkdir -p $1
+  builtin cd $1
+}
+
+down_curl () {
+  curl -fLo "$1" $2
+}
+
+disucode () {
+
+  echo "\u$1"
+}
+
+# }}}
+
+
+# cd: enhancing enhancd {{{
+
+cd () {
+  if [[ -z $1 ]]; then
+    # $1 is empty. go home
+    builtin cd ~
+  elif [[ $1 == '-' ]]; then
+    # $1 == '-': switch to last visited dir
+    builtin cd -
+  elif [[ $1 == '..' ]]; then
+    builtin cd ..
+  elif [[ $1 =~ '\+[0-9]{1,2}' ]]; then
+    # $1: `cd +8`, `cd +10`, cherry pick auto_pushd stack
+    builtin cd $1
+  elif command -v "$ENHANCD_COMMAND" > /dev/null; then
+    # populate dir enhancd dir cache, clear and list
+    d $1
+  else
+    # enhancd did not load, use normal cd, clear and list
+    builtin cd $1
+  fi
+}
+
+# }}}
+# =: front for `bc` utility (credit goes to arzzen/calc.plugin.zsh) {{{
+
+function = () {
+  echo "$@" | bc -l
+}
+
+# }}}
+
+
