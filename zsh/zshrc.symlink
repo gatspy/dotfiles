@@ -2,14 +2,26 @@
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+# export PROJECTS=~/Code
+export WORKDIR='/Volumes/Home/Work'
+export DATADIR='/Volumes/Home/Data'
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
+if [[ -a ~/.zshrc.local ]]
 then
-  source ~/.localrc
+  source ~/.zshrc.local
+  # FZF Setup {{{
+  # -------------
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  # }}}
+
+# FZF ZLE extra bindkeys {{{
+
+# bindkey '^E' fzf-cd-widget
+
+# }}}
 fi
 
 # all of our zsh files
@@ -39,3 +51,8 @@ do
 done
 
 unset config_files
+
+
+
+
+
