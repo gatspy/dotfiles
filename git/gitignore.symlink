@@ -1,6 +1,9 @@
 # Compiled Python files
 *.pyc
 
+# tag
+tags
+
 # Folder view configuration files
 .DS_Store
 Desktop.ini
@@ -16,6 +19,18 @@ Thumbs.db
 .DocumentRevisions-V100
 .fseventsd
 .Trashes
+zcompdump
+.config/
 
+# tools
 .sublime-project
 .vscode
+
+# custom
+repos/
+deps/
+plugged/
+custom/
+undodir/
+backups/
+auto-save-list/

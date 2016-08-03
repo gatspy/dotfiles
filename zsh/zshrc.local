@@ -246,6 +246,9 @@ disucode () {
   echo "\u$1"
 }
 
+dylib_version () {
+  otool -L $1
+}
 # }}}
 
 
