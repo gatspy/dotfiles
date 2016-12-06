@@ -42,7 +42,7 @@ zplug "supercrabtree/k"
 # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # zplug "plugins/pip", from:oh-my-zsh
-
+zplug "lukechilds/zsh-nvm"
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
     if read -q; then
@@ -121,12 +121,12 @@ alias -s java=vim
 alias -s txt=vim
 
 alias ghopen='hub browse'
-alias brew_home='cd ~/.favdir/brew_home'
-alias wkp='cd ~/.favdir/wk_python'
-alias wkx='cd ~/.favdir/wk_ios'
-alias wkg='cd ~/.favdir/wk_golang'
-alias wkw='cd ~/.favdir/wk_web'
-alias wkr='cd ~/.favdir/wk_ruby'
+# alias brew_home='cd ~/.favdir/brew_home'
+# alias wkp='cd ~/.favdir/wk_python'
+# alias wkx='cd ~/.favdir/wk_ios'
+# alias wkg='cd ~/.favdir/wk_golang'
+# alias wkw='cd ~/.favdir/wk_web'
+# alias wkr='cd ~/.favdir/wk_ruby'
 
 alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
@@ -171,7 +171,8 @@ export GRADLE_HOME=/usr/local/opt/gradle/libexec
 
 # Homebrew
 export HOMEBREW_GITHUB_API_TOKEN=beae5c6d64e91d958a839e7ccea368fb494d7fce
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+# export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # caskroom
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
