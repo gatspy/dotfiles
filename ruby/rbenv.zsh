@@ -2,5 +2,5 @@
 if (( $+commands[rbenv] ))
 then
   export RBENV_ROOT=${HOME}/.rbenv
-  eval "$(rbenv init -)"
+  eval "$(rbenv init - --no-rehash)"
 fi
