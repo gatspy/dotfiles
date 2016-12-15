@@ -14,7 +14,8 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 
 # zplug config
-export ZPLUG_CLONE_DEPTH=1
+# export ZPLUG_CLONE_DEPTH=1
+zstyle :zplug:tag depth 1
 
 # ENHANCD customizations
 export ENHANCD_COMMAND=d
@@ -25,6 +26,8 @@ export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore=~/.agignore -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 
+# ZSH-NVM
+export NVM_LAZY_LOAD=true
 # }}}
 
 
@@ -34,14 +37,15 @@ export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 source ~/.zplug/init.zsh
 
 zplug "Tarrasch/zsh-bd"
+# zplug "b4b4r07/enhancd"
 zplug "b4b4r07/enhancd", use:init.sh
-# zplug "felixr/docker-zsh-completion"
-# zplug "ninrod/nin-vi-mode"
+# # zplug "felixr/docker-zsh-completion"
+# # zplug "ninrod/nin-vi-mode"
 zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "supercrabtree/k"
-# zplug "zsh-users/zsh-completions"
+# # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
-# zplug "plugins/pip", from:oh-my-zsh
+# # zplug "plugins/pip", from:oh-my-zsh
 zplug "lukechilds/zsh-nvm"
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
