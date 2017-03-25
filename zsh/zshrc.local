@@ -150,6 +150,8 @@ alias ping-short='ping -o $@'
 alias pwdcp='pwd | pbcopy'
 
 alias fy='fanyi'
+alias n='npm'
+alias nd='node'
 
 # }}}
 
