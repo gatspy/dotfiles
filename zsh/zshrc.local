@@ -46,6 +46,9 @@ zplug "supercrabtree/k"
 # # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # # zplug "plugins/pip", from:oh-my-zsh
+# zplug "molovo/tipz"
+# zplug "djui/alias-tips"
+zplug "molovo/tipz"
 zplug "lukechilds/zsh-nvm"
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -157,10 +160,10 @@ alias nd='node'
 
 export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Duser.timezone=GMT"
 # config QT
-export QT_HOME=${HOME}/Home/App/Qt5/5.6/clang_64
-export QT_QPA_PLATFORM_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins/platforms
-export QT_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins
-export PATH="$PATH:$QT_HOME/bin"
+# export QT_HOME=${HOME}/Home/App/Qt5/5.6/clang_64
+# export QT_QPA_PLATFORM_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins/platforms
+# export QT_PLUGIN_PATH=/Users/Gatspy/Home/App/Qt5/5.6/clang_64/plugins
+# export PATH="$PATH:$QT_HOME/bin"
 
 # config Android
 export ANDROID_HOME=${HOME}/Home/App/Android/sdk

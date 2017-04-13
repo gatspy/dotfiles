@@ -5,3 +5,5 @@ then
   eval "$(pyenv init - --no-rehash)"
   if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 fi
+
+# export PYTHON_BUILD_MIRROR_URL="http://pyenv.qiniudn.com/pythons/"
