@@ -50,6 +50,8 @@ zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # zplug "djui/alias-tips"
 zplug "molovo/tipz"
 zplug "lukechilds/zsh-nvm"
+# zplug "oknowton/zsh-dwim"
+# zplug "vifon/deer"
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
     if read -q; then
