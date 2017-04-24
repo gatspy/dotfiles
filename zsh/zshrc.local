@@ -186,7 +186,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # caskroom
-export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
+export HOMEBREW_CASK_OPTS="--caskroom=${APPDIR}/Caskroom"
 
 # LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
 # if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
