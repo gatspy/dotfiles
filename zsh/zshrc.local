@@ -72,7 +72,7 @@ alias ag='ag --hidden --path-to-ignore=~/.agignore'
 # # alias for frequent commands
 alias ed='open -t'
 alias em='emacs -nw'
-alias e='mvim -v'
+# alias e='mvim -v'
 alias v='mvim -v'
 alias b='cd ..'
 alias c='clear'
@@ -87,6 +87,8 @@ alias k='k -h'
 alias tarc='tar -zcvf file.tar.gz'
 alias tarx='tar -zxvf'
 alias finder='ranger'
+alias t='tmux'
+alias tx='tmuxinator'
 pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
 pcat() { pygmentize -O style=perldoc -f console256 -g }
 mod_view(){ stat -f "%OLp" $1 }
@@ -156,7 +158,7 @@ alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
 alias pwdcp='pwd | pbcopy'
 
-alias fy='fanyi'
+# alias fy='fanyi'
 alias n='npm'
 alias nd='node'
 
