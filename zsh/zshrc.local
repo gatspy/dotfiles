@@ -117,7 +117,8 @@ mod_view(){ stat -f "%OLp" $1 }
 # # alias gi='builtin cd $(git rev-parse --show-toplevel)'
 
 # my conf alias
-alias ptpy='ptpython'
+alias pt='ptpython'
+alias pt3='python3 -m ptpython'
 alias ipy='ipython'
 alias sha='shasum'
 # alias dgserver='python manage.py runserver_plus'
