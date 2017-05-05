@@ -1,55 +1,61 @@
 {
-  /* "es5": true, */
+    /* "es5": true, */
 
-  "esversion":6,
+    "esversion": 6,
 
-  "node": true,
+    "node": true,
 
-  "bitwise": false,
+    "bitwise": false,
 
-  "camelcase": false,
+    "camelcase": false,
 
-  "curly": false,
+    "curly": false,
 
-  "eqeqeq": false,
+    "eqeqeq": false,
 
-  "forin": true,
+    "forin": true,
 
-  "strict": false,
+    "strict": false,
 
-  "freeze": true,
+    "freeze": true,
 
-  "immed": true,
+    "immed": true,
 
-  "indent": 2,
+    "indent": 2,
 
-  "latedef": true,
+    "latedef": true,
 
-  "newcap": true,
+    "newcap": true,
 
-  "noarg": true,
+    "noarg": true,
 
-  "noempty": false,
+    "noempty": false,
 
-  "nonbsp": true,
+    "nonbsp": true,
 
-  "nonew": true,
+    "nonew": true,
 
-  "plusplus": false,
+    "plusplus": false,
 
-  "undef": true,
+    "undef": true,
 
-  "trailing": true,
+    "trailing": true,
 
-  "debug": false,
+    "debug": false,
 
-  "funcscope": true,
+    "funcscope": true,
 
-  "laxcomma": false,
+    "laxcomma": false,
 
-  "loopfunc": true,
+    "loopfunc": true,
 
-  "onevar": false,
-  
-  "unused": true
+    "onevar": false,
+
+    "unused": true,
+
+    "globals": {
+        "angular": false,
+        "_": false
+    }
+
 }
