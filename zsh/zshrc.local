@@ -157,7 +157,7 @@ alias finder_hide='defaults write com.apple.finder AppleShowAllFiles false'
 alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
-alias pwdcp='pwd | pbcopy'
+alias pwdcp='pwd -P | pbcopy'
 
 # alias fy='fanyi'
 alias np='npm'
