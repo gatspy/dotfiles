@@ -8,4 +8,5 @@ then
   alias ll="gls -l --color"
   alias la='gls -A --color'
   alias lsa="gls -lah -F --color"
+  alias lt="gls -lAh --color --time-style=long-iso"
 fi
