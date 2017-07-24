@@ -50,6 +50,7 @@ zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # zplug "djui/alias-tips"
 zplug "molovo/tipz"
 zplug "lukechilds/zsh-nvm"
+zplug "rupa/z", use:z.sh
 # zplug "oknowton/zsh-dwim"
 # zplug "vifon/deer"
 if ! zplug check --verbose; then
@@ -74,7 +75,7 @@ alias ed='open -t'
 alias em='emacs -nw'
 # alias e='mvim -v'
 alias v='mvim -v'
-alias b='cd ..'
+# alias b='cd ..'
 alias c='clear'
 alias cls='clear && la'
 alias q='exit'
@@ -89,6 +90,8 @@ alias tarx='tar -zxvf'
 alias finder='ranger'
 alias t='tmux'
 alias tx='tmuxinator'
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
 pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
 pcat() { pygmentize -O style=perldoc -f console256 -g }
 mod_view(){ stat -f "%OLp" $1 }
@@ -117,8 +120,8 @@ mod_view(){ stat -f "%OLp" $1 }
 # # alias gi='builtin cd $(git rev-parse --show-toplevel)'
 
 # my conf alias
-alias pt='ptpython'
-alias pt3='python3 -m ptpython'
+alias py='ptpython'
+alias py3='python3 -m ptpython'
 alias ipy='ipython'
 alias sha='shasum'
 # alias dgserver='python manage.py runserver_plus'
@@ -152,16 +155,22 @@ alias repair_permissons='sudo diskutil repairPermissions /'
 alias disk_view_all='diskutil list'
 # Supported formats are plain text, rich text (rtf) and Microsoft Word (doc/docx).
 alias export_html='textutil -convert html file.ext'
-alias finder_all='defaults write com.apple.finder AppleShowAllFiles true'
+alias finder_show='defaults write com.apple.finder AppleShowAllFiles true'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles false'
+alias menubar_show='defaults write NSGlobalDomain _HIHideMenuBar -bool false'
+alias menubar_hide='defaults write NSGlobalDomain _HIHideMenuBar -bool true'
 alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
 alias pwdcp='pwd -P | pbcopy'
 
 # alias fy='fanyi'
-alias np='npm'
-alias n='node'
+# alias np='npm'
+alias nd='node'
+alias n='npm'
+alias ninit='npm init --force'
+alias bo='bower'
+alias bof="yes '' | bower init"
 
 # }}}
 
