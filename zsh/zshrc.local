@@ -162,7 +162,7 @@ alias menubar_hide='defaults write NSGlobalDomain _HIHideMenuBar -bool true'
 alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
-alias pwdcp='pwd -P | pbcopy'
+alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
 
 # alias fy='fanyi'
 # alias np='npm'
