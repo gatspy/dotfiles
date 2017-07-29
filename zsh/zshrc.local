@@ -129,7 +129,7 @@ alias sha='shasum'
 alias jdk8='export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"'
 alias jdk7='export JAVA_HOME="`/usr/libexec/java_home -v 1.7`"'
 alias jrepl='java -jar /Volumes/Home/App/java/repl/javarepl.jar'
-alias vscode='code'
+alias perms='stat -f "%A %N" *'
 alias mdv='/Volumes/Home/App/terminal-md/terminal_markdown_viewer/mdv.py'
 # alias -s py=vim       # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
 alias -s js=vim
@@ -163,6 +163,15 @@ alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
 alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
+
+# ls, with chmod-like permissions and more.
+# @param $1 The directory to ls
+function lls {
+  LLS_PATH=$1
+
+  ls -AHl $LLS_PATH | awk "{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/) \
+                            *2^(8-i));if(k)printf(\"%0o \",k);print}"
+}
 
 # alias fy='fanyi'
 # alias np='npm'
