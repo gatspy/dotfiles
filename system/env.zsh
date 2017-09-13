@@ -6,3 +6,4 @@ export TERM=xterm-256color
 # export EDITOR='subl -a'
 export EDITOR='mvim -v'
 export MANPAGER='most -s'
+export CHEATCOLORS=true
