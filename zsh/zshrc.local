@@ -38,7 +38,6 @@ source ~/.zplug/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "Tarrasch/zsh-bd"
-# zplug "b4b4r07/enhancd"
 zplug "b4b4r07/enhancd", use:init.sh
 # # zplug "felixr/docker-zsh-completion"
 # # zplug "ninrod/nin-vi-mode"
@@ -47,7 +46,6 @@ zplug "supercrabtree/k"
 # # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 # # zplug "plugins/pip", from:oh-my-zsh
-# zplug "molovo/tipz"
 # zplug "djui/alias-tips"
 zplug "molovo/tipz"
 zplug "lukechilds/zsh-nvm"
