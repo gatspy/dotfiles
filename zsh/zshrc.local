@@ -1,21 +1,7 @@
-# zsh options {{{
-
-# dir change options
-# setopt auto_pushd
-# setopt pushd_ignore_dups
-# setopt pushd_silent
-# setopt auto_cd
-
-# setopt extended_glob # allows us to use ^ to negate globs
-# unsetopt nomatch # but when pattern matching fails, simply use the command as is. See robbyrussell/oh-my-zsh#449
+#!/bin/zsh
 
 # defining word endings
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-
-# zplug config
-# export ZPLUG_CLONE_DEPTH=1
-zstyle :zplug:tag depth 1
 
 # ENHANCD customizations
 export ENHANCD_COMMAND=d
@@ -26,45 +12,9 @@ export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore=~/.agignore -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 
-# ZSH-NVM
-# export NVM_LAZY_LOAD=true
-# }}}
-
-
-# plugins {{{
-
-# # Zplug
-source ~/.zplug/init.zsh
-
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "Tarrasch/zsh-bd"
-zplug "b4b4r07/enhancd", use:init.sh
-# # zplug "felixr/docker-zsh-completion"
-# # zplug "ninrod/nin-vi-mode"
-zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "supercrabtree/k"
-# # zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# # zplug "plugins/pip", from:oh-my-zsh
-# zplug "djui/alias-tips"
-zplug "molovo/tipz"
-zplug "lukechilds/zsh-nvm"
-zplug "rupa/z", use:z.sh
-# zplug "oknowton/zsh-dwim"
-# zplug "vifon/deer"
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-zplug load
-
-
-# }}}
 # alias {{{
 
-eval "$(thefuck --alias)"
+# eval "$(thefuck --alias)"
 
 # Ag (the silver searcher)
 alias ag='ag --hidden --path-to-ignore=~/.agignore'
@@ -72,14 +22,10 @@ alias ag='ag --hidden --path-to-ignore=~/.agignore'
 # # alias for frequent commands
 alias ed='open -t'
 alias em='emacs -nw'
-# alias e='mvim -v'
-alias v='mvim -v'
-# alias b='cd ..'
-alias c='clear'
-alias cls='clear && la'
 alias q='exit'
 alias w='echo -e "$Blue $PWD ${Red}at ${Cyan}$(whoami)${Red}@${Yellow}$(hostname -s)$Red in $Yellow$0$Purple \$"'
 alias s='du -sm * | sort -nr | head -n 20'
+alias v='mvim -v'
 alias vi='mvim -v -u NONE -N'
 alias vim='mvim -v'
 alias vie='mvim -v -u ~/essential.vim -N'
@@ -93,31 +39,11 @@ alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
 pcat() { pygmentize -O style=perldoc -f console256 -g }
-mod_view(){ stat -f "%OLp" $1 }
+mod-view(){ stat -f "%OLp" $1 }
 # # working with pushd and popd
 # alias di='dirs -v | head -n 10'
 # alias dic='dirs -c'
 # alias po='popd'
-
-# # git alias
-# # alias gs='git status -sb'
-# # alias gg='git branch -vv'
-# # alias ga='git add'
-# # alias gal='git add -A'
-# # alias gc='git commit -v'
-# # alias gd='git diff'
-# # alias gds='git diff --stat'
-# # alias gf='git fetch'
-# # alias gm='git merge'
-# # alias gp='git push'
-# # alias gl='git log --pretty=format:"%C(yellow)%h%Creset %C(blue)%d%Creset %C(cyan)%ad%Creset %C(magenta)%an%Creset %C(white)%s%Creset " --date=relative --graph'
-# # alias glr='gl --reflog'
-# # alias gld='git log --pretty=format:"%C(yellow)%h%Creset %C(blue)%d%Creset %C(cyan)%ad%Creset %C(magenta)%an%Creset %s" --graph'
-# # alias glf='git log --follow -p -- '
-# # alias glnc='git log --pretty=format:"%h %ad %an %s" --date=short --graph'
-# # alias glsi='git ls-files -oiX .gitignore'
-# # alias gi='builtin cd $(git rev-parse --show-toplevel)'
-
 # my conf alias
 alias py='ptpython'
 alias py3='python3 -m ptpython'
@@ -127,23 +53,14 @@ alias sha='shasum'
 # alias dgshell='python manage.py shell_plus'
 alias jdk8='export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"'
 alias jdk7='export JAVA_HOME="`/usr/libexec/java_home -v 1.7`"'
-alias jrepl='java -jar /Volumes/Home/App/java/repl/javarepl.jar'
 alias perms='stat -f "%A %N" *'
-alias mdv='/Volumes/Home/App/terminal-md/terminal_markdown_viewer/mdv.py'
-# alias -s py=vim       # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
+# 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
+alias -s py=vim
 alias -s js=vim
 alias -s c=vim
 alias -s java=vim
 alias -s txt=vim
-
 alias ghopen='hub browse'
-# alias brew_home='cd ~/.favdir/brew_home'
-# alias wkp='cd ~/.favdir/wk_python'
-# alias wkx='cd ~/.favdir/wk_ios'
-# alias wkg='cd ~/.favdir/wk_golang'
-# alias wkw='cd ~/.favdir/wk_web'
-# alias wkr='cd ~/.favdir/wk_ruby'
-
 alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
@@ -158,27 +75,25 @@ alias finder_show='defaults write com.apple.finder AppleShowAllFiles true'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles false'
 alias menubar_show='defaults write NSGlobalDomain _HIHideMenuBar -bool false'
 alias menubar_hide='defaults write NSGlobalDomain _HIHideMenuBar -bool true'
-alias dns_clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
-alias del_dsstore="find . -type f -name '*.DS_Store' -ls -delete"
+alias dns-clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
+alias del-dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
 alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
-
-# ls, with chmod-like permissions and more.
-# @param $1 The directory to ls
-function lls {
-  LLS_PATH=$1
-
-  ls -AHl $LLS_PATH | awk "{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/) \
-                            *2^(8-i));if(k)printf(\"%0o \",k);print}"
-}
-
-# alias fy='fanyi'
-# alias np='npm'
 alias nd='node'
 alias n='npm'
 alias ninit='npm init --force'
 alias bo='bower'
 alias bof="yes '' | bower init"
+
+# ls, with chmod-like permissions and more.
+# @param $1 The directory to ls
+function lls {
+  LLS_PATH=$1
+  ls -AHl $LLS_PATH | awk "{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/) \
+                            *2^(8-i));if(k)printf(\"%0o \",k);print}"
+}
+
+
 
 # }}}
 
@@ -221,13 +136,13 @@ export DOT_NET_CORE=/usr/local/share/dotnet
 export PATH=$DOT_NET_CORE/bin:$PATH
 
 
-source ~/.config/tmuxinator/completion/tmuxinator.zsh
+# source ~/.config/tmuxinator/completion/tmuxinator.zsh
 
 # functions {{{
 
 # git_log_month: custom git log: 1 month worth of commits $1 months ago with $2 command {{{
 
-new_id () {
+new-id () {
   if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then
     print "must be a number"
     return 0
@@ -294,26 +209,26 @@ dylib_version () {
 
 # cd: enhancing enhancd {{{
 
-cd () {
-  if [[ -z $1 ]]; then
-    # $1 is empty. go home
-    builtin cd ~
-  elif [[ $1 == '-' ]]; then
-    # $1 == '-': switch to last visited dir
-    builtin cd -
-  elif [[ $1 == '..' ]]; then
-    builtin cd ..
-  elif [[ $1 =~ '\+[0-9]{1,2}' ]]; then
-    # $1: `cd +8`, `cd +10`, cherry pick auto_pushd stack
-    builtin cd $1
-  elif command -v "$ENHANCD_COMMAND" > /dev/null; then
-    # populate dir enhancd dir cache, clear and list
-    d $1
-  else
-    # enhancd did not load, use normal cd, clear and list
-    builtin cd $1
-  fi
-}
+# cd () {
+#   if [[ -z $1 ]]; then
+#     # $1 is empty. go home
+#     builtin cd ~
+#   elif [[ $1 == '-' ]]; then
+#     # $1 == '-': switch to last visited dir
+#     builtin cd -
+#   elif [[ $1 == '..' ]]; then
+#     builtin cd ..
+#   elif [[ $1 =~ '\+[0-9]{1,2}' ]]; then
+#     # $1: `cd +8`, `cd +10`, cherry pick auto_pushd stack
+#     builtin cd $1
+#   elif command -v "$ENHANCD_COMMAND" > /dev/null; then
+#     # populate dir enhancd dir cache, clear and list
+#     d $1
+#   else
+#     # enhancd did not load, use normal cd, clear and list
+#     builtin cd $1
+#   fi
+# }
 
 # }}}
 # =: front for `bc` utility (credit goes to arzzen/calc.plugin.zsh) {{{

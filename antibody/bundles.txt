@@ -1,0 +1,14 @@
+mafredri/zsh-async
+rupa/z
+Tarrasch/zsh-bd
+b4b4r07/enhancd
+robbyrussell/oh-my-zsh folder:plugins/vi-mode
+supercrabtree/k
+molovo/tipz
+lukechilds/zsh-nvm
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+# these should be at last!
+sindresorhus/pure
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
