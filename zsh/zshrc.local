@@ -12,10 +12,7 @@ export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore=~/.agignore -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 
-# alias {{{
-
 # eval "$(thefuck --alias)"
-
 # Ag (the silver searcher)
 alias ag='ag --hidden --path-to-ignore=~/.agignore'
 
@@ -35,6 +32,7 @@ alias tarx='tar -zxvf'
 alias finder='ranger'
 alias t='tmux'
 alias tx='tmuxinator'
+alias pc="proxychains4"
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
@@ -44,7 +42,6 @@ mod-view(){ stat -f "%OLp" $1 }
 # alias di='dirs -v | head -n 10'
 # alias dic='dirs -c'
 # alias po='popd'
-# my conf alias
 alias py='ptpython'
 alias py3='python3 -m ptpython'
 alias ipy='ipython'
@@ -79,9 +76,6 @@ alias dns-clean='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 alias del-dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 alias ping-short='ping -o $@'
 alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
-alias nd='node'
-alias n='npm'
-alias ninit='npm init --force'
 alias bo='bower'
 alias bof="yes '' | bower init"
 
@@ -93,10 +87,6 @@ function lls {
                             *2^(8-i));if(k)printf(\"%0o \",k);print}"
 }
 
-
-
-# }}}
-
 export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Duser.timezone=GMT"
 # config QT
 # export QT_HOME=${HOME}/Home/App/Qt5/5.6/clang_64
@@ -105,15 +95,13 @@ export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClass
 # export PATH="$PATH:$QT_HOME/bin"
 
 # config Android
-export ANDROID_HOME=${HOME}/Home/App/Android/sdk
+export ANDROID_HOME=${USERSHARE}/Home/App/Android/sdk
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
 
-export ANDROID_NDK_HOME=${HOME}/Home/App/Android/ndk/android-ndk-r14b
+export ANDROID_NDK_HOME=${USERSHARE}/Home/App/Android/ndk/android-ndk-r14b
 export PATH="$PATH:$ANDROID_NDK_HOME"
-#
-# android source repo
-export PATH="${HOME}/Home/App/bin:$PATH"
 
+# java
 export JAVA_HOME=$(/usr/libexec/java_home)
 export GRADLE_HOME=/usr/local/opt/gradle/libexec
 
@@ -135,13 +123,7 @@ export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 export DOT_NET_CORE=/usr/local/share/dotnet
 export PATH=$DOT_NET_CORE/bin:$PATH
 
-
 # source ~/.config/tmuxinator/completion/tmuxinator.zsh
-
-# functions {{{
-
-# git_log_month: custom git log: 1 month worth of commits $1 months ago with $2 command {{{
-
 new-id () {
   if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then
     print "must be a number"
@@ -184,8 +166,6 @@ git_log_month () {
   eval "$git_command --after=$after --before=$before"
 }
 
-# }}}
-# md: faster dir creation {{{
 
 md () {
   mkdir -p $1
@@ -204,39 +184,10 @@ disucode () {
 dylib_version () {
   otool -L $1
 }
-# }}}
 
-
-# cd: enhancing enhancd {{{
-
-# cd () {
-#   if [[ -z $1 ]]; then
-#     # $1 is empty. go home
-#     builtin cd ~
-#   elif [[ $1 == '-' ]]; then
-#     # $1 == '-': switch to last visited dir
-#     builtin cd -
-#   elif [[ $1 == '..' ]]; then
-#     builtin cd ..
-#   elif [[ $1 =~ '\+[0-9]{1,2}' ]]; then
-#     # $1: `cd +8`, `cd +10`, cherry pick auto_pushd stack
-#     builtin cd $1
-#   elif command -v "$ENHANCD_COMMAND" > /dev/null; then
-#     # populate dir enhancd dir cache, clear and list
-#     d $1
-#   else
-#     # enhancd did not load, use normal cd, clear and list
-#     builtin cd $1
-#   fi
-# }
-
-# }}}
-# =: front for `bc` utility (credit goes to arzzen/calc.plugin.zsh) {{{
 
 function = () {
   echo "$@" | bc -l
 }
-
-# }}}
 
 

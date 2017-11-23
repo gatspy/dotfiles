@@ -1,4 +1,40 @@
-#compdef manage.py
+#compdef manage.py django-manage django-admin.py django-admin
+# vim:ft=zsh sw=2:
+#
+# Completion script for Django's manage.py (https://www.djangoproject.com).
+#
+# NOTE: Django provides simple autocompletion, through e.g.:
+#
+#   DJANGO_AUTO_COMPLETE=1 COMP_WORDS="manage.py runserver" COMP_CWORD=2 ./manage.py
+#
+# TODO: rename to _django, move to zsh
+
+# Store $word[1] as manage_cmd to be used for callbacks.
+# TODO: rename (__django_cmd?)
+_managepy_cmd=$commands[${words[1]}]
+if [[ -z $_managepy_cmd ]]; then
+  _managepy_cmd=${words[1]}
+fi
+
+# Get completions through Django's completion system.
+# Used as a fallback only, because it's slow.
+_managepy_get_django_completion() {
+  local -a cmd
+  local ret
+  django_completion=($(_call_program django-completions \
+    env PYTHONWARNINGS="ignore::DeprecationWarning" \
+    DJANGO_AUTO_COMPLETE=1 COMP_WORDS=\"$_managepy_cmd $1\" \
+    COMP_CWORD=$2 $_managepy_cmd))
+  # ret=$?
+  # XXX: Django exits with 1 always for completions!
+  # (fixed in Django 1.10, https://code.djangoproject.com/ticket/25420).
+  ret=0
+  if [[ $#django_completion == 0 ]]; then
+    zle -M "There was an error querying Django (using $_managepy_cmd)!"
+    ret=1
+  fi
+  return $ret
+}
 
 typeset -ga nul_args
 nul_args=(
@@ -122,8 +158,8 @@ _managepy-help(){
 _managepy_cmds(){
     local line
     local -a cmd
-    _call_program help-command ./manage.py help \
-      |& sed -n '/^ /s/[(), ]/ /gp' \
+    _call_program help-command $_managepy_cmd help \
+      2>/dev/null| sed -n '/^ /s/[(), ]/ /gp' \
       | while read -A line; do cmd=($line $cmd) done
     _describe -t managepy-command 'manage.py command' cmd
 }
@@ -173,6 +209,7 @@ _managepy-migrate(){
     $no_init_data_args \
     $noinput_args \
     $db_args \
+    '*::appname:_applist' \
     $nul_args && ret=0
 }
 
@@ -184,7 +221,7 @@ _managepy-runfcgi(){
     'protocol[fcgi, scgi, ajp, ... (default fcgi)]:protocol:(fcgi scgi ajp)'
     'host[hostname to listen on..]:'
     'port[port to listen on.]:'
-    'socket[UNIX socket to listen on.]:file:_files'
+    'socket[UNIX socket to listen on.]::file:_files'
     'method[prefork or threaded (default prefork)]:method:(prefork threaded)'
     'maxrequests[number of requests a child handles before it is killed and a new child is forked (0 = no limit).]:'
     'maxspare[max number of spare processes / threads.]:'
@@ -204,17 +241,17 @@ _managepy-runfcgi(){
 
 _managepy-runserver(){
   _arguments -s : \
-    '--ipv6[Tells Django to use an IPv6 address.]' \
-    '--nothreading[Tells Django to NOT use threading.]' \
-    '--noreload[Tells Django to NOT use the auto-reloader.]' \
-    '--nostatic[Tells Django to NOT automatically serve static files at STATIC_URL.]' \
-    '--insecure[Allows serving static files even if DEBUG is False.]' \
+    '--ipv6[use an IPv6 address]' \
+    '--nothreading[do not threading]' \
+    '--noreload[do not use the auto-reloader]' \
+    '--nostatic[do not automatically serve static files at STATIC_URL]' \
+    '--insecure[serve static files even if DEBUG is False]' \
     $nul_args && ret=0
 }
 
 _managepy-shell(){
   _arguments -s : \
-    '--plain[Tells Django to use plain Python, not IPython.]' \
+    '--plain[tells Django to use plain Python, not IPython.]' \
     '--no-startup[When using plain Python, ignore the PYTHONSTARTUP environment variable and ~/.pythonrc.py script.]' \
     '--interface=-[Specify an interactive interpreter interface.]:INTERFACE:((ipython bpython))' \
     $nul_args && ret=0
@@ -326,16 +363,40 @@ _managepy-validate() {
     $nul_args && ret=0
 }
 
-_managepy-commands() {
+
+__django_caching_policy()
+{
+  local ret  # 0 means that the cache needs to be rebuilt.
+
+  # Get python interpreter from manage.py script.
+  local python
+  python=$(head $_managepy_cmd | head -n1 | cut -b3-)  #!/usr/bin/env python
+
+  # Check that it refers to "python", it might be "#!/usr/bin/env bash" with
+  # pyenv.
+  if ! [[ $python == *python* ]]; then
+    python=python
+  fi
+
+  # Compare cache file's timestamp to the most recently modified sys.path entry.
+  # This gets changed/touched when installing/removing packages.
+  local newest_sys_path=$($=python -c '
+import sys
+from os.path import exists, getmtime
+print(sorted(sys.path, key=lambda x: exists(x) and getmtime(x))[-1])')
+  [[ $newest_sys_path -nt $1 ]]
+  ret=$?
+  return $ret
+}
+
+
+_managepy_commands() {
   local -a commands
 
   commands=(
-    "changepassword:Change a user's password for django.contrib.auth."
     'check:Checks the entire Django project for potential problems.'
     'compilemessages:Compiles .po files to .mo files for use with builtin gettext support.'
     'createcachetable:Creates the table needed to use the SQL cache backend.'
-    'createsuperuser:Used to create a superuser.'
-    'collectstatic:Collect static files in a single location.'
     'dbshell:Runs the command-line client for the current DATABASE_ENGINE.'
     "diffsettings:Displays differences between the current settings.py and Django's default settings."
     'dumpdata:Output the contents of the database as a fixture of the given format.'
@@ -344,35 +405,84 @@ _managepy-commands() {
     'inspectdb:Introspects the database tables in the given database and outputs a Django model module.'
     'loaddata:Installs the named fixture(s) in the database.'
     'makemessages:Runs over the entire source tree of the current directory and pulls out all strings marked for translation.'
-    'makemigrations:Creates new migration(s) for apps.'
-    'migrate:Updates database schema. Manages both apps with migrations and those without.'
+    'makemigrations:Creates new migrations based on the changes detected to your models.'
+    'migrate:Synchronizes the database state with the current set of models and migrations.'
+    'reset:Executes ``sqlreset`` for the given app(s) in the current database.'
     'runfcgi:Run this project as a fastcgi (or some other protocol supported by flup) application,'
     'runserver:Starts a lightweight Web server for development.'
     'shell:Runs a Python interactive interpreter.'
+    'showmigrations:Shows all migrations in a project.'
     'sql:Prints the CREATE TABLE SQL statements for the given app name(s).'
     'sqlall:Prints the CREATE TABLE, custom SQL and CREATE INDEX SQL statements for the given model module name(s).'
     'sqlclear:Prints the DROP TABLE SQL statements for the given app name(s).'
     'sqlcustom:Prints the custom table modifying SQL statements for the given app name(s).'
-    'sqldropindexes:Prints the DROP INDEX SQL statements for the given model module name(s).'
+    'sqldropindexes:Prints the DROP INDEX SQL statements for the given app name(s).'
     'sqlflush:Returns a list of the SQL statements required to return all tables in the database to the state they were in just after they were installed.'
     'sqlindexes:Prints the CREATE INDEX SQL statements for the given model module name(s).'
+    'sqlmigrate:Prints the SQL for the named migration.'
     "sqlinitialdata:RENAMED: see 'sqlcustom'"
     'sqlsequencereset:Prints the SQL statements for resetting sequences for the given app name(s).'
-    'squashmigrations:Squashes an existing set of migrations (from first until specified) into a single new one.'
+    'squashmigrations:Squashes the migrations for app_label up to and including migration_name down into fewer migrations.'
     "startapp:Creates a Django app directory structure for the given app name in this project's directory."
-    "startproject:Creates a Django project directory structure for the given project name in this current directory."
+    "startproject:Creates a Django project directory structure for the given project name in the current directory or the given destination."
     "syncdb:Create the database tables for all apps in INSTALLED_APPS whose tables haven't already been created."
     'test:Runs the test suite for the specified applications, or the entire site if no apps are specified.'
     'testserver:Runs a development server with data from the given fixture(s).'
     'validate:Validates all installed models.'
   )
+  if [[ $words[1] =~ "manage(.py)$" ]]; then
+    commands=($commands
+      "changepassword:Change a user's password for django.contrib.auth."
+      'createsuperuser:create a superuser'
+      'collectstatic:collect static files in a single location'
+      'findstatic:finds the absolute paths for the given static file(s)'
+    )
+  fi
 
   _describe -t commands 'manage.py command' commands && ret=0
+
+  # Query Django's completion for the full list of commands, using a cache.
+  local cache_policy
+  zstyle -s ":completion:${curcontext}:" cache-policy cache_policy
+  if [[ -z "$cache_policy" ]]; then
+    zstyle ":completion:${curcontext}:" cache-policy __django_caching_policy
+  fi
+
+  # Use cache name based on current script; there are usually different apps
+  # installed per project.
+  local cachename=django_subcommands${_managepy_cmd:a}
+
+  typeset -a django_completion
+  if ( [[ ${(P)+cachename} -eq 0 ]] || _cache_invalid $cachename ) \
+      || ! _retrieve_cache $cachename; then
+    zle -M "Querying Django subcommands..."
+    local ret_djcomp
+    if _managepy_get_django_completion "" $((CURRENT-1)); then
+      # Remove any commands we have already.
+      local i idx val _django_subcommands
+      if [[ -n $django_completion ]]; then
+        for i in {1..$#django_completion}; do
+          val=${django_completion[$i]}
+          idx=${commands[(I)$val*]}
+          if [[ $idx == 0 ]]; then
+            _django_subcommands+=($val)
+          fi
+        done
+      fi
+      _store_cache $cachename _django_subcommands
+    fi
+  fi
+
+  if (( $#_django_subcommands )); then
+    _describe -t commands-from-django 'manage.py command (from Django)' \
+      _django_subcommands && ret=0
+  fi
 }
 
 _applist() {
   local line
   local -a apps
+  # NOTE: this could use "$_managepy_cmd diffsettings --all", but that's slower.
   _call_program help-command "python -c \"import os.path as op, re, django.conf, sys;\\
                                           bn=op.basename(op.abspath(op.curdir));[sys\\
                                           .stdout.write(str(re.sub(r'^%s\.(.*?)$' %
@@ -382,21 +492,21 @@ _applist() {
   _values 'Application' $apps && ret=0
 }
 
-_managepy() {
+_manage.py() {
   local curcontext=$curcontext ret=1
 
   if ((CURRENT == 2)); then
-    _managepy-commands
+    _managepy_commands
   else
     shift words
     (( CURRENT -- ))
     curcontext="${curcontext%:*:*}:managepy-$words[1]:"
-    _call_function ret _managepy-$words[1]
+    if ! _call_function ret _managepy-$words[1]; then
+      _managepy_get_django_completion "$words[1,$CURRENT]" $((CURRENT))
+      _describe -t arguments-from-django 'manage.py subcommand arguments (from Django)' \
+        django_completion && ret=0
+    fi
   fi
 }
 
-compdef _managepy manage.py
-compdef _managepy django
-compdef _managepy django-admin
-compdef _managepy django-admin.py
-compdef _managepy django-manage
+_manage.py "$@"
