@@ -1,3 +1,6 @@
 [submodule "tmux"]
 	path = tmux
 	url = git@github.com:gatspy/.tmux.git
+[submodule "keyboard"]
+	path = keyboard
+	url = git@github.com:gatspy/keyboard.git

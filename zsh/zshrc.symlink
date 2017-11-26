@@ -52,12 +52,12 @@ then
   source ~/.zsh.localrc
   # FZF Setup {{{
   # -------------
-  # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   # }}}
 
 # FZF ZLE extra bindkeys {{{
 
-# bindkey '^E' fzf-cd-widget
+bindkey '^E' fzf-cd-widget
 
 # }}}
 fi

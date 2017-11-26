@@ -10,5 +10,4 @@ atom.symlink/themes
 git/gitconfig.local.symlink
 zsh/zshrc.local.symlink
 zsh/zshrc.local
-
 *.bak
