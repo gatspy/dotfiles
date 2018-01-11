@@ -1,5 +1,6 @@
 # export PATH="./bin:$ZSH/bin:$PATH"
 export PATH="$DOTFILES/bin:$PATH"
+export PATH="${HOME}/.local/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 # path {{{
 
@@ -14,4 +15,3 @@ export PATH="$PATH:/usr/local/sbin"
 # export PATH
 
 # }}}
-fpath=(/usr/local/share/zsh-completions $fpath)

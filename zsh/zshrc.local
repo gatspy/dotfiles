@@ -61,6 +61,7 @@ alias ghopen='hub browse'
 alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
+alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc'
 
 # alias osx systemImages
 alias app_from_store="find /Applications -path '*Contents/_MASReceipt/receipt' -maxdepth 4 -print |\sed 's#.app/Contents/_MASReceipt/receipt#.app#g; s#/Applications/##'"
@@ -78,6 +79,7 @@ alias ping-short='ping -o $@'
 alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
 alias bo='bower'
 alias bof="yes '' | bower init"
+alias you-get-pc="proxychains4 -q you-get"
 
 # ls, with chmod-like permissions and more.
 # @param $1 The directory to ls

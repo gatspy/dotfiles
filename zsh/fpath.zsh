@@ -5,3 +5,5 @@ for topic_folder in $DOTFILES/*; do
         fpath=($topic_folder $fpath)
     fi
 done
+
+fpath=(/usr/local/share/zsh-completions $fpath)
