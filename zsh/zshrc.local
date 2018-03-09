@@ -42,8 +42,9 @@ mod-view(){ stat -f "%OLp" $1 }
 # alias di='dirs -v | head -n 10'
 # alias dic='dirs -c'
 # alias po='popd'
-alias py='ptpython'
-alias py3='python3 -m ptpython'
+alias ptpy='python -m ptpython'
+alias ptpy2='python2 -m ptpython'
+alias ptpy3='python3 -m ptpython'
 alias ipy='ipython'
 alias sha='shasum'
 # alias dgserver='python manage.py runserver_plus'
@@ -60,6 +61,7 @@ alias -s txt=vim
 alias ghopen='hub browse'
 alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
+alias txy_root='ssh root@119.27.165.107 -p 22 -i $HOME/.ssh/txy_rsa'
 alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
 alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc'
 
@@ -122,8 +124,8 @@ export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # fi
 
 # MS.NET
-export DOT_NET_CORE=/usr/local/share/dotnet
-export PATH=$DOT_NET_CORE/bin:$PATH
+# export DOT_NET_CORE=/usr/local/share/dotnet
+# export PATH=$DOT_NET_CORE/bin:$PATH
 
 # source ~/.config/tmuxinator/completion/tmuxinator.zsh
 new-id () {
@@ -192,4 +194,38 @@ function = () {
   echo "$@" | bc -l
 }
 
+function open_command() {
+  emulate -L zsh
+  setopt shwordsplit
 
+  local open_cmd
+
+  # define the open command
+  case "$OSTYPE" in
+    darwin*)  open_cmd='open' ;;
+    cygwin*)  open_cmd='cygstart' ;;
+    linux*)   open_cmd='xdg-open' ;;
+    msys*)    open_cmd='start ""' ;;
+    *)        echo "Platform $OSTYPE not supported"
+              return 1
+              ;;
+  esac
+
+  # don't use nohup on OSX
+  if [[ "$OSTYPE" == darwin* ]]; then
+    $open_cmd "$@" &>/dev/null
+  else
+    nohup $open_cmd "$@" &>/dev/null
+  fi
+}
+
+function code {
+    if [[ $# = 0 ]]
+    then
+        open_command -a "Visual Studio Code"
+    else
+        local argPath="$1"
+        [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
+        open_command -a "Visual Studio Code" "$argPath"
+    fi
+}

@@ -50,10 +50,11 @@ unset config_files updated_at
 if [[ -a ~/.zsh.localrc ]]
 then
   source ~/.zsh.localrc
-  # FZF Setup {{{
-  # -------------
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-  # }}}
+
+# FZF Setup {{{
+# -------------
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# }}}
 
 # FZF ZLE extra bindkeys {{{
 
