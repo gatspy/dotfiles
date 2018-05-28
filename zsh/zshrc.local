@@ -12,6 +12,9 @@ export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore=~/.agignore -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
 # eval "$(thefuck --alias)"
 # Ag (the silver searcher)
 alias ag='ag --hidden --path-to-ignore=~/.agignore'
@@ -53,7 +56,7 @@ alias jdk8='export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"'
 alias jdk7='export JAVA_HOME="`/usr/libexec/java_home -v 1.7`"'
 alias perms='stat -f "%A %N" *'
 # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
-alias -s py=vim
+# alias -s py=vim
 alias -s js=vim
 alias -s c=vim
 alias -s java=vim
@@ -102,8 +105,8 @@ export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClass
 export ANDROID_HOME=${USERSHARE}/Home/App/Android/sdk
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
 
-export ANDROID_NDK_HOME=${USERSHARE}/Home/App/Android/ndk/android-ndk-r14b
-export PATH="$PATH:$ANDROID_NDK_HOME"
+export NDK_ROOT="${USERSHARE}/Home/App/Android/sdk/ndk-bundle"
+export PATH="$PATH:$NDK_ROOT"
 
 # java
 export JAVA_HOME=$(/usr/libexec/java_home)

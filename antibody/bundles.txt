@@ -1,5 +1,5 @@
 mafredri/zsh-async
-rupa/z
+#rupa/z
 Tarrasch/zsh-bd
 b4b4r07/enhancd
 # laurenkt/zsh-vimto
