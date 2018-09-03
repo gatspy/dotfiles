@@ -44,6 +44,7 @@
         excludesfile = ~/.gitignore
         editor = mvim -v
         autocrlf = input
+        quotepath = false
 [apply]
         whitespace = nowarn
 [mergetool]

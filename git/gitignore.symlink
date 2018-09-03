@@ -25,6 +25,61 @@ zcompdump
 # tools
 .sublime-project
 .vscode
+.idea
+.buildpath
+.project
+.settings
+.vagrant
+.thumbs
+*target/
+
+### JetBrains+iml ###
+.idea/**/
+# File-based project format
+*.iws
+out/
+.idea_modules/
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+# External tool builders
+.externalToolBuilders
+# Locally stored "Eclipse launch configurations"
+*.launch
+# Java annotation processor (APT)
+.factorypath
+# PDT-specific (PHP Development Tools)
+.buildpath
+# sbteclipse plugin
+.target
+# STS (Spring Tool Suite)
+.springBeans
+### Eclipse Patch ###
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # custom
 repos/

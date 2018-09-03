@@ -65,6 +65,7 @@ alias ghopen='hub browse'
 alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
 alias txy_root='ssh root@119.27.165.107 -p 22 -i $HOME/.ssh/txy_rsa'
+alias jx_root='ssh root@dev.jxcloud.com -p 22 -i $HOME/.ssh/aly_rsa'
 alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
 alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc'
 
@@ -102,10 +103,10 @@ export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClass
 # export PATH="$PATH:$QT_HOME/bin"
 
 # config Android
-export ANDROID_HOME=${USERSHARE}/Home/App/Android/sdk
+export ANDROID_HOME=${HOME}/App/android/sdk
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
 
-export NDK_ROOT="${USERSHARE}/Home/App/Android/sdk/ndk-bundle"
+export NDK_ROOT="${HOME}/App/android/sdk/ndk-bundle"
 export PATH="$PATH:$NDK_ROOT"
 
 # java
@@ -174,7 +175,7 @@ git_log_month () {
 }
 
 
-md () {
+mkp () {
   mkdir -p $1
   builtin cd $1
 }
