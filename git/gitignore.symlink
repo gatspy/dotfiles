@@ -46,7 +46,6 @@ modules.xml
 
 ### Eclipse ###
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
