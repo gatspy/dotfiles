@@ -3,14 +3,30 @@
 # top-most EditorConfig file
 root = true
 
-# Tab indentation
+# Unix-style newlines with a newline ending every file
 [*]
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js,py}]
+charset = utf-8
+
+# 4 space indentation
+[*.{py,java}]
+indent_style = space
+indent_size = 4
+
+# 2 space indentation
+[*.{js,ts,jsx}]
 indent_style = space
 indent_size = 2
-charset = utf-8
-trim_trailing_whitespace = true
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
 
 # The indent size used in the `package.json` file cannot be changed
 # https://github.com/npm/npm/pull/3180#issuecomment-16336516

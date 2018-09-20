@@ -8,6 +8,7 @@ robbyrussell/oh-my-zsh folder:plugins/vi-mode
 supercrabtree/k
 molovo/tipz
 lukechilds/zsh-nvm
+# g-plane/zsh-yarn-autocompletions
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 # these should be at last!
