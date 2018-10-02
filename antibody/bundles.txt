@@ -15,3 +15,5 @@ zsh-users/zsh-autosuggestions
 sindresorhus/pure
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
+BuonOmo/yarn-completion
+lukechilds/zsh-better-npm-completion

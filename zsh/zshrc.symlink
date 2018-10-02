@@ -9,6 +9,7 @@ export USERSHARE=/Users/Shared
 # lazy load nvm by zsh-nvm
 export NVM_LAZY_LOAD=true
 export NVM_NO_USE=true
+# export NVM_AUTO_USE=true
 
 # all of our zsh files
 typeset -U config_files
@@ -19,13 +20,15 @@ for file in ${(M)config_files:#*/path.zsh}; do
   source "$file"
 done
 
-# load antibody plugins
-source ~/.zsh_plugins.sh
-
-# load everything but the path and completion files
-for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
-  source "$file"
-done
+# resolved command not found: compdef
+# 1. This will perform chmod g-w for each file returned by compaudit to remove write access for group
+# compaudit | xargs -I % chmod g-w "%"
+# 2. This will perform chown to current user (Windows and Linux) for each file returned by compaudit
+# compaudit | xargs -I % chown $USER "%"
+# Remove all dump files (which normally speed up initialization)
+# 3. rm ~/.zcompdump*
+# 4. Regenerate completions file
+# compinit
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -Uz compinit
@@ -35,6 +38,14 @@ if [ $(date +'%j') != $updated_at ]; then
 else
   compinit -C -i
 fi
+
+# load antibody plugins, must be placed after of compinit
+source "${HOME}/.zsh_plugins.sh"
+
+# load everything but the path and completion files
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
+  source "$file"
+done
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}; do
