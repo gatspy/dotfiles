@@ -5,8 +5,10 @@ if which brew >/dev/null 2>&1; then
 		cleanup)
 			(cd "$(brew --repo)" && git prune && git gc)
 			command brew cleanup
-			command brew cask cleanup
-			command brew prune
+            # brew new version integrete cask cleanup
+			# command brew cask cleanup
+            # deprecated
+			# command brew prune
 			rm -rf "$(brew --cache)"
 			;;
 		bump)

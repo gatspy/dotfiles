@@ -35,7 +35,8 @@ alias tarx='tar -zxvf'
 alias finder='ranger'
 alias t='tmux'
 alias tx='tmuxinator'
-alias pc="proxychains4"
+alias pc='proxychains4'
+alias iDevice='instruments -s devices'
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 pless() { pygmentize -O style=lovelace -f console256 -g $* | less -R }
@@ -131,6 +132,9 @@ export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # export DOT_NET_CORE=/usr/local/share/dotnet
 # export PATH=$DOT_NET_CORE/bin:$PATH
 
+# Flutter
+export FLUTTER_HOME=${HOME}/App/flutter
+export PATH=$PATH:$FLUTTER_HOME/bin
 # source ~/.config/tmuxinator/completion/tmuxinator.zsh
 new-id () {
   if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then
