@@ -1,8 +1,10 @@
 export GOROOT=/usr/local/opt/go/libexec
 export GORACH=amd64
 export GOOS=darwin
-# export GOPATH=${HOME}/Home/Work/golang/vender:${HOME}/Home/Work/golang/project
 export GOPATH=${PROJECTS}/golang/vender:${PROJECTS}/golang/project
 # export GOTOOLDIR=${HOME}/Home/App/go/pkg/tool/darwin_amd64
 # export GO15VENDOREXPERIMENT=1
+export GO111MODULE=on
+export GOCACHE="/tmp/gocache"
 export PATH="$GOROOT/bin:${GOPATH//://bin:}/bin:$PATH"
+export GOPROXY=https://goproxy.io

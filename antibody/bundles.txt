@@ -3,7 +3,7 @@ mafredri/zsh-async
 Tarrasch/zsh-bd
 b4b4r07/enhancd
 # laurenkt/zsh-vimto
-robbyrussell/oh-my-zsh folder:plugins/vi-mode
+# robbyrussell/oh-my-zsh folder:plugins/vi-mode
 # yonchu/vimman
 supercrabtree/k
 molovo/tipz

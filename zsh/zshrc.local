@@ -114,11 +114,16 @@ export PATH="$PATH:$NDK_ROOT"
 export JAVA_HOME=$(/usr/libexec/java_home)
 export GRADLE_HOME=/usr/local/opt/gradle/libexec
 
+# browsermob
+export BROWSERMOB=/Users/gatspy/App/tools/browsermob-proxy
+export PATH="$PATH:$BROWSERMOB/bin"
+
 # Homebrew
 export HOMEBREW_GITHUB_API_TOKEN=beae5c6d64e91d958a839e7ccea368fb494d7fce
 export HOMEBREW_NO_AUTO_UPDATE=1
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+# export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # caskroom
 # export HOMEBREW_CASK_OPTS="--caskroom=${APPDIR}/Caskroom"
 # export HOMEBREW_CASK_OPTS="--appdir=${APPDIR}/Caskroom --fontdir=${HOME}/Library/Fonts"
@@ -132,9 +137,6 @@ export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # export DOT_NET_CORE=/usr/local/share/dotnet
 # export PATH=$DOT_NET_CORE/bin:$PATH
 
-# Flutter
-export FLUTTER_HOME=${HOME}/App/flutter
-export PATH=$PATH:$FLUTTER_HOME/bin
 # source ~/.config/tmuxinator/completion/tmuxinator.zsh
 new-id () {
   if [[ ! $1 =~ '^[0-9]{1,2}$' ]]; then

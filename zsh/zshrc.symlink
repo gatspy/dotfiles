@@ -14,11 +14,22 @@ export NVM_NO_USE=true
 # all of our zsh files
 typeset -U config_files
 config_files=($DOTFILES/*/*.zsh)
+typeset -U plugin_files
+plugin_files=($DOTFILES/omz/*.plug)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}; do
+  # echo "$file"
   source "$file"
 done
+
+# load the plug files
+for file in ${(M)plugin_files:#*/*.plug}; do
+  # echo "$file"
+  source "$file"
+done
+
+# echo "-------------------1-------------------"
 
 # resolved command not found: compdef
 # 1. This will perform chmod g-w for each file returned by compaudit to remove write access for group
@@ -44,16 +55,22 @@ source "${HOME}/.zsh_plugins.sh"
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
+  # echo "$file"
   source "$file"
 done
+
+# echo "-------------------2-------------------"
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}; do
+  # echo "$file"
   source "$file"
 done
 
-unset config_files updated_at
+# echo "-------------------3-------------------"
 
+unset config_files updated_at
+unset plugin_files updated_at
 
 # use .zsh.localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -75,3 +92,10 @@ bindkey '^E' fzf-cd-widget
 fi
 
 
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/mc mc
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/gatspy/.sdkman"
+[[ -s "/Users/gatspy/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gatspy/.sdkman/bin/sdkman-init.sh"
