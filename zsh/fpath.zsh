@@ -6,4 +6,4 @@ for topic_folder in $DOTFILES/*; do
     fi
 done
 
-# fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(${HOME}/.zplug/zsh-completions $fpath)
