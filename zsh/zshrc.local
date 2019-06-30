@@ -105,7 +105,7 @@ export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClass
 
 # config Android
 export ANDROID_HOME=${HOME}/App/android/sdk
-export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin"
 
 export NDK_ROOT="${HOME}/App/android/sdk/ndk-bundle"
 export PATH="$PATH:$NDK_ROOT"
@@ -123,6 +123,7 @@ export HOMEBREW_GITHUB_API_TOKEN=beae5c6d64e91d958a839e7ccea368fb494d7fce
 export HOMEBREW_NO_AUTO_UPDATE=1
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+# export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
 # export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 # caskroom
 # export HOMEBREW_CASK_OPTS="--caskroom=${APPDIR}/Caskroom"
