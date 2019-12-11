@@ -1,0 +1,41 @@
+#!/usr/local/bin/zsh
+
+function run() {
+    file=$1
+    split="."
+    space=" "
+    if test "${file#*$split}" != "$file"
+    then
+        s_files=("${(@s/./)file}")
+        src=$s_files[1]
+    else
+        src=$1
+    fi
+
+    suffix='Kt'
+
+    # target="${src^}" # bash4+ 使用
+    target=${(C)src}
+
+    if [[ "${target#*$space}" != "$target" ]]; then
+        tag_replae=${target// /_}
+    else
+        tag_replae=${target}
+    fi
+
+    echo Compile: ${file}, please wait...
+    # kotlinc "${src}.kt" -include-runtime -d out.jar "${@:1}"
+    kotlinc "${src}.kt" -include-runtime -d out.jar
+
+    c_status=$?
+
+    if [ $c_status -eq 0 ]; then
+        echo Running: ${file}, please wait...
+        java -cp out.jar "${tag_replae}${suffix}"
+    elif [ $c_status -eq 127 ]; then
+        echo -e "\nTo run Kotlin code, you need to have the Kotlin compiler installed. You can get it at https://kotlinlang.org/"
+    fi
+    exit $c_status
+}
+
+run $1
