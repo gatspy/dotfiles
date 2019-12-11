@@ -12,3 +12,5 @@ zsh/zshrc.local.symlink
 zsh/zshrc.local
 *.bak
 */getcourse
+bin/sf
+bin/lgxy
