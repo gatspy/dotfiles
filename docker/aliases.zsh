@@ -161,9 +161,11 @@ dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/[
 dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
 
 # alias dm-ip='docker-machine ip'
-
-dcp() {docker-compose $@ }
 dck() { docker $@ }
+export DOCKER_COMPOSE_DEV_FILE="/Users/gatspy/App/docker/dev/docker-compose.yaml"
+dcp() {docker-compose $@ }
+dcp-dev() {docker-compose -f ${DOCKER_COMPOSE_DEV_FILE} $@}
+
 
 
 dck_test() {

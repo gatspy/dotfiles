@@ -3,6 +3,8 @@
         path = ~/.gitconfig.local
 [hub]
         protocol = https
+[pull]
+        rebase = false
 [alias]
         co = checkout
         promote = !$ZSH/bin/git-promote
