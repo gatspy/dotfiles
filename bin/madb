@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# cookie=$1
+# -loglevel trace \
+# -bsf:a aac_adtstoasc \
+
+export MYADB=$HOME/.dotfiles/bin/m_yadb
+# echo $MYADB
+str=$@
+txt=$(echo $str | sed 's/ /\%s/g')
+adb push $MYADB /data/local/tmp & adb shell app_process -Djava.class.path=/data/local/tmp/m_yadb /data/local/tmp com.ysbing.yadb.Main -keyboard "$txt"
+# adb shell input keyevent 66

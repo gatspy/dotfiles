@@ -24,37 +24,62 @@
         old = red
         new = green
         whitespace = red reverse
+
 [color "diff-highlight"]
         oldNormal = red
         oldHighlight = "red 52"
         newNormal = "green"
         newHighlight = "green 22"
+
 [color "branch"]
         current = yellow reverse
         local = yellow
         remote = green
 [color "status"]
         untracked = cyan
-[pager]
-        diff = diff-so-fancy | less --tabs=4 -RFX
-        show = diff-so-fancy | less --tabs=4 -RFX
+# [pager]
+        # diff = diff-so-fancy | less --tabs=4 -RFX
+        # show = diff-so-fancy | less --tabs=4 -RFX
 [grep]
         lineNumber = true
         extendRegexp = true
 
 [core]
+        pager = delta --diff-so-fancy
         excludesfile = ~/.gitignore
         editor = mvim -v
         autocrlf = input
         quotepath = false
+
+[delta]
+        features = side-by-side line-numbers decorations
+        plus-color = "#012800"
+        minus-color = "#340001"
+        syntax-theme = Monokai Extended
+        side-by-side = true
+        line-numbers-left-format = ""
+        line-numbers-right-format = "│ "
+
+[delta "decorations"]
+        commit-decoration-style = bold yellow box ul
+        file-style = bold yellow ul
+        file-decoration-style = none
+
+[interactive]
+        diffFilter = delta --color-only
+
 [apply]
         whitespace = nowarn
+
 [mergetool]
         keepBackup = false
+
 [difftool]
         prompt = false
+
 [help]
         autocorrect = 1
+
 [push]
         # See `git help config` (search for push.default)
         # for more information on different options of the below setting.
@@ -63,6 +88,7 @@
         default = simple
 [credential]
 	helper = osxkeychain
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

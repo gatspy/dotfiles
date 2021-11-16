@@ -44,6 +44,9 @@ modules.xml
 .idea/misc.xml
 *.ipr
 
+### ndk ###
+**/.cxx
+
 ### Eclipse ###
 .metadata
 tmp/

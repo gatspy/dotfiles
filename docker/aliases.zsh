@@ -152,8 +152,8 @@ dck-host() {
 }
 
 # Dockerfile build, e.g., $dbu tcnksm/test
-dbu() { docker build --rm -t=$1 .; }
-dbuf() { docker build --rm -t=$1 -f=$2 .; }
+# dbu() { docker build --rm -t=$1 .; }
+# dbuf() { docker build --rm -t=$1 -f=$2 .; }
 # Show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 

@@ -7,7 +7,7 @@ b4b4r07/enhancd
 # yonchu/vimman
 supercrabtree/k
 molovo/tipz
-lukechilds/zsh-nvm
+# lukechilds/zsh-nvm
 # g-plane/zsh-yarn-autocompletions
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
@@ -17,3 +17,8 @@ zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
 BuonOmo/yarn-completion
 lukechilds/zsh-better-npm-completion
+scriptingosx/mac-zsh-completions
+hadenlabs/zsh-core
+luismayta/zsh-notify
+hadenlabs/zsh-flutter
+hadenlabs/zsh-docker

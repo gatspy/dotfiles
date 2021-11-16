@@ -7,8 +7,8 @@ export PROJECTS=${HOME}/Projects
 export USERSHARE=/Users/Shared
 
 # lazy load nvm by zsh-nvm
-export NVM_LAZY_LOAD=true
-export NVM_NO_USE=true
+# export NVM_LAZY_LOAD=true
+# export NVM_NO_USE=true
 # export NVM_AUTO_USE=true
 
 # all of our zsh files
@@ -100,3 +100,4 @@ complete -o nospace -C /usr/local/bin/mc mc
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/gatspy/.sdkman"
 [[ -s "/Users/gatspy/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gatspy/.sdkman/bin/sdkman-init.sh"
+

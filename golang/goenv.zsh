@@ -13,6 +13,7 @@ go_env () {
     export GOOS=darwin
     export GOPATH=${PROJECTS}/golang/vendor:${PROJECTS}/golang/project
     # export GOPATH=${PROJECTS}/golang/vendor
+    # export GOPATH=${PROJECTS}/golang/project
     # export GOTOOLDIR=${HOME}/Home/App/go/pkg/tool/darwin_amd64
     # export GO15VENDOREXPERIMENT=1
     export GO111MODULE=auto
