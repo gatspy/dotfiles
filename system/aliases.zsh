@@ -22,7 +22,7 @@ else
 fi
 
 alias grep="grep --color=auto"
-alias duf="du -sh * | sort -hr"
+# alias duf="du -sh * | sort -hr"
 alias less="less -r"
 
 # quick hack to make watch work with aliases

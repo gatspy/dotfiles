@@ -11,6 +11,7 @@ git/gitconfig.local.symlink
 zsh/zshrc.local.symlink
 zsh/zshrc.local
 *.bak
+*_bak
 */getcourse
 bin/sf
 bin/lgxy

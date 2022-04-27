@@ -1,3 +1,0 @@
-#!/bin/sh
-
-curl 'https://packagecontrol.io/channel_v3.json' -o '/usr/local/var/www/channel_v3.json'

@@ -162,6 +162,7 @@ dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
 
 # alias dm-ip='docker-machine ip'
 dck() { docker $@ }
+dcc() { docker-compose $@ }
 export DOCKER_COMPOSE_DEV_FILE="/Users/gatspy/App/docker/dev/docker-compose.yaml"
 dcp() {docker-compose $@ }
 dcp-dev() {docker-compose -f ${DOCKER_COMPOSE_DEV_FILE} $@}

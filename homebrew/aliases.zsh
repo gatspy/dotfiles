@@ -15,7 +15,14 @@ if which brew >/dev/null 2>&1; then
 		pull)
             echo 'start upgrade brew ...'
 			command brew update
-			command brew upgrade
+			if [ -z "$2" ];then
+				command brew upgrade
+			fi
+
+			if [ -n "$2" ];then
+				command brew upgrade "$2"
+			fi
+
 			brew cleanup
 			;;
 		depend)

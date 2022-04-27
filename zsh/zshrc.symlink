@@ -14,8 +14,9 @@ export USERSHARE=/Users/Shared
 # all of our zsh files
 typeset -U config_files
 config_files=($DOTFILES/*/*.zsh)
-typeset -U plugin_files
-plugin_files=($DOTFILES/omz/*.plug)
+# use sheldon install local plugin
+# typeset -U plugin_files
+# plugin_files=($DOTFILES/omz/*.plug)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}; do
@@ -52,7 +53,10 @@ compinit -C -i
 # fi
 
 # load antibody plugins, must be placed after of compinit
-source "${HOME}/.zsh_plugins.sh"
+# source "${HOME}/.zsh_plugins.sh"
+
+# load sheldon plugin manage
+eval "$(sheldon source)"
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
@@ -101,3 +105,5 @@ complete -o nospace -C /usr/local/bin/mc mc
 export SDKMAN_DIR="/Users/gatspy/.sdkman"
 [[ -s "/Users/gatspy/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gatspy/.sdkman/bin/sdkman-init.sh"
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8

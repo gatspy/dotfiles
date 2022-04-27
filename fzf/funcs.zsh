@@ -14,6 +14,39 @@ fh() {
   print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
+# fdf [FUZZY PATTERN] - Search target fold in path
+# first arg as target pattern fold
+# second arg as root path
+fdr () {
+   cd "$( fd --type d $1 $2 | fzf )"
+}
+
+# fdf [FUZZY PATTERN] - Search target fold in mine projects path
+# first arg as target pattern fold
+fdp () {
+   cd "$( fd --type d $1 ~/Projects | fzf )"
+}
+
+fcd() {
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        return
+    fi
+    while true; do
+        local lsd=$(echo ".." && exa -1 | grep '/$' | sed 's;/$;;')
+        local dir="$(printf '%s\n' "${lsd[@]}" |
+            fzf --reverse --preview '
+                __cd_nxt="$(echo {})";
+                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                echo $__cd_path;
+                echo;
+                exa -1 --color=always "${__cd_path}";
+        ')"
+        [[ ${#dir} != 0 ]] || return 0
+        builtin cd "$dir" &> /dev/null
+    done
+}
+
 # fbr [FUZZY PATTERN] - Checkout specified branch
 # Include remote branches, sorted by most recent commit and limited to 30
 fgb() {

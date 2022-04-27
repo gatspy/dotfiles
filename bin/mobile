@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-# cookie=$1
-# -loglevel trace \
-# -bsf:a aac_adtstoasc \
-
-scrcpy --window-borderless --max-size 900
