@@ -13,5 +13,5 @@ zsh/zshrc.local
 *.bak
 *_bak
 */getcourse
-bin/sf
+bin/*
 bin/lgxy
