@@ -13,4 +13,4 @@ kx() {
 
 alias k='kubectl'
 alias ks='kubectl -n kube-system'
-alias ke='EDITOR=vim kubectl edit'
+alias ke='EDITOR=nvim kubectl edit'

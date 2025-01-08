@@ -6,7 +6,7 @@ atom.symlink/compile-cache/
 atom.symlink/packages
 atom.symlink/storage
 atom.symlink/themes
-
+homebrew/private.zsh
 git/gitconfig.local.symlink
 zsh/zshrc.local.symlink
 zsh/zshrc.local

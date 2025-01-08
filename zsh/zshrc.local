@@ -10,7 +10,7 @@ export ENHANCD_COMMAND=d
 # export ENHANCD_FILTER=fzf-tmux:fzf:percol
 
 # ulimit open files
-ulimit -n 20000
+# ulimit -n 20000
 
 # FZF customizations
 # export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore=~/.agignore -g ""'
@@ -20,15 +20,6 @@ export FZF_ALT_C_COMMAND="find . -path '*/.git' -prune -o -type d -print"
 
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
-# eval "$(starship init zsh)"
-# ls, with chmod-like permissions and more.
-# @param $1 The directory to ls
-function lls {
-  LLS_PATH=$1
-  ls -aHl $LLS_PATH | awk "{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/) \
-                            *2^(8-i));if(k)printf(\"%0o \",k);print}"
-}
 
 export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Duser.timezone=GMT"
 # config QT
@@ -59,9 +50,13 @@ export PATH=/Users/gatspy/.tiup/bin:$PATH
 # export DOT_NET_CORE=/usr/local/share/dotnet
 # export PATH=$DOT_NET_CORE/bin:$PATH
 
-eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
 # eval "$(thefuck --alias)"
+
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# . "/Users/gatspy/.acme.sh/acme.sh.env"
 
 # Ag (the silver searcher)
 alias ag='ag --hidden --path-to-ignore=~/.agignore'
@@ -111,11 +106,7 @@ alias -s js=vim
 alias -s c=vim
 alias -s java=vim
 alias -s txt=vim
-alias ghopen='hub browse'
-alias aly_user='ssh fugees@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
-alias aly_root='ssh root@hemuapp.me -p 2202 -i $HOME/.ssh/aly_rsa'
-alias txy_root='ssh root@119.27.165.107 -p 22 -i $HOME/.ssh/txy_rsa'
-alias jx_root='ssh root@dev.jxcloud.com -p 22 -i $HOME/.ssh/aly_rsa'
+
 alias gc_server='ssh -o UserKnownHostsFile=/dev/null -o CheckHostIP=no -o StrictHostKeyChecking=no -i $HOME/.ssh/gcloud_rsa -A -p 22 gatspy.if@104.199.179.106'
 alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc'
 
@@ -136,6 +127,14 @@ alias pwdcp='pwd -P | tr -d "\r\n" | pbcopy'
 alias bo='bower'
 alias bof="yes '' | bower init"
 alias you-get-pc="proxychains4 -q you-get"
+
+# ls, with chmod-like permissions and more.
+# @param $1 The directory to ls
+function lls {
+  LLS_PATH=$1
+  ls -aHl $LLS_PATH | awk "{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/) \
+                            *2^(8-i));if(k)printf(\"%0o \",k);print}"
+}
 
 # source ~/.config/tmuxinator/completion/tmuxinator.zsh
 new-id () {

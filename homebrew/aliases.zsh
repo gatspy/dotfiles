@@ -1,5 +1,8 @@
 #!/bin/sh
+
+alias b=brew
 if which brew >/dev/null 2>&1; then
+
 	brew() {
 		case "$1" in
 		cleanup)
@@ -24,6 +27,12 @@ if which brew >/dev/null 2>&1; then
 			fi
 
 			brew cleanup
+			;;
+		sort)
+			echo 'start list all packages installed using brew and their sizes ...'
+			# brew list --formula | xargs -n1 -P8 -I {} sh -c "brew info {} | egrep '[0-9]* files, ' | sed 's/^.*[0-9]* files, \(.*\)).*$/{} \1/'" | sort -h -r -k2 - | column -t
+			brew list --formula | parallel "brew info {} | egrep '[0-9]* files, ' | sed 's/^.*[0-9]* files, \(.*\)).*(/{}) \1/'" | sort -k4 -hr | column -t
+			# brew list --formula | parallel "brew info {} | egrep '[0-9]* files, ' | sed 's/^.*[0-9]* files, \(.*\)).*$/{} \1/'" | sort -h -r
 			;;
 		depend)
 			echo 'start search dependency'

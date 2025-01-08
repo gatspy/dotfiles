@@ -1,8 +1,13 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
+
+# 开启此行和最后一行，测试性能
+# zmodload zsh/zprof
+
 # shortcut to this dotfiles path is $DOTFILES
 export DOTFILES="$HOME/.dotfiles"
 
 # your project folder that we can `c [tab]` to
+export LOCAL_ROOT=${HOME}/.local
 export PROJECTS=${HOME}/Projects
 export USERSHARE=/Users/Shared
 
@@ -44,19 +49,31 @@ done
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -Uz compinit
-compinit -C -i
+
 # typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
 # if [ $(date +'%j') != $updated_at ]; then
 #   compinit -i
 # else
 #   compinit -C -i
 # fi
+#
+if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+  compinit
+else
+  compinit -C -i
+fi
 
 # load antibody plugins, must be placed after of compinit
 # source "${HOME}/.zsh_plugins.sh"
 
 # load sheldon plugin manage
 eval "$(sheldon source)"
+
+# load shell prompt
+eval "$(starship init zsh)"
+
+# load zxoide
+eval "$(zoxide init zsh)"
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
@@ -83,27 +100,30 @@ unset plugin_files updated_at
 if [[ -a ~/.zsh.localrc ]]
 then
   source ~/.zsh.localrc
+fi
 
 # FZF Setup {{{
-# -------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# }}}
+if [ -f ~/.fzf.zsh ]
+then
+ source ~/.fzf.zsh
 
-# FZF ZLE extra bindkeys {{{
+# keybinding default shell/key-bindings.zsh
+# FZF ZLE extra bindkeys
+# bindkey '^E' fzf-cd-widget
 
-bindkey '^E' fzf-cd-widget
-
-# }}}
 fi
+# }}}
 
 
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/mc mc
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/gatspy/.sdkman"
-[[ -s "/Users/gatspy/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gatspy/.sdkman/bin/sdkman-init.sh"
-
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/gatspy/.dart-cli-completion/zsh-config.zsh ]] && . /Users/gatspy/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+# zprof

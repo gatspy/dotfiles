@@ -4,12 +4,12 @@ if which mmake >/dev/null 2>&2; then
     alias make='mmake'
 fi
 
-# exa is a better ls tool
-if which exa >/dev/null 2>&1; then
-    alias ls='exa'
-    alias l='exa -la --git'
-    alias la='exa -laa --git'
-    alias ll='exa -l --git'
+# eza is a better ls tool
+if which eza >/dev/null 2>&1; then
+    alias ls='eza'
+    alias l='eza -la --git'
+    alias la='eza -laa --git'
+    alias ll='eza -l --git'
 else
     if [ "$(uname -s)" = "Darwin" ]; then
         alias ls="ls -FG"
