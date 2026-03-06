@@ -137,8 +137,32 @@ install_dotfiles () {
   done
 }
 
+install_configs () {
+  info 'installing external tool configs'
+
+  local overwrite_all=false backup_all=false skip_all=false
+
+  # Link mise config
+  if [ -f "$DOTFILES_ROOT/config/mise/config.toml.symlink" ]; then
+    mkdir -p ~/.config/mise
+    link_file "$DOTFILES_ROOT/config/mise/config.toml.symlink" ~/.config/mise/config.toml
+  fi
+
+  # Link sheldon config
+  if [ -f "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ]; then
+    mkdir -p ~/.config/sheldon
+    link_file "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ~/.config/sheldon/plugins.toml
+  fi
+
+  # Link zplug plugins directory
+  if [ -d "$DOTFILES_ROOT/zplug" ]; then
+    link_file "$DOTFILES_ROOT/zplug" ~/.zplug
+  fi
+}
+
 setup_gitconfig
 install_dotfiles
+install_configs
 
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]

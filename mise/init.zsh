@@ -18,3 +18,6 @@ if [ $commands[mise] ]; then
     $0 "$@"
   }
 fi
+
+export MISE_RUSTUP_HOME=$HOME/.rustup
+export MISE_CARGO_HOME=$HOME/.cargo

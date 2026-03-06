@@ -1,0 +1,38 @@
+#!/usr/bin/env zsh
+#
+# Private/Secret Configuration Template
+#
+# INSTRUCTIONS:
+# 1. Copy this file to ~/.zsh.localrc
+#    cp ~/.dotfiles/system/private.zsh.template ~/.zsh.localrc
+#
+# 2. Fill in your actual values below
+#
+# 3. This file is NOT tracked by git (see .gitignore)
+#
+# ============================================================================
+
+# Example: API Keys (uncomment and fill in)
+# export OPENAI_API_KEY="sk-..."
+# export ANTHROPIC_API_KEY="sk-ant-..."
+# export GITHUB_TOKEN="ghp_..."
+# export AWS_ACCESS_KEY_ID="..."
+# export AWS_SECRET_ACCESS_KEY="..."
+
+# Example: Work-specific paths
+# export WORK_PROJECTS="$HOME/work/projects"
+# export WORK_TOOLS="$HOME/work/tools"
+
+# Example: Custom database URLs
+# export DATABASE_URL="postgresql://user:password@localhost/dbname"
+# export REDIS_URL="redis://localhost:6379"
+
+# Example: Email configuration for git
+# export GIT_AUTHORNAME="Your Name"
+# export GIT_AUTHOREMAIL="your.email@example.com"
+
+# Example: Private tool tokens
+# export HOMEBREW_GITHUB_API_TOKEN="ghp_..."
+
+# ============================================================================
+# Add your private configurations below this line

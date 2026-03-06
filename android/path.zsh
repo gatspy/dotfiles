@@ -1,13 +1,33 @@
-# config Android
-export ANDROID_SDK_ROOT=${HOME}/Applications/android/sdk
-export ANDROID_HOME=${HOME}/Applications/android/sdk
-export ANDROID_EMULATOR_HOME=${HOME}/Applications/android/sdk/emulator
-export ANDROID_CMD_TOOL=${HOME}/Applications/android/sdk/cmdline-tools/latest
-#export PATH="$PATH:$ANDROID_EMULATOR_HOME:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_CMD_TOOL/bin"
-export PATH="$PATH:$ANDROID_EMULATOR_HOME:$ANDROID_HOME/platform-tools:$ANDROID_CMD_TOOL/bin"
+#!/usr/bin/env zsh
 
-export ANDROID_NDK_VERSION="23.1.7779620"
-# export ANDROID_NDK_VERSION="16.1.4479499"
-export ANDROID_NDK_ROOT="${HOME}/Applications/android/sdk/ndk/${ANDROID_NDK_VERSION}"
-export ANDROID_NDK_HOME="${HOME}/Applications/android/sdk/ndk/${ANDROID_NDK_VERSION}"
-export PATH="$PATH:$ANDROID_NDK_ROOT"
+# Android Development Configuration
+# Uses platform detection for NDK architecture compatibility
+
+# Only set Android paths if SDK directory exists
+ANDROID_SDK_ROOT="${HOME}/Applications/android/sdk"
+if [[ ! -d "$ANDROID_SDK_ROOT" ]]; then
+  # Skip Android configuration if SDK is not installed
+  return 0
+fi
+
+export ANDROID_HOME=${ANDROID_SDK_ROOT}
+export ANDROID_EMULATOR_HOME=${ANDROID_SDK_ROOT}/emulator
+export ANDROID_CMD_TOOL=${ANDROID_SDK_ROOT}/cmdline-tools/latest
+
+# Base Android tools PATH
+export PATH="$PATH:$ANDROID_EMULATOR_HOME:$ANDROID_HOME/platform-tools:$ANDROID_CMD_TOOL/bin:$ANDROID_HOME/build-tools/34.0.0"
+
+# NDK configuration
+export ANDROID_NDK_VERSION="27.0.12077973"
+export ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
+export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT}"
+
+# Dynamic architecture detection for NDK
+local ndk_arch=${PLATFORM_ARCH:-amd64}
+case "$ndk_arch" in
+    arm64)  ndk_arch="darwin-arm64" ;;
+    amd64)  ndk_arch="darwin-x86_64" ;;
+    *)      ndk_arch="darwin-x86_64" ;;  # fallback
+esac
+
+export PATH="$PATH:$ANDROID_NDK_ROOT/prebuilt/${ndk_arch}/bin"

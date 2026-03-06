@@ -1,129 +1,62 @@
 #!/usr/bin/env zsh
 
-# 开启此行和最后一行，测试性能
-# zmodload zsh/zprof
-
 # shortcut to this dotfiles path is $DOTFILES
 export DOTFILES="$HOME/.dotfiles"
 
 # your project folder that we can `c [tab]` to
 export LOCAL_ROOT=${HOME}/.local
 export PROJECTS=${HOME}/Projects
-export USERSHARE=/Users/Shared
-
-# lazy load nvm by zsh-nvm
-# export NVM_LAZY_LOAD=true
-# export NVM_NO_USE=true
-# export NVM_AUTO_USE=true
 
 # all of our zsh files
 typeset -U config_files
 config_files=($DOTFILES/*/*.zsh)
-# use sheldon install local plugin
-# typeset -U plugin_files
-# plugin_files=($DOTFILES/omz/*.plug)
 
-# load the path files
+# load the path files first
 for file in ${(M)config_files:#*/path.zsh}; do
-  # echo "$file"
   source "$file"
 done
 
-# load the plug files
-for file in ${(M)plugin_files:#*/*.plug}; do
-  # echo "$file"
-  source "$file"
-done
-
-# echo "-------------------1-------------------"
-
-# resolved command not found: compdef
-# 1. This will perform chmod g-w for each file returned by compaudit to remove write access for group
-# compaudit | xargs -I % chmod g-w "%"
-# 2. This will perform chown to current user (Windows and Linux) for each file returned by compaudit
-# compaudit | xargs -I % chown $USER "%"
-# Remove all dump files (which normally speed up initialization)
-# 3. rm ~/.zcompdump*
-# 4. Regenerate completions file
-# compinit
-
-# initialize autocomplete here, otherwise functions won't be loaded
+# initialize autocomplete
 autoload -Uz compinit
 
-# typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
-# if [ $(date +'%j') != $updated_at ]; then
-#   compinit -i
-# else
-#   compinit -C -i
-# fi
-#
+# smart compinit: only rebuild once per day
 if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
   compinit
 else
   compinit -C -i
 fi
 
-# load antibody plugins, must be placed after of compinit
-# source "${HOME}/.zsh_plugins.sh"
-
-# load sheldon plugin manage
+# load sheldon plugin manager
 eval "$(sheldon source)"
 
 # load shell prompt
 eval "$(starship init zsh)"
 
-# load zxoide
+# load zoxide for smart directory navigation
 eval "$(zoxide init zsh)"
 
-# load everything but the path and completion files
+# load everything but path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
-  # echo "$file"
   source "$file"
 done
 
-# echo "-------------------2-------------------"
-
-# load every completion after autocomplete loads
+# load completions last
 for file in ${(M)config_files:#*/completion.zsh}; do
-  # echo "$file"
   source "$file"
 done
 
-# echo "-------------------3-------------------"
+unset config_files
 
-unset config_files updated_at
-unset plugin_files updated_at
-
-# use .zsh.localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-# shellcheck disable=SC1090
-if [[ -a ~/.zsh.localrc ]]
-then
+# local configuration (not tracked in git)
+if [[ -f ~/.zsh.localrc ]]; then
   source ~/.zsh.localrc
 fi
 
-# FZF Setup {{{
-if [ -f ~/.fzf.zsh ]
-then
- source ~/.fzf.zsh
-
-# keybinding default shell/key-bindings.zsh
-# FZF ZLE extra bindkeys
-# bindkey '^E' fzf-cd-widget
-
+# FZF setup
+if [ -f ~/.fzf.zsh ]; then
+  source ~/.fzf.zsh
 fi
-# }}}
 
-
-
+# bash completion for mc
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/mc mc
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /Users/gatspy/.dart-cli-completion/zsh-config.zsh ]] && . /Users/gatspy/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
-# zprof

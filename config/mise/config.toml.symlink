@@ -1,0 +1,53 @@
+# mise configuration file
+# https://mise.jdx.dev/configuration.html
+
+[settings]
+env_shell_expand = true
+npm.package_manager = "bun"
+cargo.binstall = true
+pipx.registry_url = "https://mirrors.aliyun.com/pypi/simple/"
+pipx.uvx = true
+
+[tools]
+# Core runtimes
+node = "22.16"
+python = "latest"
+go = "latest"
+ruby = "3.4.8"
+rust = "latest"
+java = "23"
+bun = "latest"
+pnpm = "latest"
+uv = "latest"
+zig = "latest"
+flutter = "3.35.6-stable"
+
+# Cargo tools
+"cargo:cargo-deny" = "latest"
+"cargo:cargo-generate" = "latest"
+"cargo:typos-cli" = "latest"
+cargo-binstall = "latest"
+
+# Go tools
+"go:github.com/gogf/gf/cmd/gf/v2" = "latest"
+"go:github.com/ofabry/go-callvis" = "latest"
+"go:github.com/a-h/templ/cmd/templ" = "latest"
+"go:github.com/kralicky/protols/cmd/protols" = "latest"
+"go:github.com/brads3290/cclogviewer/cmd/cclogviewer" = "latest"
+
+"npm:@google/gemini-cli" = "latest"
+"npm:fanyi" = "latest"
+"npm:http-server" = "latest"
+"npm:npkill" = "latest"
+"npm:prettier" = "latest"
+"npm:pake-cli" = "latest"
+
+# Pipx tools
+"pipx:pre-commit" = "latest"
+"pipx:duckduckgo-mcp-server" = "latest"
+"gem:cocoapods" = "latest"
+"npm:ccusage" = "latest"
+
+[env]
+MISE_RUSTUP_HOME = "$HOME/.rustup"
+MISE_CARGO_HOME = "$HOME/.cargo"

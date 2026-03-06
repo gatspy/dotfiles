@@ -47,7 +47,7 @@
 [core]
         pager = delta --diff-so-fancy
         excludesfile = ~/.gitignore
-        editor = mvim -v
+        editor = nvim
         autocrlf = input
         quotepath = false
 

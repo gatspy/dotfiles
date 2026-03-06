@@ -1,0 +1,84 @@
+# `sheldon` configuration file
+# ----------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+shell = "zsh"
+
+[plugins]
+
+[templates]
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+fpath = 'fpath=( "{{ dir }}" $fpath )'
+
+# Completions
+# -----------
+
+[plugins.npm-zsh-completion]
+github = "lukechilds/zsh-better-npm-completion"
+
+[plugins.docker-zsh-completion]
+github = "greymd/docker-zsh-completion"
+
+[plugins.rust-zsh-completions]
+github = "ryutok/rust-zsh-completions"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.mac-zsh-completion]
+github = "scriptingosx/mac-zsh-completions"
+
+# Sourced plugins (immediate load)
+# --------------------------------
+
+[plugins.zplug-core]
+local = "~/.zplug"
+use = ["compinit.plug.zsh", "fzf.plug.zsh", "vimode.plug.zsh"]
+
+[plugins.enhancd]
+github = "b4b4r07/enhancd"
+use = ["init.sh"]
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.zsh-async]
+github = "mafredri/zsh-async"
+
+# Deferred plugins (lazy load)
+# ----------------------------
+
+[plugins.dotbare]
+github = "kazhala/dotbare"
+use = ["dotbare.plugin.zsh"]
+apply = ["defer", "fpath"]
+
+[plugins.zplug-extra]
+local = "~/.zplug"
+use = ["vscode.plug.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-you-should-use]
+github = "MichaelAquilina/zsh-you-should-use"
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-history-search]
+github = "zsh-users/zsh-history-substring-search"
+apply = ["defer"]
+
+[plugins.zsh-syntax-highlighting]
+github = 'zsh-users/zsh-syntax-highlighting'
+apply = ["defer"]

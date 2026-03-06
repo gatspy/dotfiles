@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# benchmark - Shell startup performance test
+#
+# Run this to measure your zsh startup time and track optimization impact.
+#
+
+echo "🚀 Running zsh startup benchmark..."
+echo "========================================"
+echo ""
+
+# Run 5 iterations and show average
+for i in {1..5}; do
+  echo "Iteration $i:"
+  /usr/bin/time zsh -i -c exit
+  echo ""
+done
+
+echo "========================================"
+echo "💡 Tips for faster startup:"
+echo "  - Run 'zprof' inside zshrc to profile"
+echo "  - Use 'mise activate zsh --shims' for lazy loading"
+echo "  - Defer heavy plugins with 'zsh-defer'"

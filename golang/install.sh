@@ -3,36 +3,44 @@ if [ "$(which go)" ] && [ -n "$GOPATH" ]; then
 	mkdir -p "$GOPATH/bin" "$GOPATH/src/github.com/"
 
 	packages="
-    github.com/nsf/gocode
-    github.com/uudashr/gopkgs/cmd/gopkgs
-    github.com/ramya-rao-a/go-outline
-    github.com/newhook/go-symbols
-    golang.org/x/tools/cmd/guru
-    golang.org/x/tools/cmd/gorename
-    github.com/cweill/gotests/...
     github.com/fatih/gomodifytags
-    github.com/josharian/impl
-    github.com/davidrjenni/reftools/cmd/fillstruct
     github.com/haya14busa/goplay/cmd/goplay
-    github.com/go-delve/delve/cmd/dlv
+    github.com/josharian/impl
+    mvdan.cc/gofumpt
     golang.org/x/tools/cmd/goimports
+    github.com/cweill/gotests/gotests
     golang.org/x/lint/golint
-    github.com/koron/iferr
-    github.com/fatih/motion
-    honnef.co/go/tools/cmd/keyify
-    github.com/jstemmer/gotags
+    honnef.co/go/tools/cmd/staticcheck
+    github.com/golangci/golangci-lint/cmd/golangci-lint
+    github.com/mgechev/revive
     golang.org/x/tools/gopls
-    github.com/rogpeppe/godef
+    github.com/go-delve/delve/cmd/dlv
+    github.com/golang/vscode-go/vscgo
     github.com/kisielk/errcheck
     github.com/klauspost/asmfmt/cmd/asmfmt
-    golang.org/x/tools/cmd/cover
     golang.org/x/tools/cmd/godoc
-    github.com/golangci/golangci-lint/cmd/golangci-lint
-  "
+    gorm.io/gen/tools/gentool
+    github.com/google/wire/cmd/wire
+    github.com/swaggo/swag/cmd/swag
+    github.com/gin-admin/gin-admin-cli/v10
+    github.com/GoAdminGroup/adm
+    github.com/rakyll/statik
+    google.golang.org/protobuf/cmd/protoc-gen-go
+    github.com/araddon/dateparse/dateparse
+    github.com/air-verse/air
+    "
     # github.com/lukehoban/go-outline
 
 	for pkg in $packages; do
-		go get -u -v "$pkg"
+	    # use go install
+		go install "$pkg"@latest
+		# go get -u -v "$pkg"
+
+		# use mise maintain all tools
+		# mise uninstall go:"$pkg"
+		# mise unuse go:"$pkg"
 	done
 	# "$GOPATH"/bin/gometalinter --install --update
+	# github.com/davidrjenni/reftools/cmd/fillstruct
+    # github.com/koron/iferr
 fi
