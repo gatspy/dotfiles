@@ -50,7 +50,7 @@ if [[ -n "${fzf_base}" ]]; then
   fi
 
 else
-  print "[oh-my-zsh] fzf plugin: Cannot find fzf installation directory.\n"\
+  print "[dotfiles] fzf: Cannot find fzf installation directory.\n"\
         "Please add \`export FZF_BASE=/path/to/fzf/install/dir\` to your .zshrc" >&2
 fi
 

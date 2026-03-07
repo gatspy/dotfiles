@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(ruby:*)",
+      "Bash(cat:*)",
+      "Bash(du:*)",
+      "Bash(go version:*)",
+      "Read(//Users/gatspy/.dotfiles/**)",
+      "Bash(__NEW_LINE_5cc4f5c2f0e89d46__ echo \"## 1. antigravity/ 分析\")",
+      "Bash(__NEW_LINE_5cc4f5c2f0e89d46__ echo -e \"\\\\n## 2. zdns/ 分析\")",
+      "Bash(__NEW_LINE_5cc4f5c2f0e89d46__ echo -e \"\\\\n## 3. zenith/ 分析\")",
+      "Bash(__NEW_LINE_5cc4f5c2f0e89d46__ echo -e \"\\\\n## 4. z/ 分析\")",
+      "Bash(__NEW_LINE_25280ad9a3f4f4cb__ for:*)",
+      "Bash(__NEW_LINE_74fc9fc29ad5e149__ for:*)",
+      "Bash(__NEW_LINE_b90707f9a8a8ef54__ echo \"### 1. Shell 启动性能基准测试\")",
+      "Bash(time zsh -i -c exit)",
+      "Bash(__NEW_LINE_1eb8558ecd21d604__ echo -e \"\\\\n### 2. 配置加载顺序分析\")",
+      "Bash(head -10 echo -e \"\\\\n### 4. PATH 设置分析\" echo \"PATH 设置的数量:\" grep -h \"^export PATH\\\\|PATH=\" ~/.dotfiles/**/*.zsh)",
+      "Bash(wc -l echo \"可能存在重复的 PATH 设置\" echo -e \"\\\\n### 5. 别名重复检查\" echo \"检查重复的别名定义:\" grep -h \"^alias\\\\|^function\" ~/.dotfiles/**/*.zsh)",
+      "Bash(__NEW_LINE_0590e96dc86fc78e__ echo \"## 1. bin/ 目录分析 \\(57个文件\\)\")",
+      "Bash(__NEW_LINE_f6f0ea7f778d16a6__ echo -e \"\\\\n## 2. completions/ 目录分析\")",
+      "Read(//tmp/**)",
+      "mcp__serena__list_dir",
+      "Bash(aws:*)",
+      "Bash(ls -lh /Users/gatspy/.dotfiles/completions/*.zsh)",
+      "Bash(sheldon list:*)",
+      "Bash(wc:*)",
+      "Bash(command:*)",
+      "Bash(sheldon show:*)",
+      "Bash(zsh:*)",
+      "Bash(sheldon lock:*)",
+      "Bash(do:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

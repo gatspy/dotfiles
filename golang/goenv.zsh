@@ -21,7 +21,6 @@ go_env() {
     export GOBIN=$GOPATH/bin
     export GO111MODULE=on
     export GOCACHE="/tmp/gocache"
-    export PATH="${GOPATH}/bin:$PATH"
     export GOPROXY=https://goproxy.cn,direct
 }
 

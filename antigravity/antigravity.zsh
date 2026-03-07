@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 # Antigravity CLI
-export PATH="${HOME}/.antigravity/antigravity/bin:$PATH"
+# PATH is managed in system/00-path.zsh

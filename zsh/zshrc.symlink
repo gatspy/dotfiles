@@ -36,8 +36,24 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # load everything but path and completion files
+# with conditional loading for project-specific configs
+declare -A topic_config
+topic_config=(
+  [android]="$ANDROID_HOME"
+  [flutter]="$FLUTTER_ROOT"
+  [reactnative]="$REACT_NATIVE_ROOT"
+  [qt]="$QT_QMAKE_DIR"
+)
+
+# always load these topics
+always_load_topics="^(system|zsh|web|docker|k8s|kubernetes|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|antigravity|zenith|zdns|completions|functions|config|script|theme|bin)$"
+
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
-  source "$file"
+  topic=${file:h:t}
+  # load if always-load topic OR topic env var is set
+  if [[ "${topic}" =~ "${always_load_topics}" ]] || [[ -n "${topic_config[$topic]}" ]]; then
+    source "$file"
+  fi
 done
 
 # load completions last

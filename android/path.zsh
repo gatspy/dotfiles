@@ -14,9 +14,6 @@ export ANDROID_HOME=${ANDROID_SDK_ROOT}
 export ANDROID_EMULATOR_HOME=${ANDROID_SDK_ROOT}/emulator
 export ANDROID_CMD_TOOL=${ANDROID_SDK_ROOT}/cmdline-tools/latest
 
-# Base Android tools PATH
-export PATH="$PATH:$ANDROID_EMULATOR_HOME:$ANDROID_HOME/platform-tools:$ANDROID_CMD_TOOL/bin:$ANDROID_HOME/build-tools/34.0.0"
-
 # NDK configuration
 export ANDROID_NDK_VERSION="27.0.12077973"
 export ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
@@ -29,5 +26,3 @@ case "$ndk_arch" in
     amd64)  ndk_arch="darwin-x86_64" ;;
     *)      ndk_arch="darwin-x86_64" ;;  # fallback
 esac
-
-export PATH="$PATH:$ANDROID_NDK_ROOT/prebuilt/${ndk_arch}/bin"

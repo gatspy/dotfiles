@@ -6,5 +6,3 @@ export QT_DEBUG=true
 export QT_DEBUG_CONSOLE=true
 export QT_DEBUG_PLUGINS=1
 export QT_WEBKIT=true
-
-export PATH=$PATH:$QT_QMAKE_DIR

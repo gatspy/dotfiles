@@ -33,42 +33,14 @@ github = "ryutok/rust-zsh-completions"
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 
-[plugins.mac-zsh-completion]
-github = "scriptingosx/mac-zsh-completions"
-
 # Sourced plugins (immediate load)
 # --------------------------------
-
-[plugins.zplug-core]
-local = "~/.zplug"
-use = ["compinit.plug.zsh", "fzf.plug.zsh", "vimode.plug.zsh"]
-
-[plugins.enhancd]
-github = "b4b4r07/enhancd"
-use = ["init.sh"]
 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
-[plugins.zsh-async]
-github = "mafredri/zsh-async"
-
 # Deferred plugins (lazy load)
 # ----------------------------
-
-[plugins.dotbare]
-github = "kazhala/dotbare"
-use = ["dotbare.plugin.zsh"]
-apply = ["defer", "fpath"]
-
-[plugins.zplug-extra]
-local = "~/.zplug"
-use = ["vscode.plug.zsh"]
-apply = ["defer"]
-
-[plugins.zsh-you-should-use]
-github = "MichaelAquilina/zsh-you-should-use"
-apply = ["defer"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"

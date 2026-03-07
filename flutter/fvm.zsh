@@ -16,7 +16,5 @@ export PUB_HOSTED_URL=https://pub.flutter-io.cn
 
 # export FLUTTER_GIT_URL=https://mirrors.tuna.tsinghua.edu.cn/git/flutter-sdk.git
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-
 # alias flutter='fvm flutter'
 # alias dart='fvm dart'

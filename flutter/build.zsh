@@ -7,5 +7,4 @@ function flutter_env() {
 
 function fos_env() {
     source ${HOME}/fuchsia/fuchsia/scripts/fx-env.sh
-    export PATH=${HOME}/fuchsia/fuchsia/.jiri_root/bin:$PATH
 }
