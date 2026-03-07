@@ -49,6 +49,29 @@ setup_gitconfig () {
   fi
 }
 
+setup_submodules () {
+  if [ -f "$DOTFILES_ROOT/.gitmodules" ]
+  then
+    info 'initializing git submodules'
+
+    # Check if submodules are already initialized
+    if [ ! -d "$DOTFILES_ROOT/tmux/.git" ]
+    then
+      git submodule update --init --recursive
+
+      # Check if successful
+      if [ $? -eq 0 ]
+      then
+        success 'git submodules initialized'
+      else
+        fail 'failed to initialize git submodules'
+      fi
+    else
+      success 'git submodules already initialized'
+    fi
+  fi
+}
+
 
 link_file () {
   local src=$1 dst=$2
@@ -158,9 +181,26 @@ install_configs () {
   if [ -d "$DOTFILES_ROOT/zplug" ]; then
     link_file "$DOTFILES_ROOT/zplug" ~/.zplug
   fi
+
+  # Link tmux configuration (from submodule)
+  if [ -f "$DOTFILES_ROOT/tmux/.tmux.conf" ]; then
+    link_file "$DOTFILES_ROOT/tmux/.tmux.conf" ~/.tmux.conf
+  fi
+
+  # Create .tmux.conf.local if it doesn't exist
+  if [ ! -f "$HOME/.tmux.conf.local" ] && [ -f "$DOTFILES_ROOT/tmux/.tmux.conf.local" ]; then
+    cp "$DOTFILES_ROOT/tmux/.tmux.conf.local" ~/.tmux.conf.local
+    success "created ~/.tmux.conf.local"
+  fi
+
+  # Link hammerspoon configuration
+  if [ -d "$DOTFILES_ROOT/hammerspoon" ]; then
+    link_file "$DOTFILES_ROOT/hammerspoon" ~/.hammerspoon
+  fi
 }
 
 setup_gitconfig
+setup_submodules
 install_dotfiles
 install_configs
 
