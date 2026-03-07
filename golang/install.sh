@@ -1,5 +1,6 @@
-#!/bin/sh
-if [ "$(which go)" ] && [ -n "$GOPATH" ]; then
+#!/usr/bin/env zsh
+set -euo pipefail
+if command -v go >/dev/null 2>&1 && [ -n "${GOPATH:-}" ]; then
 	mkdir -p "$GOPATH/bin" "$GOPATH/src/github.com/"
 
 	packages="
@@ -29,18 +30,8 @@ if [ "$(which go)" ] && [ -n "$GOPATH" ]; then
     github.com/araddon/dateparse/dateparse
     github.com/air-verse/air
     "
-    # github.com/lukehoban/go-outline
 
 	for pkg in $packages; do
-	    # use go install
-		go install "$pkg"@latest
-		# go get -u -v "$pkg"
-
-		# use mise maintain all tools
-		# mise uninstall go:"$pkg"
-		# mise unuse go:"$pkg"
+		go install "$pkg"@latest || echo "Warning: Failed to install $pkg"
 	done
-	# "$GOPATH"/bin/gometalinter --install --update
-	# github.com/davidrjenni/reftools/cmd/fillstruct
-    # github.com/koron/iferr
 fi

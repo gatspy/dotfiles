@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env zsh
+set -euo pipefail
 [ "$(uname -s)" != "Darwin" ] && exit 0
 sed "s;/Users/carlos;$HOME;g" \
 	"$DOTFILES"/iterm/com.googlecode.iterm2.plist.example >"$DOTFILES"/iterm/com.googlecode.iterm2.plist

@@ -31,7 +31,20 @@
       "Bash(zsh:*)",
       "Bash(sheldon lock:*)",
       "Bash(do:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "mcp__serena__find_file",
+      "Bash(ls:*)",
+      "Bash(head:*)",
+      "Bash(find:*)",
+      "Bash(while read f)",
+      "Bash(done)",
+      "Bash(xargs:*)",
+      "Bash(mv git-*:*)",
+      "Bash(mv dot:*)",
+      "Bash(mv brew-back:*)",
+      "Bash(mv getcourse:*)",
+      "Bash(mv cloudapp:*)"
     ]
   }
 }
