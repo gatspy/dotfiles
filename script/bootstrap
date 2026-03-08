@@ -86,8 +86,10 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*'); do
-    dst="$HOME/.$(basename "${src%.*}")"
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*' -not -path '*/config/*'); do
+    # 获取文件名（去掉 .symlink 后缀）
+    filename=$(basename "$src" .symlink)
+    dst="$HOME/.$filename"
     link_file "$src" "$dst"
   done
 }
@@ -106,6 +108,12 @@ install_configs () {
   if [ -f "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ]; then
     mkdir -p ~/.config/sheldon
     link_file "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ~/.config/sheldon/plugins.toml
+  fi
+
+  # Starship 配置
+  if [ -f "$DOTFILES_ROOT/config/starship.toml.symlink" ]; then
+    mkdir -p ~/.config
+    link_file "$DOTFILES_ROOT/config/starship.toml.symlink" ~/.config/starship.toml
   fi
 
   # Tmux 配置
