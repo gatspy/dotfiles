@@ -1,4 +1,4 @@
-local message = require('keyboard.status-message')
+local message = require('status-message')
 
 function ssidChangedCallback() -- 回调
     ssid = hs.wifi.currentNetwork() -- 获取当前 WiFi ssid

@@ -1,4 +1,4 @@
-local message = require('keyboard.status-message')
+local message = require('status-message')
 
 local messageMuting = message.new('muted 🎤')
 local messageHot = message.new('hot 🎤')
