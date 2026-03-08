@@ -18,8 +18,15 @@ shell = "zsh"
 defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 fpath = 'fpath=( "{{ dir }}" $fpath )'
 
-# Completions
-# -----------
+# ============================================================================
+# IMPORTANT: zsh-defer must be loaded BEFORE any plugins that use defer
+# ============================================================================
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+# Completions (deferred)
+# ---------------------
 
 [plugins.npm-zsh-completion]
 github = "lukechilds/zsh-better-npm-completion"
@@ -36,12 +43,6 @@ apply = ["defer"]
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 apply = ["defer"]
-
-# Sourced plugins (immediate load)
-# --------------------------------
-
-[plugins.zsh-defer]
-github = "romkatv/zsh-defer"
 
 # Deferred plugins (lazy load)
 # ----------------------------
