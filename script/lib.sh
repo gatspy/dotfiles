@@ -122,10 +122,30 @@ ensure_dir() {
 # 配置操作函数
 # =============================================================================
 
-# 创建符号链接（支持备份）
+# 计算相对路径
+relative_path() {
+  local target=$1
+  local link_path=$2
+  local link_dir
+  link_dir=$(dirname "$link_path")
+  [[ -z "$link_dir" ]] && link_dir="."
+
+  # 使用 python 计算相对路径
+  if command -v python3 >/dev/null 2>&1; then
+    python3 -c "import os.path; print(os.path.relpath('$target', '$link_dir'))"
+  else
+    echo "$target"
+  fi
+}
+
+# 创建符号链接（支持备份，优先使用相对路径）
 symlink_with_backup() {
   local src=$1
   local dest=$2
+
+  # 扩展 ~ 为 $HOME
+  src="${src/#\~/$HOME}"
+  dest="${dest/#\~/$HOME}"
 
   # 如果目标已存在
   if [[ -e "$dest" ]]; then
@@ -140,9 +160,14 @@ symlink_with_backup() {
     fi
   fi
 
-  # 创建符号链接
-  ln -s "$src" "$dest"
-  log_success "Created symlink: $dest -> $src"
+  # 确保目标目录存在
+  local dest_dir=$(dirname "$dest")
+  [[ ! -d "$dest_dir" ]] && mkdir -p "$dest_dir"
+
+  # 创建符号链接（使用相对路径）
+  local rel_src=$(relative_path "$src" "$dest")
+  ln -s "$rel_src" "$dest"
+  log_success "Created symlink: $dest -> $rel_src"
 }
 
 # =============================================================================
