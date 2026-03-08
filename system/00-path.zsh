@@ -11,7 +11,6 @@ typeset -U path manpath
 path=(
   "$DOTFILES/bin"
   "${HOME}/.local/bin"
-  "${HOME}/.fzf/bin"(N)
   "/usr/local/bin"
   "/usr/local/sbin"
   "${HOME}/.antigravity/antigravity/bin"(N)
