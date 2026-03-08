@@ -252,4 +252,8 @@ done
   - `dart/completion.zsh` - 删除 || true
   - `script/lib.sh` - 平台检测函数使用常量
 
+- **Task #30 (关键修复)**: 2 个文件
+  - `config/sheldon/plugins.toml.symlink` - 修复 zsh-defer 加载顺序（移至首位）
+  - `git/completion.zsh` - 删除直接 source 补全文件（由 compinit 自动加载）
+
 所有更改均经过语法检查和功能测试，确保不影响现有功能。
