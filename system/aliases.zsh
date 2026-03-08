@@ -11,7 +11,7 @@ if which eza >/dev/null 2>&1; then
     alias la='eza -laa --git'
     alias ll='eza -l --git'
 else
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if [ "$PLATFORM_OS" = "Darwin" ]; then
         alias ls="ls -FG"
     else
         alias ls="ls -F --color"
@@ -29,12 +29,12 @@ alias less="less -r"
 alias watch='watch '
 
 # open, pbcopy and pbpaste on linux
-if [ "$(uname -s)" != "Darwin" ]; then
+if [ "$PLATFORM_OS" != "Darwin" ]; then
     if [ -z "$(command -v pbcopy)" ]; then
-        if [ -n "$(command -v xclip)" ]; then
+        if command -v xclip >/dev/null 2>&1; then
             alias pbcopy="xclip -selection clipboard"
             alias pbpaste="xclip -selection clipboard -o"
-        elif [ -n "$(command -v xsel)" ]; then
+        elif command -v xsel >/dev/null 2>&1; then
             alias pbcopy="xsel --clipboard --input"
             alias pbpaste="xsel --clipboard --output"
         fi

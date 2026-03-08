@@ -3,6 +3,16 @@
 #
 # 提供通用的日志、检测、备份等函数
 
+# 缓存平台信息，避免重复调用 uname
+_PLATFORM_CACHE_OS=$(uname -s)
+_PLATFORM_CACHE_MACHINE=$(uname -m)
+
+# Platform constants for consistency
+readonly PLATFORM_MACOS="Darwin"
+readonly PLATFORM_LINUX="Linux"
+readonly PLATFORM_ARCH_ARM64="arm64"
+readonly PLATFORM_ARCH_X86_64="x86_64"
+
 # =============================================================================
 # 日志函数
 # =============================================================================
@@ -132,22 +142,22 @@ in_git_repo() {
 # 平台检测函数
 # =============================================================================
 
-# 检测操作系统
+# 检测操作系统（使用缓存）
 is_macos() {
-  [[ "$(uname -s)" == "Darwin" ]]
+  [[ "$_PLATFORM_CACHE_OS" == "$PLATFORM_MACOS" ]]
 }
 
 is_linux() {
-  [[ "$(uname -s)" == "Linux" ]]
+  [[ "$_PLATFORM_CACHE_OS" == "$PLATFORM_LINUX" ]]
 }
 
-# 检测架构
+# 检测架构（使用缓存）
 is_arm64() {
-  [[ "$(uname -m)" == "arm64" ]]
+  [[ "$_PLATFORM_CACHE_MACHINE" == "$PLATFORM_ARCH_ARM64" ]]
 }
 
 is_x86_64() {
-  [[ "$(uname -m)" == "x86_64" ]]
+  [[ "$_PLATFORM_CACHE_MACHINE" == "$PLATFORM_ARCH_X86_64" ]]
 }
 
 # =============================================================================
@@ -159,7 +169,7 @@ confirm() {
   local prompt=$1
   local response
 
-  echo -n "$prompt [Y/n] "
+  printf "%s [Y/n] " "$prompt"
   read -r response
   case "$response" in
     [nN][oO]|[nN]) return 1 ;;

@@ -15,138 +15,110 @@ echo '║          Dotfiles Bootstrap - 一键部署                      ║'
 echo '╚════════════════════════════════════════════════════════════╝'
 echo ''
 
-# 日志函数
-info () {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-warn () {
-  printf "\r\033[2K  [ \033[00;33mWARN\033[0m] $1\n"
-}
-
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
+# 加载公共函数库
+source "${DOTFILES_ROOT}/script/lib.sh" 2>/dev/null || {
+  echo "错误: 无法加载 script/lib.sh"
   exit 1
 }
 
 # 初始化 Git 子模块
 setup_submodules () {
-  if [ -f "$DOTFILES_ROOT/.gitmodules" ]; then
-    info '初始化 Git 子模块'
+  if [[ -f "$DOTFILES_ROOT/.gitmodules" ]]; then
+    log_info '初始化 Git 子模块'
 
-    if [ -d "$DOTFILES_ROOT/tmux/.git" ]; then
-      success 'Git 子模块已初始化'
+    if [[ -d "$DOTFILES_ROOT/tmux/.git" ]]; then
+      log_success 'Git 子模块已初始化'
       return 0
     fi
 
     git submodule update --init --recursive
 
-    if [ $? -eq 0 ]; then
-      success 'Git 子模块初始化完成'
+    if [[ $? -eq 0 ]]; then
+      log_success 'Git 子模块初始化完成'
     else
-      fail 'Git 子模块初始化失败'
+      log_error 'Git 子模块初始化失败'
+      exit 1
     fi
   fi
-}
-
-# 创建符号链接
-link_file () {
-  local src=$1 dst=$2
-  local overwrite_all=false backup_all=false skip_all=false
-
-  if [ -e "$dst" ] || [ -L "$dst" ]; then
-    local currentSrc="$(readlink "$dst" 2>/dev/null || echo 'not_a_link')"
-
-    if [ "$currentSrc" == "$src" ]; then
-      return 0
-    fi
-
-    # 自动处理策略
-    if [ -f "$dst" ] || [ -L "$dst" ]; then
-      mv "$dst" "${dst}.backup"
-      success "备份: ${dst} → ${dst}.backup"
-    elif [ -d "$dst" ]; then
-      rm -rf "$dst"
-      success "移除目录: $dst"
-    fi
-  fi
-
-  ln -s "$1" "$2"
-  success "链接: $1 → $2"
 }
 
 # 安装 dotfiles 符号链接
 install_dotfiles () {
-  info '安装 Dotfiles 符号链接'
-
-  local overwrite_all=false backup_all=false skip_all=false
+  log_info '安装 Dotfiles 符号链接'
 
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*' -not -path '*/config/*'); do
-    # 获取文件名（去掉 .symlink 后缀）
     filename=$(basename "$src" .symlink)
     dst="$HOME/.$filename"
-    link_file "$src" "$dst"
+    symlink_with_backup "$src" "$dst"
   done
+}
+
+# Helper function to install XDG config files
+install_xdg_config() {
+  local tool=$1
+  local src_file=$2
+  local dst_dir=$3
+  local dst_file=$4
+
+  if [[ -f "$DOTFILES_ROOT/$src_file" ]]; then
+    ensure_dir "$dst_dir"
+    symlink_with_backup "$DOTFILES_ROOT/$src_file" "$dst_dir/$dst_file"
+  fi
 }
 
 # 安装外部工具配置
 install_configs () {
-  info '安装外部工具配置'
+  log_info '安装外部工具配置'
 
   # Mise 配置
-  if [ -f "$DOTFILES_ROOT/config/mise/config.toml.symlink" ]; then
-    mkdir -p ~/.config/mise
-    link_file "$DOTFILES_ROOT/config/mise/config.toml.symlink" ~/.config/mise/config.toml
+  if [[ -f "$DOTFILES_ROOT/config/mise/config.toml.symlink" ]]; then
+    ensure_dir ~/.config/mise
+    symlink_with_backup "$DOTFILES_ROOT/config/mise/config.toml.symlink" ~/.config/mise/config.toml
   fi
 
   # Sheldon 配置
-  if [ -f "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ]; then
-    mkdir -p ~/.config/sheldon
-    link_file "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ~/.config/sheldon/plugins.toml
+  if [[ -f "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ]]; then
+    ensure_dir ~/.config/sheldon
+    symlink_with_backup "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ~/.config/sheldon/plugins.toml
   fi
 
   # Starship 配置
-  if [ -f "$DOTFILES_ROOT/config/starship.toml.symlink" ]; then
-    mkdir -p ~/.config
-    link_file "$DOTFILES_ROOT/config/starship.toml.symlink" ~/.config/starship.toml
+  if [[ -f "$DOTFILES_ROOT/config/starship.toml.symlink" ]]; then
+    ensure_dir ~/.config
+    symlink_with_backup "$DOTFILES_ROOT/config/starship.toml.symlink" ~/.config/starship.toml
   fi
 
   # Tmux 配置
-  if [ -f "$DOTFILES_ROOT/tmux/.tmux.conf" ]; then
-    link_file "$DOTFILES_ROOT/tmux/.tmux.conf" ~/.tmux.conf
+  if [[ -f "$DOTFILES_ROOT/tmux/.tmux.conf" ]]; then
+    symlink_with_backup "$DOTFILES_ROOT/tmux/.tmux.conf" ~/.tmux.conf
   fi
 
   # Tmux 本地配置
-  if [ ! -f "$HOME/.tmux.conf.local" ] && [ -f "$DOTFILES_ROOT/tmux/.tmux.conf.local" ]; then
+  if [[ ! -f "$HOME/.tmux.conf.local" ]] && [[ -f "$DOTFILES_ROOT/tmux/.tmux.conf.local" ]]; then
     cp "$DOTFILES_ROOT/tmux/.tmux.conf.local" ~/.tmux.conf.local
-    success "创建: ~/.tmux.conf.local"
+    log_success "创建: ~/.tmux.conf.local"
   fi
 
   # Hammerspoon 配置
-  if [ -d "$DOTFILES_ROOT/hammerspoon" ]; then
-    link_file "$DOTFILES_ROOT/hammerspoon" ~/.hammerspoon
+  if [[ -d "$DOTFILES_ROOT/hammerspoon" ]]; then
+    symlink_with_backup "$DOTFILES_ROOT/hammerspoon" ~/.hammerspoon
   fi
 
   # Karabiner 配置（目录链接）
-  if [ -d "$DOTFILES_ROOT/karabiner" ]; then
-    link_file "$DOTFILES_ROOT/karabiner" ~/.config/karabiner
+  if [[ -d "$DOTFILES_ROOT/karabiner" ]]; then
+    symlink_with_backup "$DOTFILES_ROOT/karabiner" ~/.config/karabiner
   fi
 }
 
 # 检查 Git 配置
 check_gitconfig () {
-  info '检查 Git 配置'
+  log_info '检查 Git 配置'
 
   local gitconfig="$DOTFILES_ROOT/git/gitconfig.symlink"
 
   # 检查是否仍使用占位符
   if grep -q "AUTHORNAME\|AUTHOREMAIL" "$gitconfig" 2>/dev/null; then
-    warn '检测到 Git 配置中使用占位符'
+    log_warning '检测到 Git 配置中使用占位符'
     echo ''
     echo '  请编辑 git/gitconfig.symlink，填写你的用户信息：'
     echo ''
@@ -159,26 +131,26 @@ check_gitconfig () {
     return 1
   fi
 
-  success 'Git 配置正常'
+  log_success 'Git 配置正常'
   return 0
 }
 
 # 安装依赖 (macOS)
 install_dependencies () {
-  if [ "$(uname -s)" != "Darwin" ]; then
+  if ! is_macos; then
     return 0
   fi
 
-  info '安装系统依赖'
+  log_info '安装系统依赖'
 
-  if [ -f "$DOTFILES_ROOT/bin/dot" ]; then
+  if [[ -f "$DOTFILES_ROOT/bin/dot" ]]; then
     if source "$DOTFILES_ROOT/bin/dot" > /tmp/dotfiles-dot 2>&1; then
-      success '依赖安装完成'
+      log_success '依赖安装完成'
     else
-      warn '依赖安装出现问题，请检查日志: /tmp/dotfiles-dot'
+      log_warning '依赖安装出现问题，请检查日志: /tmp/dotfiles-dot'
     fi
   else
-    warn '未找到 bin/dot 脚本，跳过依赖安装'
+    log_warning '未找到 bin/dot 脚本，跳过依赖安装'
   fi
 }
 

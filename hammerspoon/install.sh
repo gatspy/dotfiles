@@ -14,13 +14,7 @@ if [[ ! -d "/Applications/Hammerspoon.app" ]]; then
   exit 0
 fi
 
-# 确保 .hammerspoon 目录不存在
-if [[ -e "$HOME/.hammerspoon" ]]; then
-  log_warning "$HOME/.hammerspoon exists, skipping"
-  exit 0
-fi
-
-# 创建符号链接
-ln -s "$DOTFILES/hammerspoon" "$HOME/.hammerspoon"
+# 创建符号链接（支持备份）
+symlink_with_backup "$DOTFILES/hammerspoon" "$HOME/.hammerspoon"
 
 log_success "Hammerspoon configured"

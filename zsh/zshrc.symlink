@@ -11,6 +11,11 @@ export PROJECTS=${HOME}/Projects
 typeset -U config_files
 config_files=($DOTFILES/*/*.zsh)
 
+# Cache system calls to improve startup performance
+export HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix 2>/dev/null)}"
+export PLATFORM_OS="$(uname -s)"
+export PLATFORM_MACHINE="$(uname -m)"
+
 # load the path files first
 for file in ${(M)config_files:#*/path.zsh}; do
   source "$file"
@@ -20,11 +25,14 @@ done
 autoload -Uz compinit
 
 # smart compinit: only rebuild once per day
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+# Use zsh builtin parameter for faster file age check
+_zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ ! -f "$_zcompdump" || $_zcompdump(Nmm-1) ]]; then
   compinit
 else
   compinit -C -i
 fi
+unset _zcompdump
 
 # load sheldon plugin manager
 eval "$(sheldon source)"
@@ -37,13 +45,11 @@ eval "$(zoxide init zsh)"
 
 # load everything but path and completion files
 # with conditional loading for project-specific configs
-declare -A topic_config
-topic_config=(
-  [android]="$ANDROID_HOME"
-  [flutter]="$FLUTTER_ROOT"
-  [reactnative]="$REACT_NATIVE_ROOT"
-  [qt]="$QT_QMAKE_DIR"
-)
+typeset -A topic_config
+topic_config[android]="$ANDROID_HOME"
+topic_config[flutter]="$FLUTTER_ROOT"
+topic_config[reactnative]="$REACT_NATIVE_ROOT"
+topic_config[qt]="$QT_QMAKE_DIR"
 
 # always load these topics
 always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|small-tools|completions|functions|config|script)$"
@@ -58,20 +64,21 @@ done
 
 # load completions last (skip lazy-loaded completions)
 lazy_completions=(pixi django react-native dotnet)
+# Use associative array for O(1) lookup instead of O(n) loop
+typeset -A lazy_completion_map
+for lazy in $lazy_completions; do
+  lazy_completion_map[$lazy]=1
+done
+
 for file in ${(M)config_files:#*/completion.zsh}; do
-  # Skip completions that are lazy-loaded via lazy.zsh
-  skip=0
-  for lazy in $lazy_completions; do
-    if [[ $file =~ "$lazy.completion.zsh" ]]; then
-      skip=1
-      break
-    fi
-  done
-  if [[ $skip -eq 0 ]]; then
+  # Extract topic name from file path
+  topic=${file:h:t}
+  # Skip if topic is in lazy completion map
+  if [[ -z "${lazy_completion_map[$topic]}" ]]; then
     source "$file"
   fi
 done
-unset lazy_completions
+unset lazy_completions lazy_completion_map
 
 unset config_files
 
