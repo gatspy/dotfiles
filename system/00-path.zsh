@@ -11,6 +11,9 @@ typeset -U path manpath
 path=(
   "$DOTFILES/bin"
   "${HOME}/.local/bin"
+  "${HOME}/.fzf/bin"(N)
+  "/usr/local/bin"
+  "/usr/local/sbin"
   "${HOME}/.antigravity/antigravity/bin"(N)
   "$ANDROID_HOME/platform-tools"(N)
   "$ANDROID_CMD_TOOL/bin"(N)
@@ -22,7 +25,6 @@ path=(
   "$QT_QMAKE_DIR"(N)
   "$BUN_INSTALL/bin"(N)
   "/usr/local/opt/openssl@3/bin"
-  "/usr/local/sbin"
   "$path[@]"
 )
 
