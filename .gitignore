@@ -24,3 +24,4 @@ ai/agent.zsh
 # Karabiner (GUI auto-modifies these)
 karabiner/karabiner.json
 karabiner/automatic_backups/
+.claude/**
