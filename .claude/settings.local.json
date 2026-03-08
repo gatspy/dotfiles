@@ -62,7 +62,8 @@
       "Bash(echo \"$dir/:\")",
       "Bash(~/.dotfiles/small-tools/aliases.zsh:*)",
       "Bash(~/.dotfiles/small-tools/init.zsh:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(/Users/gatspy/.dotfiles/karabiner/README.md:*)"
     ]
   }
 }

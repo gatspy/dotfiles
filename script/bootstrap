@@ -131,6 +131,11 @@ install_configs () {
   if [ -d "$DOTFILES_ROOT/hammerspoon" ]; then
     link_file "$DOTFILES_ROOT/hammerspoon" ~/.hammerspoon
   fi
+
+  # Karabiner 配置（目录链接）
+  if [ -d "$DOTFILES_ROOT/karabiner" ]; then
+    link_file "$DOTFILES_ROOT/karabiner" ~/.config/karabiner
+  fi
 }
 
 # 检查 Git 配置
