@@ -46,7 +46,7 @@ topic_config=(
 )
 
 # always load these topics
-always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|antigravity|zenith|zdns|completions|functions|config|script)$"
+always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|small-tools|completions|functions|config|script)$"
 
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
   topic=${file:h:t}
@@ -56,10 +56,22 @@ for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
   fi
 done
 
-# load completions last
+# load completions last (skip lazy-loaded completions)
+lazy_completions=(pixi django react-native dotnet)
 for file in ${(M)config_files:#*/completion.zsh}; do
-  source "$file"
+  # Skip completions that are lazy-loaded via lazy.zsh
+  skip=0
+  for lazy in $lazy_completions; do
+    if [[ $file =~ "$lazy.completion.zsh" ]]; then
+      skip=1
+      break
+    fi
+  done
+  if [[ $skip -eq 0 ]]; then
+    source "$file"
+  fi
 done
+unset lazy_completions
 
 unset config_files
 

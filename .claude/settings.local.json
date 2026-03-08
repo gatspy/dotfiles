@@ -53,7 +53,15 @@
       "Bash(for file in /Users/gatspy/.dotfiles/homebrew/install.sh /Users/gatspy/.dotfiles/hammerspoon/install.sh /Users/gatspy/.dotfiles/git/install.sh /Users/gatspy/.dotfiles/karabiner/install.sh)",
       "Bash(source:*)",
       "Bash(/Users/gatspy/.local/bin/ai:*)",
-      "Bash(sheldon status:*)"
+      "Bash(sheldon status:*)",
+      "Bash(git push:*)",
+      "Bash(do echo:*)",
+      "Bash(for topic in android flutter reactnative qt)",
+      "Read(//Users/gatspy/.dotfiles/$topic/**)",
+      "Bash(for dir in zenith zdns antigravity)",
+      "Bash(echo \"$dir/:\")",
+      "Bash(~/.dotfiles/small-tools/aliases.zsh:*)",
+      "Bash(~/.dotfiles/small-tools/init.zsh:*)"
     ]
   }
 }

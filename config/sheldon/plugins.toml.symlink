@@ -23,15 +23,19 @@ fpath = 'fpath=( "{{ dir }}" $fpath )'
 
 [plugins.npm-zsh-completion]
 github = "lukechilds/zsh-better-npm-completion"
+apply = ["defer"]
 
 [plugins.docker-zsh-completion]
 github = "greymd/docker-zsh-completion"
+apply = ["defer"]
 
 [plugins.rust-zsh-completions]
 github = "ryutok/rust-zsh-completions"
+apply = ["defer"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+apply = ["defer"]
 
 # Sourced plugins (immediate load)
 # --------------------------------

@@ -19,3 +19,21 @@ if [[ $commands[python] ]]; then
     _django_manager "$@"
   }
 fi
+
+# react-native 补全（56 行）
+if [[ $commands[react-native] ]]; then
+  _react_native() {
+    unfunction "$0"
+    source "$DOTFILES/completions/react-native.completion.zsh"
+    _react_native "$@"
+  }
+fi
+
+# dotnet 补全（161 行）
+if [[ $commands[dotnet] ]]; then
+  _dotnet() {
+    unfunction "$0"
+    source "$DOTFILES/completions/dotnet.completion.zsh"
+    _dotnet "$@"
+  }
+fi
