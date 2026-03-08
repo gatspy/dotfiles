@@ -61,7 +61,8 @@
       "Bash(for dir in zenith zdns antigravity)",
       "Bash(echo \"$dir/:\")",
       "Bash(~/.dotfiles/small-tools/aliases.zsh:*)",
-      "Bash(~/.dotfiles/small-tools/init.zsh:*)"
+      "Bash(~/.dotfiles/small-tools/init.zsh:*)",
+      "Bash(bash:*)"
     ]
   }
 }

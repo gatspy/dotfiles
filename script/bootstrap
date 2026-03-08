@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
-# bootstrap installs things.
+# bootstrap - Dotfiles 一键部署脚本
+#
+# 用法: script/bootstrap
 
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
@@ -8,213 +10,186 @@ DOTFILES_ROOT=$(pwd -P)
 set -e
 
 echo ''
+echo '╔════════════════════════════════════════════════════════════╗'
+echo '║          Dotfiles Bootstrap - 一键部署                      ║'
+echo '╚════════════════════════════════════════════════════════════╝'
+echo ''
 
+# 日志函数
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-user () {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
 }
 
 success () {
   printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
 }
 
+warn () {
+  printf "\r\033[2K  [ \033[00;33mWARN\033[0m] $1\n"
+}
+
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
-  exit
+  exit 1
 }
 
-setup_gitconfig () {
-  if ! [ -f git/gitconfig.local.symlink ]
-  then
-    info 'setup gitconfig'
-
-    git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
-
-    user ' - What is your github author name?'
-    read -e git_authorname
-    user ' - What is your github author email?'
-    read -e git_authoremail
-
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
-
-    success 'gitconfig'
-  fi
-}
-
+# 初始化 Git 子模块
 setup_submodules () {
-  if [ -f "$DOTFILES_ROOT/.gitmodules" ]
-  then
-    info 'initializing git submodules'
+  if [ -f "$DOTFILES_ROOT/.gitmodules" ]; then
+    info '初始化 Git 子模块'
 
-    # Check if submodules are already initialized
-    if [ ! -d "$DOTFILES_ROOT/tmux/.git" ]
-    then
-      git submodule update --init --recursive
+    if [ -d "$DOTFILES_ROOT/tmux/.git" ]; then
+      success 'Git 子模块已初始化'
+      return 0
+    fi
 
-      # Check if successful
-      if [ $? -eq 0 ]
-      then
-        success 'git submodules initialized'
-      else
-        fail 'failed to initialize git submodules'
-      fi
+    git submodule update --init --recursive
+
+    if [ $? -eq 0 ]; then
+      success 'Git 子模块初始化完成'
     else
-      success 'git submodules already initialized'
+      fail 'Git 子模块初始化失败'
     fi
   fi
 }
 
-
+# 创建符号链接
 link_file () {
   local src=$1 dst=$2
+  local overwrite_all=false backup_all=false skip_all=false
 
-  local overwrite= backup= skip=
-  local action=
+  if [ -e "$dst" ] || [ -L "$dst" ]; then
+    local currentSrc="$(readlink "$dst" 2>/dev/null || echo 'not_a_link')"
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
-  then
-
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
-    then
-
-      local currentSrc="$(readlink $dst)"
-
-      if [ "$currentSrc" == "$src" ]
-      then
-
-        skip=true;
-
-      else
-
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
-
-        case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
-        esac
-
-      fi
-
+    if [ "$currentSrc" == "$src" ]; then
+      return 0
     fi
 
-    overwrite=${overwrite:-$overwrite_all}
-    backup=${backup:-$backup_all}
-    skip=${skip:-$skip_all}
-
-    if [ "$overwrite" == "true" ]
-    then
-      rm -rf "$dst"
-      success "removed $dst"
-    fi
-
-    if [ "$backup" == "true" ]
-    then
+    # 自动处理策略
+    if [ -f "$dst" ] || [ -L "$dst" ]; then
       mv "$dst" "${dst}.backup"
-      success "moved $dst to ${dst}.backup"
-    fi
-
-    if [ "$skip" == "true" ]
-    then
-      success "skipped $src"
+      success "备份: ${dst} → ${dst}.backup"
+    elif [ -d "$dst" ]; then
+      rm -rf "$dst"
+      success "移除目录: $dst"
     fi
   fi
 
-  if [ "$skip" != "true" ]  # "false" or empty
-  then
-    ln -s "$1" "$2"
-    success "linked $1 to $2"
-  fi
+  ln -s "$1" "$2"
+  success "链接: $1 → $2"
 }
 
+# 安装 dotfiles 符号链接
 install_dotfiles () {
-  info 'installing dotfiles'
+  info '安装 Dotfiles 符号链接'
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
-  do
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*'); do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
 }
 
+# 安装外部工具配置
 install_configs () {
-  info 'installing external tool configs'
+  info '安装外部工具配置'
 
-  local overwrite_all=false backup_all=false skip_all=false
-
-  # Link mise config
+  # Mise 配置
   if [ -f "$DOTFILES_ROOT/config/mise/config.toml.symlink" ]; then
     mkdir -p ~/.config/mise
     link_file "$DOTFILES_ROOT/config/mise/config.toml.symlink" ~/.config/mise/config.toml
   fi
 
-  # Link sheldon config
+  # Sheldon 配置
   if [ -f "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ]; then
     mkdir -p ~/.config/sheldon
     link_file "$DOTFILES_ROOT/config/sheldon/plugins.toml.symlink" ~/.config/sheldon/plugins.toml
   fi
 
-  # Link zplug plugins directory
-  if [ -d "$DOTFILES_ROOT/zplug" ]; then
-    link_file "$DOTFILES_ROOT/zplug" ~/.zplug
-  fi
-
-  # Link tmux configuration (from submodule)
+  # Tmux 配置
   if [ -f "$DOTFILES_ROOT/tmux/.tmux.conf" ]; then
     link_file "$DOTFILES_ROOT/tmux/.tmux.conf" ~/.tmux.conf
   fi
 
-  # Create .tmux.conf.local if it doesn't exist
+  # Tmux 本地配置
   if [ ! -f "$HOME/.tmux.conf.local" ] && [ -f "$DOTFILES_ROOT/tmux/.tmux.conf.local" ]; then
     cp "$DOTFILES_ROOT/tmux/.tmux.conf.local" ~/.tmux.conf.local
-    success "created ~/.tmux.conf.local"
+    success "创建: ~/.tmux.conf.local"
   fi
 
-  # Link hammerspoon configuration
+  # Hammerspoon 配置
   if [ -d "$DOTFILES_ROOT/hammerspoon" ]; then
     link_file "$DOTFILES_ROOT/hammerspoon" ~/.hammerspoon
   fi
 }
 
-setup_gitconfig
-setup_submodules
-install_dotfiles
-install_configs
+# 检查 Git 配置
+check_gitconfig () {
+  info '检查 Git 配置'
 
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot > /tmp/dotfiles-dot 2>&1
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
+  local gitconfig="$DOTFILES_ROOT/git/gitconfig.symlink"
+
+  # 检查是否仍使用占位符
+  if grep -q "AUTHORNAME\|AUTHOREMAIL" "$gitconfig" 2>/dev/null; then
+    warn '检测到 Git 配置中使用占位符'
+    echo ''
+    echo '  请编辑 git/gitconfig.symlink，填写你的用户信息：'
+    echo ''
+    echo '    [user]'
+    echo '            name = Your Name'
+    echo '            email = your.email@example.com'
+    echo ''
+    echo '  编辑后运行: exec zsh'
+    echo ''
+    return 1
   fi
-fi
 
-echo ''
-echo '  All installed!'
+  success 'Git 配置正常'
+  return 0
+}
+
+# 安装依赖 (macOS)
+install_dependencies () {
+  if [ "$(uname -s)" != "Darwin" ]; then
+    return 0
+  fi
+
+  info '安装系统依赖'
+
+  if [ -f "$DOTFILES_ROOT/bin/dot" ]; then
+    if source "$DOTFILES_ROOT/bin/dot" > /tmp/dotfiles-dot 2>&1; then
+      success '依赖安装完成'
+    else
+      warn '依赖安装出现问题，请检查日志: /tmp/dotfiles-dot'
+    fi
+  else
+    warn '未找到 bin/dot 脚本，跳过依赖安装'
+  fi
+}
+
+# 主流程
+main () {
+  setup_submodules
+  install_dotfiles
+  install_configs
+  install_dependencies
+
+  # 检查 Git 配置（非阻塞）
+  check_gitconfig || true
+
+  echo ''
+  echo '╔════════════════════════════════════════════════════════════╗'
+  echo '║                   ✅ 部署完成！                             ║'
+  echo '╠════════════════════════════════════════════════════════════╣'
+  echo '║  运行以下命令启动新 Shell:                                  ║'
+  echo '║    exec zsh                                                ║'
+  echo '║                                                            ║'
+  echo '║  或重新加载配置:                                            ║'
+  echo '║    source ~/.zshrc                                          ║'
+  echo '╚════════════════════════════════════════════════════════════╝'
+  echo ''
+}
+
+main "$@"

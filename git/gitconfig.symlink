@@ -1,4 +1,11 @@
-# Local/private config goes in the include
+# Git 用户配置
+# 请在此处填写你的用户名和邮箱
+[user]
+        name = gatspy
+        email = your.email@example.com
+
+# 机器特定配置覆盖（可选）
+# 如需为特定仓库使用不同的用户信息，请在 ~/.gitconfig.local 中配置
 [include]
         path = ~/.gitconfig.local
 [hub]
