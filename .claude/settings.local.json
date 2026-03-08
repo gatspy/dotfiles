@@ -44,7 +44,16 @@
       "Bash(mv dot:*)",
       "Bash(mv brew-back:*)",
       "Bash(mv getcourse:*)",
-      "Bash(mv cloudapp:*)"
+      "Bash(mv cloudapp:*)",
+      "Bash(sysctl:*)",
+      "Bash(rustc:*)",
+      "Bash(sw_vers:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(file:*)",
+      "Bash(for file in /Users/gatspy/.dotfiles/homebrew/install.sh /Users/gatspy/.dotfiles/hammerspoon/install.sh /Users/gatspy/.dotfiles/git/install.sh /Users/gatspy/.dotfiles/karabiner/install.sh)",
+      "Bash(source:*)",
+      "Bash(/Users/gatspy/.local/bin/ai:*)",
+      "Bash(sheldon status:*)"
     ]
   }
 }

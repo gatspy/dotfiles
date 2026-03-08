@@ -1,21 +1,37 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 #
-# Homebrew
+# Homebrew Installation Script
 #
-# This installs some of the common dependencies needed (or at least desired)
-# using Homebrew.
+# This installs Homebrew if not already present.
+# See https://brew.sh for official installation instructions.
+
+# Source common functions
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+source "${DOTFILES}/script/lib.sh" 2>/dev/null || true
+
+log_info "Checking Homebrew installation..."
 
 # Check for Homebrew
-if ! command -v brew >/dev/null 2>&1; then
-  echo "  Installing Homebrew for you."
-
-  # Install the correct homebrew for each OS type
-  if test "$(uname)" = "Darwin"; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  elif test "$(expr substr "$(uname -s)" 1 5)" = "Linux"; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
+if command_exists brew; then
+  log_success "Homebrew is already installed"
+  brew --version
+  exit 0
 fi
 
-exit 0
+log_info "Installing Homebrew..."
+
+# Install Homebrew for the current OS type
+if is_macos; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  log_success "Homebrew installed on macOS"
+elif is_linux; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  log_success "Homebrew installed on Linux"
+else
+  log_error "Unsupported OS: $(uname -s)"
+  exit 1
+fi
+
+log_info "Homebrew installation complete"
+log_info "Please run 'brew --version' to verify"

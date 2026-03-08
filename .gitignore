@@ -18,3 +18,5 @@ bin/lgxy
 
 # AI service API keys (sensitive)
 ai/agent.zsh
+*.backup
+*.bak

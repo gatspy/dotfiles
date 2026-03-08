@@ -46,7 +46,7 @@ topic_config=(
 )
 
 # always load these topics
-always_load_topics="^(system|zsh|web|docker|k8s|kubernetes|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|antigravity|zenith|zdns|completions|functions|config|script|theme|bin)$"
+always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|antigravity|zenith|zdns|completions|functions|config|script)$"
 
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
   topic=${file:h:t}

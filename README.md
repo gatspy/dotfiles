@@ -240,13 +240,13 @@ ls -la ~/.config/sheldon/plugins.toml
    ```
 
    具体包括：
-   - `docker/install.sh` - 安装 Docker 补全
    - `git/install.sh` - 配置 Git 凭据助手
    - `golang/install.sh` - 安装 Go 开发工具
    - `hammerspoon/install.sh` - 配置 Hammerspoon
+   - `homebrew/install.sh` - 安装 Homebrew (macOS/Linux)
    - `iterm/install.sh` - 配置 iTerm2 (仅 macOS)
    - `karabiner/install.sh` - 配置 Karabiner-Elements
-   - `python/install_fix.sh` - 配置 Python 环境
+   - `macos/install.sh` - macOS 系统更新检查
 
 **预计时间**：15-30 分钟 (首次运行)
 
@@ -367,7 +367,6 @@ git config user.email
 git submodule status
 
 # 检查补全
-docker [Tab]
 git [Tab]
 ```
 
@@ -458,18 +457,25 @@ vim ~/.tmux.conf.local
 # 4. 设置路径为: ~/.dotfiles/iterm
 ```
 
-#### Docker 补全
+#### AI 工具配置（可选）
 
-Docker 相关的补全脚本已在安装时下载：
+如果你使用 AI 开发工具（Kimi、GLM、Gemini、Figma 等），需要配置 API 密钥：
 
 ```bash
-# 验证补全文件
-ls -la ~/.docker/completions/
-# 应该看到: _docker, _docker-compose, _docker-machine
+# 1. 复制示例配置
+cp ~/.dotfiles/ai/keys.example ~/.zsh.localrc
 
-# 测试补全
-docker [按 Tab]  # 应该看到子命令补全
+# 2. 编辑文件，填入你的 API 密钥
+vim ~/.zsh.localrc
+
+# 3. 重新加载配置
+source ~/.zsh.localrc
 ```
+
+**重要安全提示**：
+- ⚠️ 永远不要将 API 密钥提交到 Git
+- 📋 详细配置指南见 `docs/security/api-keys.md`
+- 🔄 建议每 90 天轮换一次密钥
 
 #### Go 开发工具
 
@@ -531,6 +537,73 @@ Karabiner 配置已在安装时复制：
 # 打开 Karabiner-Elements Preferences
 # 点击 "Reload XML"
 ```
+
+#### AI 工具详细配置
+
+本项目集成了多个 AI 服务，用于增强开发体验：
+
+**支持的 AI 服务**：
+
+| 服务 | 用途 | 获取密钥 |
+|------|------|----------|
+| **Kimi Codex** | Moonshot AI 代码助手 | https://platform.moonshot.cn/console/api-keys |
+| **GLM Codex** | 智谱 AI 代码生成 | https://open.bigmodel.cn/usercenter/apikeys |
+| **Gemini** | Google AI 代码补全 | https://aistudio.google.com/app/apikey |
+| **Figma** | Figma API 集成 | https://www.figma.com/developers/api |
+| **Magic UI** | 21st.dev UI 生成 | 账户设置中获取 |
+| **Morphllm** | 代码重构工具 | Morphllm 控制台 |
+| **Cursor CLI** | Cursor 命令行工具 | Cursor 账户设置 |
+
+**配置步骤**：
+
+```bash
+# 1. 复制示例配置文件
+cp ~/.dotfiles/ai/keys.example ~/.zsh.localrc
+
+# 2. 编辑文件，替换占位符为你的实际密钥
+vim ~/.zsh.localrc
+
+# 3. 设置文件权限（安全）
+chmod 600 ~/.zsh.localrc
+
+# 4. 重新加载配置
+source ~/.zsh.localrc
+```
+
+**验证配置**：
+
+```bash
+# 检查密钥是否加载
+echo $KIMI_CODEX_API_KEY
+echo $GEMINI_API_KEY
+
+# 如果输出了你的密钥，说明配置成功
+```
+
+**安全最佳实践**：
+
+1. ✅ **永远不要**将 `.zsh.localrc` 提交到 Git
+2. ✅ 每 90 天轮换一次 API 密钥
+3. ✅ 使用最小权限原则配置密钥
+4. ✅ 启用 API 使用监控和告警
+5. ❌ 不要在日志中打印密钥
+6. ❌ 不要与他人共享密钥
+
+**故障排查**：
+
+```bash
+# 如果 AI 工具无法使用，检查：
+# 1. 密钥是否正确加载
+env | grep API_KEY
+
+# 2. 配置文件是否被 source
+zsh -c 'source ~/.zsh.localrc && env | grep API_KEY'
+
+# 3. 密钥格式是否正确（通常以 sk- 开头）
+echo $KIMI_CODEX_API_KEY | grep "^sk-"
+```
+
+**更多详情**：参见 `docs/security/api-keys.md`
 
 ---
 
@@ -791,21 +864,24 @@ graph TB
     D --> D1[zshrc.symlink]
 
     E --> E1[git/]
-    E --> E2[docker/]
-    E --> E3[golang/]
-    E --> E4[hammerspoon/]
-    E --> E5[karabiner/]
-    E --> E6[readline/]
+    E --> E2[golang/]
+    E --> E3[hammerspoon/]
+    E --> E4[karabiner/]
+    E --> E5[homebrew/]
+    E --> E6[ai/]
     E --> E7[*.symlink]
 
     E1 --> E1A[gitconfig.symlink]
     E1 --> E1B[install.sh]
 
-    E4 --> E4A[init.lua]
+    E3 --> E3A[init.lua]
+    E3 --> E3B[install.sh]
+
+    E4 --> E4A[karabiner.json]
     E4 --> E4B[install.sh]
 
-    E5 --> E5A[karabiner.json]
-    E5 --> E5B[install.sh]
+    E6 --> E6A[keys.example]
+    E6 --> E6B[agent.zsh]
 
     style A fill:#e1f5ff
     style D1 fill:#ffe1e1
@@ -820,7 +896,11 @@ graph TB
 
 - **config/**：外部工具配置
   - `mise/` - 版本管理器配置
-  - `sheldon/` - 插件管理器配置
+  - `sheldon/` - Zsh 插件管理器配置
+
+- **ai/**：AI 工具配置
+  - `keys.example` - API 密钥配置示例
+  - `agent.zsh` - AI 服务集成（Claude Code 等）
 
 - **system/**：核心系统设置
   - `00-path.zsh` - PATH 配置
@@ -837,11 +917,13 @@ graph TB
 
 - **topic/**：主题模块
   - `git/` - Git 相关配置
-  - `docker/` - Docker 配置
   - `golang/` - Go 开发配置
   - `hammerspoon/` - Hammerspoon 自动化配置
   - `karabiner/` - Karabiner 键盘映射
-  - `readline/` - Readline 配置
+  - `homebrew/` - Homebrew 包管理器
+  - `ai/` - AI 工具配置
+  - `mise/` - 版本管理器集成
+  - `k8s/` - Kubernetes 工具
   - `*.symlink` - 符号链接文件
 
 - **bin/**：可执行脚本

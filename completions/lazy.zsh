@@ -11,15 +11,6 @@ if [[ $commands[pixi] ]]; then
   }
 fi
 
-# rustup 补全（1031 行，33K）
-if [[ $commands[rustup] ]]; then
-  rustup() {
-    unfunction "$0"
-    source "$DOTFILES/completions/_rustup"
-    rustup "$@"
-  }
-fi
-
 # django 补全（401 行，14K）
 if [[ $commands[python] ]]; then
   _django_manager() {

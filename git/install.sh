@@ -1,20 +1,20 @@
 #!/usr/bin/env zsh
 set -euo pipefail
+# Git 配置安装脚本
 
-# Don't ask ssh password all the time
-if [ "$(uname -s)" = "Darwin" ]; then
-	git config --global credential.helper osxkeychain
+# Source common functions
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+source "${DOTFILES}/script/lib.sh" 2>/dev/null || true
+
+log_info "Configuring Git..."
+
+# Configure credential helper
+if is_macos; then
+  git config --global credential.helper osxkeychain
+  log_info "Set macOS credential helper (osxkeychain)"
 else
-	git config --global credential.helper cache
+  git config --global credential.helper cache
+  log_info "Set credential helper (cache)"
 fi
 
-# better diffs
-# if command -v diff-so-fancy >/dev/null 2>&1; then
-# 	git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
-# fi
-
-# use vscode as mergetool
-# if command -v code >/dev/null 2>&1; then
-# 	git config --global merge.tool vscode
-# 	git config --global mergetool.vscode.cmd "code --wait $MERGED"
-# fi
+log_success "Git configured"
