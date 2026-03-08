@@ -11,10 +11,11 @@ export PROJECTS=${HOME}/Projects
 typeset -U config_files
 config_files=($DOTFILES/*/*.zsh)
 
-# Cache system calls to improve startup performance
+# Cache Homebrew prefix to avoid repeated subprocess calls
 export HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix 2>/dev/null)}"
-export PLATFORM_OS="$(uname -s)"
-export PLATFORM_MACHINE="$(uname -m)"
+
+# Note: PLATFORM_OS and PLATFORM_ARCH are set by system/platform.zsh
+# using detect_os() and detect_arch() functions for consistency
 
 # load the path files first
 for file in ${(M)config_files:#*/path.zsh}; do

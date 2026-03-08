@@ -4,14 +4,35 @@
 # 提供通用的日志、检测、备份等函数
 
 # 缓存平台信息，避免重复调用 uname
-_PLATFORM_CACHE_OS=$(uname -s)
-_PLATFORM_CACHE_MACHINE=$(uname -m)
+# 使用与 system/platform.zsh 相同的检测逻辑
+detect_os() {
+    case "$OSTYPE" in
+        darwin*)  echo "darwin" ;;
+        linux*)   echo "linux" ;;
+        msys*)    echo "windows" ;;
+        cygwin*)  echo "windows" ;;
+        *)        echo "unknown" ;;
+    esac
+}
 
-# Platform constants for consistency
-readonly PLATFORM_MACOS="Darwin"
-readonly PLATFORM_LINUX="Linux"
+detect_arch() {
+    local arch=$(uname -m)
+    case "$arch" in
+        arm64|aarch64) echo "arm64" ;;
+        x86_64|amd64)  echo "amd64" ;;
+        i386|i686)     echo "386" ;;
+        *)             echo "unknown" ;;
+    esac
+}
+
+_PLATFORM_CACHE_OS=$(detect_os)
+_PLATFORM_CACHE_MACHINE=$(detect_arch)
+
+# Platform constants for consistency (matching detect_os/detect_arch output)
+readonly PLATFORM_MACOS="darwin"
+readonly PLATFORM_LINUX="linux"
 readonly PLATFORM_ARCH_ARM64="arm64"
-readonly PLATFORM_ARCH_X86_64="x86_64"
+readonly PLATFORM_ARCH_AMD64="amd64"
 
 # =============================================================================
 # 日志函数
@@ -156,8 +177,13 @@ is_arm64() {
   [[ "$_PLATFORM_CACHE_MACHINE" == "$PLATFORM_ARCH_ARM64" ]]
 }
 
+is_amd64() {
+  [[ "$_PLATFORM_CACHE_MACHINE" == "$PLATFORM_ARCH_AMD64" ]]
+}
+
+# Deprecated: use is_amd64() for consistency
 is_x86_64() {
-  [[ "$_PLATFORM_CACHE_MACHINE" == "$PLATFORM_ARCH_X86_64" ]]
+  is_amd64
 }
 
 # =============================================================================

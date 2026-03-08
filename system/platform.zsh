@@ -26,6 +26,10 @@ detect_arch() {
     esac
 }
 
-# PLATFORM_OS and PLATFORM_MACHINE are now cached in zshrc.symlink
-# This ensures consistency with script/lib.sh caching mechanism
-# The functions below are kept for potential use in standalone scripts
+# Export platform variables for use in other modules
+# These use the detection functions above for consistency
+export PLATFORM_OS=$(detect_os)
+export PLATFORM_ARCH=$(detect_arch)
+
+# Note: PLATFORM_MACHINE is set by zsh/zshrc.symlink using uname -m directly
+# and may have different values (e.g., "x86_64" vs "amd64" from detect_arch)
