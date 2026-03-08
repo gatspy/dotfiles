@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(sheldon source:*)"
+      "Bash(sheldon source:*)",
+      "Bash(exec zsh:*)",
+      "Bash(rm:*)"
     ]
   }
 }
