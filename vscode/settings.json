@@ -1,0 +1,143 @@
+{
+  /// ==========================================
+  /// 🎨 1. 核心外观与字体 (匹配你的极客审美)
+  /// ==========================================
+  "editor.fontFamily": "Hack Nerd Font Mono, MesloLGM Nerd Font, Consolas, 'Courier New', monospace",
+  "editor.fontSize": 13,
+  "editor.lineHeight": 21,
+  "editor.cursorBlinking": "blink",
+  "editor.cursorStyle": "underline",
+  "editor.wordWrapColumn": 120,
+  "editor.rulers": [100, 120],
+  "editor.minimap.enabled": false, // 真极客不用小地图，省空间
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+
+  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
+  "workbench.activityBar.location": "bottom", // 保留你的底部习惯
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.tabSizing": "shrink",
+  "window.titleBarStyle": "native",
+
+  /// ==========================================
+  /// 💻 2. 终端集成 (完美衔接 M4 Pro 环境)
+  /// ==========================================
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.scrollback": 10000, // 配合你的 iTerm2 十万行习惯
+  "terminal.integrated.cursorStyle": "underline",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.defaultProfile.osx": "zsh", // 前期使用 zsh 过渡
+
+  /// ==========================================
+  /// ⚙️ 3. 编辑器行为与工作流
+  /// ==========================================
+  "editor.formatOnSave": true, // 开启保存自动格式化
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.snippetSuggestions": "top",
+  "editor.suggestSelection": "first",
+  "editor.lineNumbers": "relative", // 配合 Vim 的神级设置
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "onFocusChange",
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": true,
+  "explorer.confirmDragAndDrop": false,
+
+  /// ==========================================
+  /// 🚫 4. 性能优化 (排除垃圾文件，告别卡顿)
+  /// ==========================================
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.idea": true,
+    "node_modules": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/.fvm": true
+  },
+
+  /// ==========================================
+  /// 🌍 5. 网络与大环境
+  /// ==========================================
+  "http.proxy": "http://127.0.0.1:7890",
+  "https.proxy": "http://127.0.0.1:7890",
+
+  /// ==========================================
+  /// 🤖 6. AI 助手精简 (二选一，切忌养蛊)
+  /// 建议只留 Copilot 负责补全，Cline 负责全局 Agent
+  /// ==========================================
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.chat.agent.thinkingTool": true,
+  "chat.agent.maxRequests": 500,
+  "chat.agentSessionsViewLocation": "view",
+  "roo-cline.language": "zh",
+  "cline.vsCodeLmModelSelector": {},
+  // "baidu.comate.license": "***", // 建议停用，给机器减负
+  // "baidu.comate.username": "几度第八章",
+
+  /// ==========================================
+  /// ⌨️ 7. 纯正 Vim 灵魂 (原封不动保留你的肌肉记忆)
+  /// ==========================================
+  "vim.leader": ",",
+  "vim.hlsearch": true,
+  "vim.visualstar": true,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerHeight": 24,
+  "vim.easymotionMarkerBackgroundColor": "#f44242",
+  "vim.cursorStylePerMode.normal": "underline",
+  "vim.cursorStylePerMode.insert": "line-thin",
+  "vim.cursorStylePerMode.replace": "block-outline",
+  "vim.insertModeKeyBindings": [{ "before": ["k", "j"], "after": ["<Esc>"] }],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["leader", "q"], "commands": ["workbench.action.files.save", "workbench.action.closeActiveEditor"] },
+    { "before": ["leader", "w"], "commands": ["workbench.action.files.save"] },
+    { "before": ["leader", "g", "d"], "after": ["g", "d"] },
+    { "before": ["leader", "j", "d"], "after": ["g", "d"] },
+    { "before": ["leader", "c", "c"], "commands": ["editor.action.addCommentLine"] },
+    { "before": ["leader", "c", "u"], "commands": ["editor.action.removeCommentLine"] },
+    { "before": ["*"], "after": ["#"] },
+    { "before": ["#"], "after": ["*"] },
+    { "before": ["0"], "after": ["^"] },
+    { "before": ["^"], "after": ["0"] },
+    { "before": [";"], "commands": ["workbench.action.showCommands"] },
+    { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["leader", "s"], "commands": ["workbench.actions.view.problems"] },
+    { "before": ["leader", "z", "z"], "commands": ["editor.foldAll"] },
+    { "before": ["leader", "z", "u"], "commands": ["editor.unfoldAll"] },
+    { "before": ["leader", "/"], "commands": [":nohl"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["<leader>", "c", "c"], "commands": ["editor.action.addCommentLine"] },
+    { "before": ["<leader>", "c", "u"], "commands": ["editor.action.removeCommentLine"] },
+    { "before": [">"], "commands": ["editor.action.indentLines"] },
+    { "before": ["<"], "commands": ["editor.action.outdentLines"] }
+  ],
+
+  /// ==========================================
+  /// 🧰 8. 语言专属格式化 (由特定 Profile 里的插件接管)
+  /// ==========================================
+  "rust-analyzer.check.command": "clippy",
+  "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
+  "[go]": { "editor.defaultFormatter": "golang.go" },
+  "[python]": { "editor.defaultFormatter": "ms-python.black-formatter" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+}
