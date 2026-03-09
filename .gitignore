@@ -25,3 +25,4 @@ ai/agent.zsh
 karabiner/karabiner.json
 karabiner/automatic_backups/
 .claude/**
+.serena/**
