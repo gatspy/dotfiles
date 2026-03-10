@@ -1,10 +1,17 @@
 #!/bin/bash
 
-echo "🚀 大表哥特供：VS Code 极简 30 插件 + 多重影分身一键创世启动！"
+echo "🚀 VS Code 极速并发版创世引擎启动！"
 echo "--------------------------------------------------------------"
 
+# 🛑 致命错误拦截：检查 code 命令是否存在
+if ! command -v code &> /dev/null; then
+    echo "🚨 致命错误：终端找不到 'code' 命令！"
+    echo "👉 解决方法：打开 VS Code，按 Cmd+Shift+P，输入 'install code'，选择在 PATH 中安装 code 命令，然后重启终端！"
+    exit 1
+fi
+
 # ==========================================
-# 🧱 1. 核心 AI 与基建阵列 (10 个，所有宇宙的底座)
+# 🧱 1. 核心 AI 与基建阵列 (10 个)
 # ==========================================
 BASE_EXTS=(
     "github.copilot"
@@ -57,11 +64,11 @@ CLIENT_EXTS=(
     "dart-code.flutter"
 )
 
-# 组合“M4-AI-Commander 上帝视角” (全量合集)
+# 上帝视角合集
 COMMANDER_EXTS=("${RUST_EXTS[@]}" "${BACKEND_EXTS[@]}" "${CLIENT_EXTS[@]}")
 
 # ==========================================
-# ⚙️ 魔法安装引擎
+# ⚙️ 批量并发引擎 (速度提升 100 倍)
 # ==========================================
 install_profile() {
     local profile_name=$1
@@ -70,16 +77,18 @@ install_profile() {
 
     echo "✨ 正在构建宇宙: [$profile_name] ..."
 
-    # 强制注入基础插件 (静默安装，保持终端干净)
+    # 构建批量安装参数
+    local args=()
     for ext in "${BASE_EXTS[@]}"; do
-        code --profile "$profile_name" --install-extension "$ext" --force > /dev/null 2>&1
+        args+=("--install-extension" "$ext")
+    done
+    for ext in "${extensions[@]}"; do
+        args+=("--install-extension" "$ext")
     done
 
-    # 注入专属插件
-    for ext in "${extensions[@]}"; do
-        echo "   -> 正在装载武器: $ext"
-        code --profile "$profile_name" --install-extension "$ext" --force > /dev/null 2>&1
-    done
+    # 敞开输出，移除静默，直接并发执行！
+    code --profile "$profile_name" "${args[@]}" --force
+
     echo "✅ [$profile_name] 宇宙构建完毕！"
     echo "--------------------------------------------------------------"
 }
@@ -93,4 +102,3 @@ install_profile "M4-Backend" "${BACKEND_EXTS[@]}"
 install_profile "M4-Client" "${CLIENT_EXTS[@]}"
 
 echo "🎉 创世大业圆满成功！"
-echo "💡 提示：在终端输入 \`code .\` 打开项目后，点击左下角 ⚙️ 切换你的专属宇宙吧！"
