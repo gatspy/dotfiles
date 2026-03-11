@@ -108,6 +108,11 @@ install_configs () {
   if [[ -d "$DOTFILES_ROOT/karabiner" ]]; then
     symlink_with_backup "$DOTFILES_ROOT/karabiner" ~/.config/karabiner
   fi
+
+  # Git 提交消息模板
+  if [[ -f "$DOTFILES_ROOT/git/gitmessage.symlink" ]]; then
+    symlink_with_backup "$DOTFILES_ROOT/git/gitmessage.symlink" ~/.gitmessage
+  fi
 }
 
 # 检查 Git 配置

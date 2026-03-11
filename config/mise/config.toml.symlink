@@ -5,8 +5,8 @@
 env_shell_expand = true
 npm.package_manager = "bun"
 cargo.binstall = true
-pipx.registry_url = "https://mirrors.aliyun.com/pypi/simple/"
 pipx.uvx = true
+# pipx.registry_url = "https://mirrors.aliyun.com/pypi/simple/"
 
 [tools]
 # Core runtimes
@@ -29,7 +29,7 @@ flutter = "3.35.6-stable"
 cargo-binstall = "latest"
 
 # Go tools
-"go:github.com/gogf/gf/cmd/gf/v2" = "latest"
+"go:github.com/gogf/gf/cmd/gf/v2" = "2.10.0"
 "go:github.com/ofabry/go-callvis" = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
 "go:github.com/kralicky/protols/cmd/protols" = "latest"
@@ -51,3 +51,5 @@ cargo-binstall = "latest"
 [env]
 MISE_RUSTUP_HOME = "$HOME/.rustup"
 MISE_CARGO_HOME = "$HOME/.cargo"
+PIP_INDEX_URL = "https://mirrors.aliyun.com/pypi/simple/"
+GOPROXY = "https://goproxy.cn,direct"
