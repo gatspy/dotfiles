@@ -92,3 +92,9 @@ undodir/
 backups/
 auto-save-list/
 **/doc/tags
+
+# AI assistants
+.claude/
+.serena/
+.cursor/
+.aider*

@@ -6,8 +6,7 @@ env_shell_expand = true
 npm.package_manager = "bun"
 cargo.binstall = true
 pipx.uvx = true
-# pipx.registry_url = "https://mirrors.aliyun.com/pypi/simple/"
-
+pipx.registry_url = "https://pypi.tuna.tsinghua.edu.cn/simple/{}/"
 [tools]
 # Core runtimes
 node = "22.16"
@@ -43,12 +42,15 @@ cargo-binstall = "latest"
 "npm:pake-cli" = "latest"
 
 # Pipx tools
-"pipx:pre-commit" = "latest"
+"pipx:kimi-cli" = { version = "latest", python = "3.13" }
+"pipx:pre-commit" = { version = "latest", python = "3.13" }
 "pipx:duckduckgo-mcp-server" = "latest"
+
 "gem:cocoapods" = "latest"
 "npm:ccusage" = "latest"
 
 [env]
+MISE_PYTHON_PRECOMPILED_FLAVOR = "install_only_stripped"
 MISE_RUSTUP_HOME = "$HOME/.rustup"
 MISE_CARGO_HOME = "$HOME/.cargo"
 PIP_INDEX_URL = "https://mirrors.aliyun.com/pypi/simple/"

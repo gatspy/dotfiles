@@ -4,7 +4,7 @@
 # ==========================================
 
 add_newline = true
-command_timeout = 5000
+command_timeout = 20000
 
 # 重新设计排版：左边是路径和 Git，右边靠右对齐显示语言版本，极其清爽
 format = """
@@ -30,59 +30,79 @@ vicmd_symbol = "[❮](green)"
 
 [directory]
 style = "bold blue"
-read_only = " "
+read_only = " 󰌾"
 truncate_to_repo = false
 
 # 注入 Nerd Font 灵魂图标
 [git_branch]
-symbol = " "
+symbol = "󰘬 "
 format = "[$symbol$branch]($style) "
 style = "bright-black"
+
+[git_state]
+format = '([$state( $progress_current/$progress_total)]($style)) '
+style = "bright-black"
+rebase = "󰩌"
+merge = "󰙡"
+revert = "󰜀"
+cherry_pick = "󰘯"
+bisect = "󰃢"
+am = "󰏢"
+am_or_rebase = "󰏢"
 
 [git_status]
 style = "cyan"
 format = '([$all_status$ahead_behind]($style) )'
-conflicted = "🏳 "
-ahead = "⇡${count} "
-behind = "⇣${count} "
-diverged = "⇕⇡${ahead}⇣${behind} "
-untracked = "🤷‍ "
-stashed = "📦 "
-modified = "📝 "
-staged = "[++\\($count\\)](green) "
-renamed = "📛 "
-deleted = "🗑 "
+conflicted = "󰩌 "
+ahead = "󰁘${count} "
+behind = "󰁃${count} "
+diverged = "󰹺 "
+untracked = "󰋗 "
+stashed = "󰏗 "
+modified = "󰏫 "
+staged = "󰐗${count} "
+renamed = "󰑕 "
+deleted = "󰩹 "
 
 # ==========================================
 # 🛠️ 全栈火力展示区 (配合 mise 完美显示环境版本)
 # ==========================================
 
 [rust]
-symbol = " "
+symbol = "󱘗 "
 format = "[$symbol($version )]($style)"
 style = "bold red"
 
 [golang]
-symbol = " "
+symbol = "󰟓 "
 format = "[$symbol($version )]($style)"
 style = "bold cyan"
 
 [python]
-symbol = " "
+symbol = "󰌠 "
 format = "[$symbol($version )(\\($virtualenv\\) )]($style)"
 style = "bold yellow"
+detect_extensions = []
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile", "setup.py", "setup.cfg", ".python-version"]
+detect_folders = [".venv", "venv", "__pypackages__"]
 
 [dart]
-symbol = " "
+symbol = "󰟝 "
 format = "[$symbol($version )]($style)"
 style = "bold blue"
 
 [nodejs]
-symbol = " "
+symbol = "󰎙 "
 format = "[$symbol($version )]($style)"
 style = "bold green"
 
 [c]
-symbol = " "
+symbol = "󰙱 "
 format = "[$symbol($version )]($style)"
 style = "bold blue"
+
+[cmd_duration]
+format = "[󰔛 $duration]($style) "
+style = "yellow"
+min_time = 2000
+show_notifications = false
