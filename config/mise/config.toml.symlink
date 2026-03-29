@@ -7,6 +7,8 @@ npm.package_manager = "bun"
 cargo.binstall = true
 pipx.uvx = true
 pipx.registry_url = "https://pypi.tuna.tsinghua.edu.cn/simple/{}/"
+task.run_auto_install = false
+
 [tools]
 # Core runtimes
 node = "22.16"
