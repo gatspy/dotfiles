@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 
-# Lazy load mise
-# eval "$(mise activate zsh)"
-eval "$(mise activate zsh --shims)"
-
 # Check if 'mise' is a command in $PATH
 if [ $commands[mise] ]; then
 

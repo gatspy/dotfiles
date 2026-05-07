@@ -21,6 +21,16 @@ else
     alias ll="ls -l"
 fi
 
+# tre is a better tree tool (Rust, gitignore-aware, editor aliasing)
+if which tre >/dev/null 2>&1; then
+    # wrapper function: run tre with editor aliasing + auto-source generated aliases
+    tre() {
+        command tre -e "$@"
+        source /tmp/tre_aliases_$USER 2>/dev/null
+    }
+    alias tree='tre'
+fi
+
 alias grep="grep --color=auto"
 # alias duf="du -sh * | sort -hr"
 alias less="less -r"

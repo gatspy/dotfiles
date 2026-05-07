@@ -1,11 +1,3 @@
-# Use `hub` as our git wrapper:
-#   http://defunkt.github.com/hub/
-hub_path=$(which hub)
-if (( $+commands[hub] ))
-then
-  alias git=$hub_path
-fi
-
 # The rest of my fun git aliases
 alias gl='git pull --prune'
 
@@ -40,4 +32,17 @@ alias gall='git log --oneline @{u}..'
 
 gi() {
     curl -s "https://www.gitignore.io/api/$*"
+}
+
+git() {
+  if [[ "$1" == "clone" && "$2" =~ ^[a-zA-Z0-9_-]+/[a-zA-Z0-9_.-]+$ ]]; then
+    # 极客魔法：无论用户有没有输入 .git 后缀，这里强制把它剥离掉
+    local clean_repo="${2%.git}"
+    echo "🚀 自动拼接 GitHub SSH 链接..."
+
+    # 统一用最干净的格式拼装最终的 SSH 地址
+    command git clone "git@github.com:${clean_repo}.git" "${@:3}"
+  else
+    command git "$@"
+  fi
 }

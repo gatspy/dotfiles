@@ -88,6 +88,12 @@ if [[ -f ~/.zsh.localrc ]]; then
   source ~/.zsh.localrc
 fi
 
+# mise shims must be loaded AFTER all PATH modifications
+# to ensure mise-managed tools take precedence over Homebrew
+eval "$(mise activate zsh --shims)"
+
+typeset -U path
+
 # FZF setup
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh

@@ -34,10 +34,6 @@ export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+UseConcMarkSweepGC -XX:+CMSClass
 # export JAVA_HOME=$(/usr/libexec/java_home)
 export GRADLE_HOME=/usr/local/opt/gradle/libexec
 
-# browsermob
-export BROWSERMOB=/Users/gatspy/App/tools/browsermob-proxy
-export PATH="$PATH:$BROWSERMOB/bin"
-
 # tidb
 export PATH=/Users/gatspy/.tiup/bin:$PATH
 
@@ -65,13 +61,12 @@ alias cat='bat'
 
 # # alias for frequent commands
 alias ed='open -t'
-alias em='emacs -nw'
 alias q='exit'
 alias w='echo -e "$Blue $PWD ${Red}at ${Cyan}$(whoami)${Red}@${Yellow}$(hostname -s)$Red in $Yellow$0$Purple \$"'
 alias s='du -sm * | sort -nr | head -n 20'
-alias v='mvim -v'
-alias vi='mvim -v -u NONE -N'
-alias vim='mvim -v'
+alias v='nvim'
+alias vi='nvim -u NONE -N'
+alias vim='nvim'
 alias vie='mvim -v -u ~/essential.vim -N'
 alias k='k -h'
 alias tarc='tar -zcvf file.tar.gz'

@@ -8,8 +8,6 @@
 # 如需为特定仓库使用不同的用户信息，请在 ~/.gitconfig.local 中配置
 [include]
         path = ~/.gitconfig.local
-[hub]
-        protocol = https
 [pull]
         rebase = false
 [alias]

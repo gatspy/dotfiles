@@ -4,7 +4,7 @@
 # ==========================================
 
 add_newline = true
-command_timeout = 20000
+command_timeout = 5000
 
 # 重新设计排版：左边是路径和 Git，右边靠右对齐显示语言版本，极其清爽
 format = """
@@ -13,7 +13,7 @@ $git_branch\
 $git_state\
 $git_status\
 $fill\
-$python$rust$golang$nodejs$dart$c\
+$python$rust$golang$nodejs$c\
 $cmd_duration\
 $line_break\
 $character"""
@@ -51,8 +51,9 @@ am = "󰏢"
 am_or_rebase = "󰏢"
 
 [git_status]
+ignore_submodules = true
 style = "cyan"
-format = '([$all_status$ahead_behind]($style) )'
+format = '([$all_status$ahead_behind]($style))'
 conflicted = "󰩌 "
 ahead = "⇡${count} "
 behind = "󰁃${count} "
