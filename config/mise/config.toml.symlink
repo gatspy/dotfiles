@@ -63,6 +63,7 @@ cheat = "latest"
 duf = "latest"
 
 # not in mise registry — github/cargo backends (prebuilt preferred, else mise rust build)
+"cargo:fblog" = "latest"
 "cargo:procs" = "latest"
 "cargo:tre-command" = "latest"
 "cargo:eva" = "latest"
