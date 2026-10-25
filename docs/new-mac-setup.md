@@ -17,7 +17,7 @@
    - mas 项需先登录 App Store；Xcode 走 mas 约 12GB；`mas "微信"`/`mas "WeChat_Lite"` 同 ID 重复，bundle 报错时删一行即可
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）→ `~/.zsh.localrc` 私有配置**手动落位**（不在 git）
 5. **冒烟验收**（最小环境，不信继承）：
-   `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise ccls; git status -sb'`
+   `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
 
 ## 跨架构债（部署前必须修，一处改动双机受益）
 
@@ -30,7 +30,7 @@
 | 层级 | 包 | 说明 |
 |---|---|---|
 | 必装 | git curl tmux jq wget htop coreutils | 系统级基础 |
-| 开发 | cmake ninja llvm ccls | ARM 全部有 bottle；ccls 在 M6 上分钟级复活（旧机冻结不修） |
+| 开发 | cmake ninja | 构建工具，全部 bottle |
 | 按需 | ffmpeg imagemagick graphviz poppler protobuf gnupg nmap radare2 | 大件视为年升级项 |
 
 ## 通用纪律（三机三界皆准）

@@ -25,6 +25,9 @@ codex = "latest"
 claude-code = "latest"
 flutter = "3.38.10-stable"
 
+# CLI tools (aqua backend, prebuilt binaries)
+"aqua:rtk-ai/rtk" = "latest"
+
 # Cargo tools
 "cargo-binstall" = "latest"
 "cargo:cargo-deny" = "latest"
