@@ -21,12 +21,28 @@ java = "23"
 bun = "latest"
 uv = "latest"
 zig = "latest"
+deno = "latest"
 codex = "latest"
 claude-code = "latest"
 flutter = "3.38.10-stable"
 
 # CLI tools (aqua backend, prebuilt binaries)
 "aqua:rtk-ai/rtk" = "latest"
+"aqua:astral-sh/ruff" = "latest"
+"aqua:bootandy/dust" = "latest"
+"aqua:sxyazi/yazi" = "latest"
+"aqua:casey/just" = "latest"
+"aqua:starship/starship" = "latest"
+"aqua:ducaale/xh" = "latest"
+"aqua:jdx/usage" = "latest"
+"aqua:twpayne/chezmoi" = "latest"
+"aqua:junegunn/fzf" = "latest"
+
+# cargo backend (cargo-binstall pulls prebuilt; falls back to mise rust source build)
+"cargo:atuin" = "latest"
+"cargo:git-delta" = "latest"
+"cargo:sheldon" = "latest"
+"cargo:tokei" = "latest"
 
 # Cargo tools
 "cargo-binstall" = "latest"
@@ -55,6 +71,12 @@ flutter = "3.38.10-stable"
 "pipx:pre-commit" = { version = "latest", python = "3.13" }
 
 "gem:cocoapods" = "latest"
+
+# GitHub release binaries
+"github:yt-dlp/yt-dlp" = "latest"
+
+# pipx backend (PyPI-only tools, managed via mise)
+"pipx:mycli" = "latest"
 
 
 [env]
