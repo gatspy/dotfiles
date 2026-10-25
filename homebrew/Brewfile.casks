@@ -1,5 +1,25 @@
 tap "deskflow/tap", trusted: true
 tap "xo/xo", trusted: true
+
+# Formulae (M6 whitelist, all bottled on arm64; brew stanzas run before mas
+# stanzas, so mas itself is bootstrapped by this same bundle)
+brew "mas"
+# system base
+brew "git"
+brew "curl"
+brew "tmux"
+brew "jq"
+brew "wget"
+brew "htop"
+brew "coreutils"
+# build
+brew "cmake"
+brew "ninja"
+# retained per dual-machine ruling
+brew "neovim"
+brew "mole"
+brew "wireshark"
+
 # Terminal interface for Antigravity agents
 cask "antigravity-cli"
 # Open source IDE for exploring and testing APIs

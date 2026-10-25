@@ -13,7 +13,7 @@
 
 1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
 2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
-3. **brew**：formula 白名单（下表，全部 bottle 分钟级）→ `brew bundle --file=homebrew/Brewfile.casks`（32 cask + 14 mas + 100+ vscode 扩展 + go/cargo 段）
+3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（13 白名单 formula + 32 cask + 14 mas + 82 vscode 扩展 + go/cargo 段；brew 段先于 mas 段执行，mas 无需手动预装）
    - mas 项需先登录 App Store；Xcode 走 mas 约 12GB；`mas "微信"`/`mas "WeChat_Lite"` 同 ID 重复，bundle 报错时删一行即可
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）→ `~/.zsh.localrc` 私有配置**手动落位**（不在 git）
 5. **冒烟验收**（最小环境，不信继承）：
@@ -28,7 +28,7 @@
 
 | 层级 | 包 | 说明 |
 |---|---|---|
-| 引导 | mas | `brew bundle` 的 mas 段前置依赖，第一个装 |
+| 引导 | mas | 已并入 Brewfile（brew 段先于 mas 段执行，无需手动预装） |
 | 必装 | git curl tmux jq wget htop coreutils | 系统级基础 |
 | 开发 | cmake ninja | 构建工具，全部 bottle |
 | 留任 | neovim mole wireshark | 与 Intel 同裁定：编辑器留 brew / 同名不同物 / 大件维保 |
