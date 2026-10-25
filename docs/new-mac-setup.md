@@ -19,18 +19,19 @@
 5. **冒烟验收**（最小环境，不信继承）：
    `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
 
-## 跨架构债（部署前必须修，一处改动双机受益）
+## 跨架构债
 
-- `system/00-path.zsh`：`/usr/local/bin`、`/usr/local/sbin`、`/usr/local/opt/openssl@3/bin` 硬编码 → 按 `brew --prefix` 结果条件化（arm64 为 `/opt/homebrew`）
-- `system/00-path.zsh`：NDK `prebuilt/${ndk_arch:-darwin-x86_64}` → 确认 `platform.zsh` 在 arm64 产出 `darwin-aarch64`
-- `zsh/zshrc.symlink`：`complete -C /usr/local/bin/mc` → 前缀化
+- ~~`/usr/local` 三处硬编码 + zshrc mc 补全路径~~ → 已修复（commit 807152d，按 `HOMEBREW_PREFIX` 条件化，双机受益）
+- `system/00-path.zsh`：NDK `prebuilt/${ndk_arch:-darwin-x86_64}` → 待 M6 部署时确认 `platform.zsh` 在 arm64 产出 `darwin-aarch64`（Intel 上该行因 `(N)` 静默跳过，无影响）
 
 ## M6 formula 白名单（初稿）
 
 | 层级 | 包 | 说明 |
 |---|---|---|
+| 引导 | mas | `brew bundle` 的 mas 段前置依赖，第一个装 |
 | 必装 | git curl tmux jq wget htop coreutils | 系统级基础 |
 | 开发 | cmake ninja | 构建工具，全部 bottle |
+| 留任 | neovim mole wireshark | 与 Intel 同裁定：编辑器留 brew / 同名不同物 / 大件维保 |
 | 按需 | ffmpeg imagemagick graphviz poppler protobuf gnupg nmap radare2 | 大件视为年升级项 |
 
 ## 通用纪律（三机三界皆准）
