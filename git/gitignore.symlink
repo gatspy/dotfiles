@@ -98,3 +98,5 @@ auto-save-list/
 .serena/
 .cursor/
 .aider*
+
+**/.claude/settings.local.json

@@ -12,7 +12,7 @@ fi
 
 export ANDROID_HOME=${ANDROID_SDK_ROOT}
 export ANDROID_EMULATOR_HOME=${ANDROID_SDK_ROOT}/emulator
-export ANDROID_CMD_TOOL=${ANDROID_SDK_ROOT}/cmdline-tools/latest
+export ANDROID_CMD_TOOL=${ANDROID_SDK_ROOT}/cmdline-tools/8.0
 
 # NDK configuration
 export ANDROID_NDK_VERSION="27.0.12077973"

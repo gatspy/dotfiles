@@ -101,4 +101,7 @@ fi
 
 # bash completion for mc
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/mc mc
+complete -o nospace -C "${HOMEBREW_PREFIX:-/usr/local}/bin/mc" mc
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
