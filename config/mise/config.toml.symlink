@@ -26,23 +26,27 @@ codex = "latest"
 claude-code = "latest"
 flutter = "3.38.10-stable"
 
-# CLI tools (aqua backend, prebuilt binaries)
-"aqua:rtk-ai/rtk" = "latest"
-"aqua:astral-sh/ruff" = "latest"
-"aqua:bootandy/dust" = "latest"
-"aqua:sxyazi/yazi" = "latest"
-"aqua:casey/just" = "latest"
-"aqua:starship/starship" = "latest"
-"aqua:ducaale/xh" = "latest"
-"aqua:jdx/usage" = "latest"
-"aqua:twpayne/chezmoi" = "latest"
-"aqua:junegunn/fzf" = "latest"
+# CLI tools (registry short names; mise resolves the backend per its registry)
+rtk = "latest"
+dust = "latest"
+yazi = "latest"
+just = "latest"
+starship = "latest"
+xh = "latest"
+usage = "latest"
+chezmoi = "latest"
+fzf = "latest"
+tokei = "latest"
 
-# cargo backend (cargo-binstall pulls prebuilt; falls back to mise rust source build)
+# Intel exception: the aqua registry defaults for these three carry no darwin/amd64
+# assets, so the cargo backend must be pinned explicitly (binstall prebuilt,
+# falls back to mise rust source build)
 "cargo:atuin" = "latest"
 "cargo:git-delta" = "latest"
 "cargo:sheldon" = "latest"
-"cargo:tokei" = "latest"
+
+# ruff: the registry short name resolves to a stale 0.15.0; pinned to upstream releases
+"aqua:astral-sh/ruff" = "latest"
 
 # Cargo tools
 "cargo-binstall" = "latest"
