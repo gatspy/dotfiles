@@ -1,0 +1,83 @@
+;; Shared layer definitions for the dual-platform (macOS / Windows) keymap.
+;;
+;; This file contains ONLY layer logic (deflayer blocks) and platform-neutral
+;; aliases (@cap, @cmd-held, ...). Platform differences live in the entry
+;; files (mac.kbd / win.kbd):
+;;   - @main        : primary modifier key code (mac: lmet, win: lctl)
+;;   - @switcher    : app/task switcher combo (mac: Cmd+Tab, win: Alt+Tab)
+;;   - @app-*       : application launcher commands
+;;
+;; IMPORTANT: the defsrc key order in both entry files MUST match the action
+;; order in every deflayer below (57 keys total).
+
+;; ---------------------------------------------------------------
+;; Base layer: default typing behaviour
+;;   caps      -> tap Esc / hold Ctrl
+;;   left ctrl -> DISABLED (physically broken key, always-stuck events)
+;;   left win  -> hold for "cmd layer" (main modifier, Cmd-like)
+;;   right shift -> hold for "nav layer" (wasd + hjkl arrows)
+;;   right win -> hold for "hyper layer" (app launchers / system actions)
+;; ---------------------------------------------------------------
+(deflayer base
+  @cap   XX     _      @cmd-held  _   @nav-held
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _
+  _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _
+  @hyper-held
+)
+
+;; ---------------------------------------------------------------
+;; Nav layer: hold Right Shift. wasd + hjkl become arrow keys.
+;; Note: Right Shift is repurposed as a layer trigger; use Left Shift
+;; for text selection / capital letters while this layer is held.
+;; ---------------------------------------------------------------
+(deflayer nav
+  _      XX     _      @cmd-held  _   _
+  _      up     _      _      _      _      _      _      _      _
+  left   down   right  _      _      left   down   up     right
+  _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _
+  @hyper-held
+)
+
+;; ---------------------------------------------------------------
+;; Cmd layer: hold Left Win (= Left Cmd on mac). Every key outputs
+;; "main modifier + key", replicating the macOS Cmd-key experience:
+;;   win+a -> Ctrl+A (win) / Cmd+A (mac), etc.
+;;   win+tab -> task switcher (win: Alt+Tab, mac: Cmd+Tab)
+;; Native system shortcuts on the win key are intentionally retired;
+;; high-frequency ones are rebuilt in the hyper layer.
+;; ---------------------------------------------------------------
+(deflayer cmd
+  @cap   XX     _      @cmd-held  @switcher  _
+  (multi @main q) (multi @main w) (multi @main e) (multi @main r) (multi @main t) (multi @main y) (multi @main u) (multi @main i) (multi @main o) (multi @main p)
+  (multi @main a) (multi @main s) (multi @main d) (multi @main f) (multi @main g) (multi @main h) (multi @main j) (multi @main k) (multi @main l)
+  (multi @main z) (multi @main x) (multi @main c) (multi @main v) (multi @main b) (multi @main n) (multi @main m)
+  (multi @main 1) (multi @main 2) (multi @main 3) (multi @main 4) (multi @main 5) (multi @main 6) (multi @main 7) (multi @main 8) (multi @main 9) (multi @main 0)
+  (multi @main -) (multi @main =) (multi @main [) (multi @main ]) (multi @main ;) (multi @main ') (multi @main \) (multi @main ,) (multi @main .) (multi @main /)
+  (multi @main grv) (multi @main esc) (multi @main ret) (multi @main spc)
+  @hyper-held
+)
+
+;; ---------------------------------------------------------------
+;; Hyper layer: hold Right Win (= Right Cmd position).
+;;   letters -> launch applications (mirrors the old Hammerspoon
+;;              hyper-apps mapping, both platforms use the same keys)
+;;   caps    -> real Caps Lock toggle
+;;   s/d/l/a/q/grv -> rebuilt system actions (see aliases)
+;; ---------------------------------------------------------------
+(deflayer hyper
+  caps   XX     _      @cmd-held  _   _
+  @force-quit  _  @app-e  _  @app-t  _  _  _  _  _
+  @screenshot  @launcher  @show-desktop  @app-f  @app-g  _  _  _  @lockscreen
+  _      _      @app-c @app-v @app-b _      @app-m
+  _      _      _      _      _      _      _      _      _      _
+  _      _      _      _      _      _      _      _      _      _
+  @reload  _  _  _
+  @hyper-held
+)

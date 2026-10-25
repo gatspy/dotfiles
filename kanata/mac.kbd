@@ -1,0 +1,68 @@
+;; Kanata entry config for macOS.
+;; Platform-specific aliases + key codes (lmet/rmet), then shared layers.
+;;
+;; STATUS: prepared but NOT active — macOS currently stays on Karabiner-Elements.
+;; Switch-over steps live in README.md ("macOS 切换").
+;;
+;; Requirements when activating:
+;;   - Karabiner-Elements installed (driver host only; its own grabber
+;;     must NOT be running while Kanata runs).
+;;   - kanata binary granted "Input Monitoring" (and run via launchd).
+
+(defcfg
+  ;; Unmapped keys (fn row, AltGr, right-side keys) pass through untouched.
+  process-unmapped-keys no
+  ;; Required for the app-launcher (cmd ...) actions below.
+  danger-enable-cmd yes
+)
+
+(defalias
+  ;; Primary modifier: physical Left Win position == Left Cmd on mac.
+  main lmet
+
+  ;; Caps: tap = Esc, hold = Ctrl.
+  cap (tap-hold 200 200 esc lctl)
+
+  ;; Layer triggers.
+  cmd-held (layer-while-held cmd)
+  nav-held (layer-while-held nav)
+  hyper-held (layer-while-held hyper)
+
+  ;; Task switcher: Cmd+Tab.
+  switcher (multi lmet tab)
+
+  ;; System actions (rebuilt here because mac input path is unaffected).
+  force-quit (multi lmet lalt esc)
+  screenshot (multi lmet lsft 4)
+  launcher (multi lmet spc)
+  show-desktop (multi lmet f3)
+  lockscreen (multi lctl lmet q)
+  ;; Hyper+` reloads Hammerspoon via the old hotkey (Shift+Ctrl+Alt+Cmd + `).
+  reload (multi lctl lalt lmet lsft grv)
+
+  ;; App launchers — verified against /Applications on this machine.
+  app-b (cmd open -a "Google Chrome")
+  app-c (cmd open -a "WeChat")
+  app-e (cmd open -a "Zed")
+  app-f (cmd open -a Finder)
+  app-g (cmd open -a Mail)
+  app-m (cmd open -a "MWeb Pro")
+  app-t (cmd open -a iTerm)
+  app-v (cmd open -a "Visual Studio Code")
+)
+
+;; Key order MUST match the shared deflayer blocks (57 keys).
+;; Key codes are IDENTICAL to win.kbd: Kanata's lmet/rmet are abstract meta
+;; keys -- on macOS they ARE the Cmd keys, both in defsrc and in outputs.
+(defsrc
+  caps  lctl  lalt  lmet  tab   rsft
+  q     w     e     r     t     y     u     i     o     p
+  a     s     d     f     g     h     j     k     l
+  z     x     c     v     b     n     m
+  1     2     3     4     5     6     7     8     9     0
+  -     =     [     ]     ;     '     \     ,     .     /
+  grv   esc   ret   spc
+  rmet
+)
+
+(include "shared-layers.kbd")

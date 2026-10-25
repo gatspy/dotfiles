@@ -1,0 +1,73 @@
+;; Kanata entry config for Windows 11.
+;; Platform-specific aliases + key codes (lmet/rmet), then shared layers.
+;;
+;; Deployment:
+;;   Phase 1 (current): LLHOOK mode (default), no driver needed.
+;;   Phase 2 (stability): install the Interception driver, then switch to
+;;     kanata_interception.exe with the same config; the Win-key combos
+;;     below are plain output events and work identically in both modes.
+;; Run elevated so remaps reach admin windows.
+
+(defcfg
+  ;; Required for the app-launcher (cmd ...) actions below.
+  process-unmapped-keys no
+  danger-enable-cmd yes
+)
+
+(defalias
+  ;; Primary modifier: physical Left Win == Ctrl (Cmd role from macOS).
+  main lctl
+
+  ;; Caps: tap = Esc, hold = Ctrl.
+  cap (tap-hold 200 200 esc lctl)
+
+  ;; Layer triggers.
+  cmd-held (layer-while-held cmd)
+  nav-held (layer-while-held nav)
+  hyper-held (layer-while-held hyper)
+
+  ;; Task switcher: Alt+Esc (native no-UI window cycle). Alt+Tab itself is
+  ;; avoided here: its fullscreen switcher UI clashes with LLHOOK event
+  ;; timing (kanata state desync); Phase 2 (Interception) removes the clash.
+  switcher (multi lalt esc)
+
+  ;; System actions — output direction is unaffected by input interception,
+  ;; so native Win-key combos are sent as normal OS shortcuts.
+  ;; (lmet here = the Windows key on the output side as well.)
+  force-quit (multi lctl lsft esc)
+  screenshot (multi lmet lsft s)
+  launcher (multi lmet s)
+  show-desktop (multi lmet d)
+  lockscreen (multi lmet l)
+  ;; Config reload is done via CLI/TCP on Windows; key left unassigned.
+  reload XX
+
+  ;; App launchers — VERIFY on the target machine that each alias
+  ;; (chrome / weixin / zed / code / wt) resolves; adjust if an app
+  ;; registers a different App Paths name.
+  app-b (cmd cmd.exe /C start chrome)
+  app-c (cmd cmd.exe /C start weixin)
+  app-e (cmd cmd.exe /C start zed)
+  app-f (cmd cmd.exe /C start explorer)
+  app-g XX
+  app-m XX
+  app-t (cmd cmd.exe /C start wt)
+  app-v (cmd cmd.exe /C start code)
+)
+
+;; Key order MUST match the shared deflayer blocks (57 keys).
+;; Key codes are IDENTICAL to mac.kbd: Kanata's lmet/rmet are abstract meta
+;; keys -- on Windows they ARE the Win keys, both in defsrc and in outputs
+;; (e.g. `(multi lmet lsft s)` delivers Win+Shift+S).
+(defsrc
+  caps  lctl  lalt  lmet  tab   rsft
+  q     w     e     r     t     y     u     i     o     p
+  a     s     d     f     g     h     j     k     l
+  z     x     c     v     b     n     m
+  1     2     3     4     5     6     7     8     9     0
+  - =   [ ] ; ' \ , . /
+  grv   esc   ret spc
+  rmet
+)
+
+(include "shared-layers.kbd")

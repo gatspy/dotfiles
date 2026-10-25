@@ -1,0 +1,82 @@
+// Keystone unified keymap — Capslox implementation for Windows.
+// Spec: ~/.dotfiles/docs/keyboard-unified-solution.md, chapter 2.
+// Install: %USERPROFILE%\.config\capslox\keymap.jsonc
+//          (if Capslox generated its default config at %APPDATA%\Capslox\ instead,
+//           copy this file next to it and follow the app's override resolution)
+// Saving applies immediately; syntax errors keep the previous config running.
+//
+// VERIFICATION NOTES (fields marked VERIFY depend on undocumented details of
+// the Capslox action schema — if a binding silently does nothing, check the
+// official manual for the exact object form):
+//   - shell_action object fields ("type"/"shell"/"command")
+
+{
+  "version": 1,
+
+  // Physical key -> modifier aliases.
+  //  mx = left Win  (main modifier, Cmd role)   — tap disabled, start menu retired
+  //  hx = right Win (Hyper)                     — tap disabled
+  //  nv = right Shift (nav trigger)             — tap falls through to shift itself
+  //  cx = Caps       (tap = Esc, hold = modifier per A3 acceptance)
+  "custom_modifiers": {
+    "lwin":   { "alias": "mx", "tap": "noop" },
+    "rwin":   { "alias": "hx", "tap": "noop" },
+    "rshift": { "alias": "nv" },
+    "caps":   { "alias": "cx", "tap": "esc" }
+  },
+
+  "vars": {},
+
+  "layers": [
+    {
+      "id": "base",
+      "bindings": {
+        // N8: physically broken left Ctrl — swallow everything
+        "lctl": "noop",
+
+        // ---- Main layer: Win+key delivers Ctrl+key (mirrors kanata cmd layer) ----
+        "mx-q": "ctrl-q", "mx-w": "ctrl-w", "mx-e": "ctrl-e", "mx-r": "ctrl-r", "mx-t": "ctrl-t",
+        "mx-y": "ctrl-y", "mx-u": "ctrl-u", "mx-i": "ctrl-i", "mx-o": "ctrl-o", "mx-p": "ctrl-p",
+        "mx-a": "ctrl-a", "mx-s": "ctrl-s", "mx-d": "ctrl-d", "mx-f": "ctrl-f", "mx-g": "ctrl-g",
+        "mx-h": "ctrl-h", "mx-j": "ctrl-j", "mx-k": "ctrl-k", "mx-l": "ctrl-l",
+        "mx-z": "ctrl-z", "mx-x": "ctrl-x", "mx-c": "ctrl-c", "mx-v": "ctrl-v", "mx-b": "ctrl-b",
+        "mx-n": "ctrl-n", "mx-m": "ctrl-m",
+        "mx-1": "ctrl-1", "mx-2": "ctrl-2", "mx-3": "ctrl-3", "mx-4": "ctrl-4", "mx-5": "ctrl-5",
+        "mx-6": "ctrl-6", "mx-7": "ctrl-7", "mx-8": "ctrl-8", "mx-9": "ctrl-9", "mx-0": "ctrl-0",
+        "mx-minus": "ctrl-minus", "mx-equal": "ctrl-equal",
+        "mx-bracket-left": "ctrl-bracket-left", "mx-bracket-right": "ctrl-bracket-right",
+        "mx-semicolon": "ctrl-semicolon", "mx-quote": "ctrl-quote", "mx-backslash": "ctrl-backslash",
+        "mx-comma": "ctrl-comma", "mx-period": "ctrl-period", "mx-slash": "ctrl-slash",
+        "mx-backtick": "ctrl-backtick",
+
+        // N6: task switcher — Alt+Esc (no-UI cycle); see solution doc 2.5
+        "mx-tab": "alt-esc",
+        "mx-esc": "ctrl-esc",
+        "mx-enter": "ctrl-enter",
+        "mx-space": "ctrl-space",
+
+        // ---- Nav layer: hold Right Shift ----
+        "nv-w": "up", "nv-a": "left", "nv-s": "down", "nv-d": "right",
+        "nv-h": "left", "nv-j": "down", "nv-k": "up", "nv-l": "right",
+
+        // ---- Hyper layer: hold Right Win ----
+        // System actions (send_keys, deterministic)
+        "hx-q": "ctrl-shift-esc",
+        "hx-s": "win-s",
+        "hx-d": "win-d",
+        "hx-l": "win-l",
+        "hx-a": "win-shift-s",
+        "hx-caps": "capslock",
+
+        // App launchers (VERIFY: shell_action object field names)
+        "hx-b": { "type": "shell_action", "shell": "cmd", "command": "start chrome" },
+        "hx-c": { "type": "shell_action", "shell": "cmd", "command": "start weixin" },
+        "hx-e": { "type": "shell_action", "shell": "cmd", "command": "start zed" },
+        "hx-f": { "type": "shell_action", "shell": "cmd", "command": "start explorer" },
+        "hx-t": { "type": "shell_action", "shell": "cmd", "command": "start wt" },
+        "hx-v": { "type": "shell_action", "shell": "cmd", "command": "start code" }
+        // hx-g / hx-m intentionally unbound (pending app choice)
+      }
+    }
+  ]
+}
