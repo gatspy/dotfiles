@@ -71,8 +71,10 @@ duf = "latest"
 
 # Cargo tools
 "cargo-binstall" = "latest"
+"cargo:cargo-audit" = "latest"
 "cargo:cargo-deny" = "latest"
 "cargo:cargo-generate" = "latest"
+"cargo:crm" = "latest"
 "cargo:typos-cli" = "latest"
 
 # Go tools
