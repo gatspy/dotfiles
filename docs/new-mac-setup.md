@@ -15,7 +15,7 @@
 2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
 3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（9 白名单 formula + 20 cask + go/cargo 段；VS Code 及扩展段为 MBP 遗产，不进 M6）
    - App Store 应用（含 Xcode 约 12GB）手动到 App Store 安装；mas 已退役（2026-10-26）
-4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）→ `~/.zsh.localrc` 私有配置**手动落位**（不在 git）
+4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）；`~/.zsh.localrc` 为软链指向 `zsh/zshrc.local`，已入 git 随 clone 自动到位（2026-10-27 实证修正，旧文"不在 git"为误）
 5. **冒烟验收**（最小环境，不信继承）：
    `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
 6. **双机互通**（与 MBP 2019，2026-10-26 定稿）：
