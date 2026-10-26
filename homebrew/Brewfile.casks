@@ -1,12 +1,11 @@
 tap "deskflow/tap", trusted: true
 tap "xo/xo", trusted: true
 
-# Formulae — M6 whitelist v2.1 (2026-10-26): core 12 + on-demand heavyweights 5.
-# tmux/graphviz/zbar/fq/help2man/texinfo ruled out same day; tmux configs kept
+# Formulae — M6 whitelist v2.2 (2026-10-26): core 11 + on-demand heavyweights 5.
+# tmux/graphviz/zbar/fq/help2man/texinfo/mas ruled out same day; tmux configs kept
 # in dotfiles for painless reinstall if ever needed.
 # All bottled on arm64. GNU/diag/dev long-tail stays MBP-only, not M6 scope.
-# Brew stanzas run before mas stanzas, so mas itself is bootstrapped here.
-brew "mas"
+# App Store apps are installed manually via the App Store (mas retired).
 # system base
 brew "git"
 brew "curl"
@@ -71,20 +70,8 @@ cask "typora"
 # Multiplayer code editor
 cask "zed"
 
-mas "Bob", id: 1630034110
-mas "Clearview X", id: 1557106464
-mas "Eul", id: 1541991958
-mas "iSee Pro", id: 687061437
-mas "iShot Pro", id: 1611347086
-mas "Medis", id: 1579200037
-mas "MWeb Pro", id: 1403919533
-mas "Picsee", id: 1454805783
-mas "Pixea", id: 1507782672
-mas "RunCat", id: 1429033973
-mas "ServerCat", id: 1501532023
-mas "TestFlight", id: 899247664
-mas "Xcode", id: 497799835
-mas "微信", id: 836500024
+# mas stanza removed 2026-10-26: App Store apps (incl. Xcode) are installed
+# manually via the App Store per user ruling.
 
 # vscode stanza removed 2026-10-26: visual-studio-code is MBP-only legacy,
 # M6 runs Zed + Antigravity; full stanza recoverable from git history.
