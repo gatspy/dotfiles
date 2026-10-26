@@ -38,7 +38,7 @@
 | 必装 | git curl jq wget htop coreutils | 系统级基础 |
 | 开发 | cmake ninja | 构建工具，全部 bottle |
 | 留任 | neovim mole wireshark | 与 Intel 同裁定：编辑器留 brew / 同名不同物 / 大件维保 |
-| 按需 | ffmpeg imagemagick poppler protobuf gnupg nmap radare2 | 大件视为年升级项（graphviz 已裁定退役） |
+| 按需 | ffmpeg protobuf radare2 | 大件视为年升级项（graphviz/poppler/gnupg 已裁定退役；imagemagick/nmap 按需另议） |
 
 ## 通用纪律（三机三界皆准）
 

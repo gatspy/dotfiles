@@ -1,7 +1,8 @@
 tap "deskflow/tap", trusted: true
 tap "xo/xo", trusted: true
 
-# Formulae — M6 whitelist v2.2 (2026-10-26): core 11 + on-demand heavyweights 5.
+# Formulae — M6 whitelist v2.3 (2026-10-26): core 11 + on-demand heavyweights 3.
+# poppler/graphviz retired by ruling; gnupg/imagemagick never in M6 scope.
 # tmux/graphviz/zbar/fq/help2man/texinfo/mas ruled out same day; tmux configs kept
 # in dotfiles for painless reinstall if ever needed.
 # All bottled on arm64. GNU/diag/dev long-tail stays MBP-only, not M6 scope.
@@ -22,8 +23,6 @@ brew "mole"
 brew "wireshark"
 # on-demand heavyweights (yearly upgrades)
 brew "ffmpeg"
-brew "graphviz"
-brew "poppler"
 brew "protobuf"
 brew "radare2"
 
