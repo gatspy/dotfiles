@@ -102,6 +102,11 @@ duf = "latest"
 
 # pipx backend (PyPI-only tools, managed via mise)
 "pipx:mycli" = "latest"
+antigravity-cli = "latest"
+protobuf = "latest"
+kind = "latest"
+git-filter-repo = "latest"
+xcodegen = "latest"
 
 
 [env]
