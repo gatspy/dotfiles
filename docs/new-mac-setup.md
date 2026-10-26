@@ -11,13 +11,20 @@
 
 ## 新机初始化（M6，按序执行）
 
-1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
+1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；**电脑名设为 `mini`**（系统设置 → 通用 → 共享 → 本地主机名，mDNS 即 `mini.local`，与 MBP 侧 `Host mini` 别名咬合）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
 2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
 3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（13 白名单 formula + 32 cask + 14 mas + 82 vscode 扩展 + go/cargo 段；brew 段先于 mas 段执行，mas 无需手动预装）
    - mas 项需先登录 App Store；Xcode 走 mas 约 12GB；`mas "微信"`/`mas "WeChat_Lite"` 同 ID 重复，bundle 报错时删一行即可
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）→ `~/.zsh.localrc` 私有配置**手动落位**（不在 git）
 5. **冒烟验收**（最小环境，不信继承）：
    `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
+6. **双机互通**（与 MBP 2019，2026-10-26 定稿）：
+   - 开「远程登录」（系统设置 → 通用 → 共享），并把 `sshd` 加入「完全磁盘访问」（否则跨机读家目录部分文件被拒）
+   - MBP 公钥入册：MBP 侧执行 `ssh mini 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_ed25519.pub`，M6 → MBP 反向同理（M6 生成 ed25519 后推给 MBP）
+   - M6 侧对称别名：`Host mbp` → `HostName Gatspy.local` / `User gatspy`（MBP 侧 `Host mini` 已于 2026-10-26 落地）
+   - 两端 sshd 收紧仅密钥：写 `/etc/ssh/sshd_config.d/99-hardening.conf`（`PasswordAuthentication no` + `KbdInteractiveAuthentication no` + `PermitRootLogin no`），`sudo launchctl kickstart -k system/com.openssh.sshd` 重载
+   - 跨网 GUI 远控：uu远程（官网 dmg，双端安装；brew/mas 无包）
+   - 验收三连：互 `ssh mini 'uname -m'` / `ssh mbp 'uname -m'` 见 arm64/x86_64；`rsync -n` 试传；屏幕共享互连一次
 
 ## 跨架构债
 
