@@ -13,7 +13,7 @@
 
 1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；设备名 `Gatspy-Mini`（iCloud 管辖，实测不可改名——2026-10-26，mDNS 即 `Gatspy-Mini.local`；别名与主机名解耦，勿再折腾改名）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
 2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
-3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（9 白名单 formula + 20 cask + go/cargo 段；VS Code 及扩展段为 MBP 遗产，不进 M6）
+3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（10 白名单 formula + 20 cask + go/cargo 段；VS Code 及扩展段为 MBP 遗产，不进 M6）
    - App Store 应用（含 Xcode 约 12GB）手动到 App Store 安装；mas 已退役（2026-10-26）
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）→ `~/.zsh.localrc` 私有配置**手动落位**（不在 git）
 5. **冒烟验收**（最小环境，不信继承）：
@@ -35,7 +35,7 @@
 
 | 层级 | 包 | 说明 |
 |---|---|---|
-| 必装 | git curl jq | 系统级基础（wget/htop/coreutils 2026-10-27 退役，证据零活引用） |
+| 必装 | git curl jq grc | 系统级基础（grc 为 system/grc.zsh 着色在役依赖；wget/htop/coreutils 2026-10-27 退役） |
 | 开发 | cmake ninja | 构建工具，全部 bottle |
 | 留任 | neovim mole | 编辑器留 brew / 同名不同物（wireshark 同日退役：纯 CLI 且不抓包） |
 | 按需 | ffmpeg radare2 | 大件视为年升级项（protobuf 归 mise；graphviz/poppler/gnupg/imagemagick/libpq 已裁定退役） |
