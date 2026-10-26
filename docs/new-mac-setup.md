@@ -11,7 +11,7 @@
 
 ## 新机初始化（M6，按序执行）
 
-1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；**电脑名设为 `mini`**（系统设置 → 通用 → 共享 → 本地主机名，mDNS 即 `mini.local`，与 MBP 侧 `Host mini` 别名咬合）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
+1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；设备名 `Gatspy-Mini`（iCloud 管辖，实测不可改名——2026-10-26，mDNS 即 `Gatspy-Mini.local`；别名与主机名解耦，勿再折腾改名）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
 2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
 3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（13 白名单 formula + 32 cask + 14 mas + 82 vscode 扩展 + go/cargo 段；brew 段先于 mas 段执行，mas 无需手动预装）
    - mas 项需先登录 App Store；Xcode 走 mas 约 12GB；`mas "微信"`/`mas "WeChat_Lite"` 同 ID 重复，bundle 报错时删一行即可
