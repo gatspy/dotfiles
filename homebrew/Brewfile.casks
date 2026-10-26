@@ -73,18 +73,8 @@ cask "zed"
 
 # vscode stanza removed 2026-10-26: visual-studio-code is MBP-only legacy,
 # M6 runs Zed + Antigravity; full stanza recoverable from git history.
-# wire/fblog/gemini-cli are owned by mise (config.toml) — do not re-add here
-cargo "cargo-asm"
-cargo "cargo-audit"
-cargo "cargo-edit"
-cargo "cargo-expand"
-cargo "cargo-llvm-cov"
-cargo "cargo-tarpaulin"
-cargo "cbindgen"
-cargo "crm"
-cargo "flutter_rust_bridge_codegen"
-cargo "git-cliff"
-cargo "gql"
-cargo "irust"
-cargo "pijul"
-npm "corepack"
+# cargo/npm stanzas removed 2026-10-27 (M6 deploy incident): brew bundle's cargo
+# stanza is an out-of-band `cargo install` (violates mise-only tool discipline) and
+# pulled `brew install rust` -> no macOS 27 bottle -> SOURCE BUILD of llvm+z3 (2GB+).
+# These rust dev tools belong in mise config.toml [tools] if wanted (ruling pending).
+# cargo/npm domain is owned by mise — never re-add here.
