@@ -1,8 +1,9 @@
 tap "deskflow/tap", trusted: true
 tap "xo/xo", trusted: true
 
-# Formulae — M6 whitelist v2.4 (2026-10-27): core 8 + on-demand heavyweights 2.
-# grc is required by dotfiles system/grc.zsh (command output colorizer).
+# Formulae — M6 whitelist v2.4 (2026-10-27): core 7 + on-demand heavyweights 2.
+# grc retired same day: system/grc.zsh deleted; its wrapped-command colorization
+# is fully superseded by mise's native-color tools (eza/dust/duf/procs/fd/delta/btm).
 # 2026-10-27 purge (MBP-evidenced, zero-live-refs): wget/htop/coreutils retired,
 # wireshark retired (formula is CLI-only; user doesn't capture), protobuf retired
 # (protoc now mise-owned). imagemagick/libpq never in M6 scope.
@@ -15,7 +16,6 @@ tap "xo/xo", trusted: true
 brew "git"
 brew "curl"
 brew "jq"
-brew "grc"
 # build
 brew "cmake"
 brew "ninja"
