@@ -41,6 +41,9 @@ cask "iina"
 cask "imageoptim"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Maple Mono NF CN font — required by iterm/dynamic-profiles/Modern.json
+# (install BEFORE first iTerm2 launch, else the profile re-ingests with Menlo)
+cask "font-maple-mono-nf-cn"
 # Menu bar manager
 cask "jordanbaird-ice"
 # File archiver
