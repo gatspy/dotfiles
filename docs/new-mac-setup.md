@@ -12,8 +12,8 @@
 ## 新机初始化（M6，按序执行）
 
 1. **裸机基础**：账户名小写 `gatspy`（与旧机一致，杜绝大小写化石）；设备名 `Gatspy-Mini`（iCloud 管辖，实测不可改名——2026-10-26，mDNS 即 `Gatspy-Mini.local`；别名与主机名解耦，勿再折腾改名）；`xcode-select --install`；网络/代理（仓库内 aliyun pip、goproxy、清华 pipx 镜像随 mise 配置自动生效）
-2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（69+ 工具，ARM 原生）
-3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（9 白名单 formula + 20 cask + go/cargo 段；VS Code 及扩展段为 MBP 遗产，不进 M6）
+2. **mise 先行**（唯一先于 brew 的管理器，官方脚本装到 `~/.local/bin`，永不进 brew）→ `git clone git@github.com:gatspy/dotfiles.git ~/.dotfiles` → 激活符号链接（见 `docs/symlinks.md`，至少 `~/.zshrc` 与 `~/.config/mise/config.toml`）→ `mise install`（76 工具，ARM 原生）
+3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（9 白名单 formula + 20 cask；cargo/npm/go 语言栈工具一律归 mise config.toml 管辖——Brewfile 的 cargo 段会触发 `brew install rust` 在 macOS 27 无瓶源码编译 llvm+z3 的事故，已永久删除）
    - App Store 应用（含 Xcode 约 12GB）手动到 App Store 安装；mas 已退役（2026-10-26）
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）；`~/.zsh.localrc` 为软链指向 `zsh/zshrc.local`，已入 git 随 clone 自动到位（2026-10-27 实证修正，旧文"不在 git"为误）
 5. **冒烟验收**（最小环境，不信继承）：
