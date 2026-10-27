@@ -16,6 +16,7 @@
 3. **brew**：一条命令 `brew bundle --file=homebrew/Brewfile.casks` 全量部署（9 白名单 formula + 20 cask；cargo/npm/go 语言栈工具一律归 mise config.toml 管辖——Brewfile 的 cargo 段会触发 `brew install rust` 在 macOS 27 无瓶源码编译 llvm+z3 的事故，已永久删除）
    - App Store 应用（含 Xcode 约 12GB）手动到 App Store 安装；mas 已退役（2026-10-26）
 4. **dotfiles 全面部署**：symlink 机制全量激活 → `vscode/install.sh`（M4 四 Profile）；`~/.zsh.localrc` 为软链指向 `zsh/zshrc.local`，已入 git 随 clone 自动到位（2026-10-27 实证修正，旧文"不在 git"为误）
+5. **iTerm2 外观与重建保险**：外观三键（Dark/标签栏底部/不拉伸，2026-10-27 定稿）跑 `iterm/appearance.sh` 后重启 iTerm2；全量偏好快照在 `iterm/com.googlecode.iterm2.snapshot.plist`（`defaults import com.googlecode.iterm2 <file>` 后重启——覆盖当前全部偏好，慎用）；Modern 形态经 DynamicProfiles 自动吸收，注意字体（font-maple-mono-nf-cn）必须先于首次 iTerm2 启动安装
 5. **冒烟验收**（最小环境，不信继承）：
    `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
 6. **双机互通**（与 MBP 2019，2026-10-26 定稿）：
