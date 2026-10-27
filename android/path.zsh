@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Android Development Configuration
-# Uses platform detection for NDK architecture compatibility
+# NDK prebuilt dir is the same on Intel and Apple Silicon (universal binaries)
 
 # Only set Android paths if SDK directory exists
 ANDROID_SDK_ROOT="${HOME}/Applications/android/sdk"
@@ -19,10 +19,7 @@ export ANDROID_NDK_VERSION="27.0.12077973"
 export ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
 export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT}"
 
-# Dynamic architecture detection for NDK
-local ndk_arch=${PLATFORM_ARCH:-amd64}
-case "$ndk_arch" in
-    arm64)  ndk_arch="darwin-arm64" ;;
-    amd64)  ndk_arch="darwin-x86_64" ;;
-    *)      ndk_arch="darwin-x86_64" ;;  # fallback
-esac
+# NDK prebuilt dir: Google ships universal (x86_64 + arm64) mac binaries under
+# the legacy darwin-x86_64 dir name (lipo-verified on 27.0/28.2) — same dir on
+# both Intel and Apple Silicon hosts, no per-arch mapping needed.
+local ndk_arch="darwin-x86_64"
