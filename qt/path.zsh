@@ -1,5 +1,5 @@
-export QT_DIR=/usr/local/opt/qt5
-export QT_QMAKE_DIR=/usr/local/opt/qt5/bin
+export QT_DIR="${HOMEBREW_PREFIX:-/usr/local}/opt/qt5"
+export QT_QMAKE_DIR="${HOMEBREW_PREFIX:-/usr/local}/opt/qt5/bin"
 export QT_VERSION=5.15.2
 export QT_API=5.15.2
 export QT_DEBUG=true

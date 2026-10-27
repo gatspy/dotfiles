@@ -7,9 +7,9 @@
 
 echo -e "Setting Environment Variables"
 export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include"
-export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(xcrun --show-sdk-path)/usr/lib -L/usr/local/opt/zlib/lib"
-export CPPFLAGS="-I/usr/local/opt/zlib/include"
-export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(xcrun --show-sdk-path)/usr/lib -L$(brew --prefix zlib)/lib"
+export CPPFLAGS="-I$(brew --prefix zlib)/include"
+export PKG_CONFIG_PATH="$(brew --prefix zlib)/lib/pkgconfig"
 
 echo "Done!"
 echo
