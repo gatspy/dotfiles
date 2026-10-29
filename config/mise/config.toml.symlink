@@ -91,7 +91,6 @@ duf = "latest"
 "npm:prettier" = "latest"
 "npm:pake-cli" = "latest"
 "npm:http-server" = "latest"
-"npm:@google/gemini-cli" = "latest"
 "npm:@moonshot-ai/kimi-code" = "latest"
 
 "pipx:duckduckgo-mcp-server" = "latest"

@@ -9,7 +9,7 @@ tap "xo/xo", trusted: true
 # (protoc now mise-owned). imagemagick/libpq never in M6 scope.
 # gnupg is MBP-only by ruling. jq stays brew (jaq deviates on $ENV etc.).
 # Owned by mise (config.toml) — do not re-add: protobuf, kind, git-filter-repo,
-# xcodegen, antigravity-cli, wire, fblog, gemini-cli.
+# xcodegen, antigravity-cli, wire, fblog. (gemini-cli removed 2026-10-29.)
 # tmux configs kept in dotfiles for painless reinstall if ever needed.
 # All bottled on arm64. App Store apps are installed manually (mas retired).
 # system base
