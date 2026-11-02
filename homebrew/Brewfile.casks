@@ -44,10 +44,10 @@ cask "iterm2"
 # Maple Mono NF CN font — required by iterm/dynamic-profiles/Modern.json
 # (install BEFORE first iTerm2 launch, else the profile re-ingests with Menlo)
 cask "font-maple-mono-nf-cn"
-# Hack Nerd Font Mono — required by config/zed/settings.json.symlink
-# (buffer_font_family; plain Hack Nerd Font is NOT the same family, Zed would
-# silently fall back to its default font without this)
-cask "font-hack-nerd-font-mono"
+# Hack Nerd Font — required by config/zed/settings.json.symlink: the settings
+# name family "Hack Nerd Font Mono"; this umbrella cask ships Mono + regular +
+# Propo variants (12 ttf). Without it Zed silently falls back to default font.
+cask "font-hack-nerd-font"
 # Menu bar manager
 cask "jordanbaird-ice"
 # File archiver
