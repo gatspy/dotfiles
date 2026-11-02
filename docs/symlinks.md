@@ -1,7 +1,7 @@
 # Dotfiles 符号链接清单
 
-**更新日期**: 2026-03-08
-**总计**: 11 个符号链接
+**更新日期**: 2026-11-02
+**总计**: 13 个符号链接
 
 ---
 
@@ -32,6 +32,8 @@
 | `config/mise/config.toml.symlink` | `~/.config/mise/config.toml` | Mise 版本管理配置 |
 | `config/sheldon/plugins.toml.symlink` | `~/.config/sheldon/plugins.toml` | Sheldon 插件配置 |
 | `config/starship.toml.symlink` | `~/.config/starship.toml` | Starship 提示符配置 |
+| `config/zed/settings.json.symlink` | `~/.config/zed/settings.json` | Zed 编辑器设置（正典=MBP 精雕版，跨机共享，2026-11-02 入册） |
+| `config/zed/keymap.json.symlink` | `~/.config/zed/keymap.json` | Zed 键位绑定 |
 
 **处理函数**: `install_configs()`
 
@@ -91,6 +93,17 @@ fi
 if [ -f "$DOTFILES_ROOT/config/starship.toml.symlink" ]; then
   mkdir -p ~/.config
   link_file "$DOTFILES_ROOT/config/starship.toml.symlink" ~/.config/starship.toml
+fi
+
+# Zed 配置 (settings + keymap)
+if [ -f "$DOTFILES_ROOT/config/zed/settings.json.symlink" ]; then
+  mkdir -p ~/.config/zed
+  link_file "$DOTFILES_ROOT/config/zed/settings.json.symlink" ~/.config/zed/settings.json
+fi
+
+if [ -f "$DOTFILES_ROOT/config/zed/keymap.json.symlink" ]; then
+  mkdir -p ~/.config/zed
+  link_file "$DOTFILES_ROOT/config/zed/keymap.json.symlink" ~/.config/zed/keymap.json
 fi
 
 # Tmux 配置

@@ -1,0 +1,93 @@
+{
+  // ==========================================
+  // 核心：追求极致的“秒开”性能
+  // ==========================================
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
+  "auto_update": false,
+
+  // 核心：启动时必须无条件恢复上一次的工作状态（包括所有打开的散文件标签页）
+  "restore_on_startup": "last_workspace",
+
+  "cli_default_open_behavior": "new_window",
+
+  // ==========================================
+  // 视觉与排版 (美观与现代感的核心)
+  // ==========================================
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Mirage",
+    "dark": "Gruvbox Dark Hard"
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "buffer_font_family": "Hack Nerd Font Mono",
+
+  // 开启连字特性：如 != 会显示为 ≠，=> 会变成连贯箭头，极具现代感
+  "buffer_font_features": {
+    "calt": true,
+    "liga": true
+  },
+
+  // 黄金行高：改为 1.6 倍后，看长文件像看精装书一样舒服
+  "buffer_line_height": {
+    "custom": 1.6
+  },
+
+  "scrollbar": { "show": "auto", "axes": {
+        "vertical": true,
+        "horizontal": false
+      } }, // 隐藏旧时代的丑陋滚动条
+  "show_wrap_guides": false,        // 隐藏垂直对齐参考线，保持画布纯净
+  "soft_wrap": "editor_width",      // 自动折行，看长日志绝不左右拖拽
+  "drop_target_size": 0.0,          // 拖入文件直接新建标签，永不自作主张分屏
+
+  // 纯粹的阅读器，不需要自作多情的保存和格式化
+  "autosave": "off",
+  "format_on_save": "off",
+
+  // ==========================================
+  // UI 元素极简降噪 (苹果级扁平设计)
+  // ==========================================
+  "toolbar": {
+    "breadcrumbs": false, // 看散文件不需要顶部导航
+    "quick_actions": false
+  },
+  "tab_bar": {
+    "show": true,
+    "show_tab_bar_buttons": false
+  },
+  "tabs": {
+    "show_close_button": "hover",
+    "show_diagnostics": "off", // 彻底屏蔽报错红线，专注阅读
+    "git_status": false,       // 屏蔽 Git 颜色干扰
+    "file_icons": true
+  },
+
+  // ==========================================
+  // 极速检索 (忽略庞大目录，毫秒级搜文件)
+  // ==========================================
+  "file_scan_exclusions": [
+    "**/.git", "**/.svn", "**/.DS_Store", "**/Thumbs.db",
+    "**/node_modules", "**/target", "**/dist", "**/build"
+  ]
+}

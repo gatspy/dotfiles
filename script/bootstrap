@@ -88,6 +88,16 @@ install_configs () {
     symlink_with_backup "$DOTFILES_ROOT/config/starship.toml.symlink" ~/.config/starship.toml
   fi
 
+  # Zed 配置 (settings + keymap)
+  if [[ -f "$DOTFILES_ROOT/config/zed/settings.json.symlink" ]]; then
+    ensure_dir ~/.config/zed
+    symlink_with_backup "$DOTFILES_ROOT/config/zed/settings.json.symlink" ~/.config/zed/settings.json
+  fi
+  if [[ -f "$DOTFILES_ROOT/config/zed/keymap.json.symlink" ]]; then
+    ensure_dir ~/.config/zed
+    symlink_with_backup "$DOTFILES_ROOT/config/zed/keymap.json.symlink" ~/.config/zed/keymap.json
+  fi
+
   # Tmux 配置
   if [[ -f "$DOTFILES_ROOT/tmux/.tmux.conf" ]]; then
     symlink_with_backup "$DOTFILES_ROOT/tmux/.tmux.conf" ~/.tmux.conf
