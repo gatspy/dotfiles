@@ -20,7 +20,7 @@
 5. **冒烟验收**（最小环境，不信继承）：
    `env -i HOME=$HOME TERM=xterm-256color zsh -il -c 'command -v go starship mise; git status -sb'`
 6. **双机互通**（与 MBP 2019，2026-10-26 定稿）：
-   - 开「远程登录」（系统设置 → 通用 → 共享），并把 `sshd` 加入「完全磁盘访问」（否则跨机读家目录部分文件被拒）
+   - 开「远程登录」与「屏幕共享」（系统设置 → 通用 → 共享；屏幕共享不开则 5900 无监听、连接直接被拒——2026-11-02 M6 实案），并把 `sshd` 加入「完全磁盘访问」（否则跨机读家目录部分文件被拒）
    - MBP 公钥入册：MBP 侧执行 `ssh mini 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_ed25519.pub`，M6 → MBP 反向同理（M6 生成 ed25519 后推给 MBP）
    - M6 侧对称别名：`Host mbp` → `HostName Gatspy.local` / `User gatspy`（MBP 侧 `Host mini` 已于 2026-10-26 落地）
    - 两端 sshd 收紧仅密钥：写 `/etc/ssh/sshd_config.d/99-hardening.conf`（`PasswordAuthentication no` + `KbdInteractiveAuthentication no` + `PermitRootLogin no`），`sudo launchctl kickstart -k system/com.openssh.sshd` 重载
