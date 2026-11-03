@@ -82,7 +82,6 @@ duf = "latest"
 "go:github.com/ofabry/go-callvis" = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
 "go:github.com/kralicky/protols/cmd/protols" = "latest"
-"go:github.com/brads3290/cclogviewer/cmd/cclogviewer" = "latest"
 
 "npm:pnpm" = "latest"
 "npm:fanyi" = "latest"
