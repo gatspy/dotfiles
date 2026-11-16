@@ -7,82 +7,83 @@ npm.package_manager = "bun"
 cargo.binstall = true
 pipx.uvx = true
 pipx.registry_url = "https://pypi.tuna.tsinghua.edu.cn/simple/{}/"
+python.precompiled_flavor = "install_only_stripped"
 task.run_auto_install = false
-minimum_release_age = "0s"
+minimum_release_age = "1d" # 防上游新包投毒冷却期；若需追当日刚发的新版可随时改回 "0s"
 
 [tools]
-# Core runtimes
+# ── 1. 核心运行时 (Core runtimes) ─────────────────────────────
 node = "22.16"
 python = "3.14"
 go = "latest"
 ruby = "3.4.8"
 rust = "stable"
-java = "23"
+java = "temurin-21" # 显式指定开源免费的 Eclipse Temurin 21 LTS，完美兼容 Gradle/Flutter
 bun = "latest"
 uv = "latest"
 zig = "latest"
 deno = "latest"
 codex = "latest"
 claude-code = "latest"
-flutter = "3.38.10-stable"
+flutter = "3.47.9"  # 锁定 3.47 成熟稳定分支，无 -stable 后缀，彻底消除版本比对警告
 
-# CLI tools (registry short names; mise resolves the backend per its registry)
+# ── 2. 通用 CLI 工具 (内置 Registry 预编译包) ─────────────────
+antigravity-cli = "latest"
+bat = "latest"
+bottom = "latest"
+cheat = "latest"
+chezmoi = "latest"
+croc = "latest"
+direnv = "latest"
+duf = "latest"
+dust = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+git-filter-repo = "latest"
+just = "latest"
+kind = "latest"
+pnpm = "latest"     # 独立预编译二进制，与 Node 版本升级彻底解耦
+protobuf = "latest"
+ripgrep = "latest"
 rtk = "latest"
 ruff = "latest"
-dust = "latest"
-yazi = "latest"
-just = "latest"
 starship = "latest"
-xh = "latest"
-usage = "latest"
-chezmoi = "latest"
-fzf = "latest"
+taplo = "latest"
+tealdeer = "latest"
 tokei = "latest"
+usage = "latest"
+websocat = "latest"
+xcodegen = "latest"
+xh = "latest"
+yazi = "latest"
+yt-dlp = "latest"   # 内置规则自带 SHA256 校验
+zoxide = "latest"
 
-# Intel exceptions: registry defaults for these carry no darwin/amd64 assets
-# (atuin/sheldon: aqua-first registries; git-delta is not even a registry name,
-# the tool is `delta` whose default backend is also aqua). cargo backend pinned
-# explicitly; cargo-binstall pulls prebuilt when metadata allows, else builds
-# via mise-managed rust.
+# ── 3. Cargo 后端工具 (含 Intel Mac 架构兜底与 Rust 子命令) ────
+# 优先通过 cargo-binstall 拉取预编译包；若上游无 darwin/amd64 资产则自动回退本地编译
+"cargo-binstall" = "latest"
 "cargo:atuin" = "latest"
 "cargo:git-delta" = "latest"
 "cargo:sheldon" = "latest"
-bat = "latest"
-bottom = "latest"
-eza = "latest"
-fd = "latest"
-ripgrep = "latest"
-taplo = "latest"
-tealdeer = "latest"
-websocat = "latest"
-zoxide = "latest"
-gh = "latest"
-croc = "latest"
-direnv = "latest"
-cheat = "latest"
-duf = "latest"
-
-# not in mise registry — github/cargo backends (prebuilt preferred, else mise rust build)
 "cargo:fblog" = "latest"
 "cargo:procs" = "latest"
 "cargo:tre-command" = "latest"
 "cargo:eva" = "latest"
 "cargo:rustscan" = "latest"
-
-# Cargo tools
-"cargo-binstall" = "latest"
 "cargo:cargo-audit" = "latest"
 "cargo:cargo-deny" = "latest"
 "cargo:cargo-generate" = "latest"
 "cargo:crm" = "latest"
 "cargo:typos-cli" = "latest"
 
-# Go tools
+# ── 4. Go 工具 ───────────────────────────────────────────────
 "go:github.com/gogf/gf/cmd/gf/v2" = "2.10.0"
 "go:github.com/ofabry/go-callvis" = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
 
-"npm:pnpm" = "latest"
+# ── 5. NPM 工具 (通过 bun 极速安装) ───────────────────────────
 "npm:fanyi" = "latest"
 "npm:ccusage" = "latest"
 "npm:npkill" = "latest"
@@ -91,26 +92,17 @@ duf = "latest"
 "npm:http-server" = "latest"
 "npm:@moonshot-ai/kimi-code" = "latest"
 
+# ── 6. Python CLI 工具 (复用全局 Python 3.14 + uvx 隔离运行) ──
 "pipx:duckduckgo-mcp-server" = "latest"
-"pipx:pre-commit" = { version = "latest", python = "3.13" }
+"pipx:pre-commit" = "latest"
+"pipx:mycli" = "latest"
 
+# ── 7. Ruby Gem 工具 ─────────────────────────────────────────
 "gem:cocoapods" = "latest"
 
-# GitHub release binaries
-"github:yt-dlp/yt-dlp" = "latest"
-
-# pipx backend (PyPI-only tools, managed via mise)
-"pipx:mycli" = "latest"
-antigravity-cli = "latest"
-protobuf = "latest"
-kind = "latest"
-git-filter-repo = "latest"
-xcodegen = "latest"
-
-
 [env]
-MISE_PYTHON_PRECOMPILED_FLAVOR = "install_only_stripped"
 MISE_RUSTUP_HOME = "$HOME/.rustup"
 MISE_CARGO_HOME = "$HOME/.cargo"
-PIP_INDEX_URL = "https://mirrors.aliyun.com/pypi/simple/"
+PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+UV_DEFAULT_INDEX = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 GOPROXY = "https://goproxy.cn,direct"
