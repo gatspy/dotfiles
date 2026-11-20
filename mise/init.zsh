@@ -17,3 +17,8 @@ fi
 
 export MISE_RUSTUP_HOME=$HOME/.rustup
 export MISE_CARGO_HOME=$HOME/.cargo
+
+if command -v gh >/dev/null 2>&1 && _gh_tok="$(gh auth token 2>/dev/null)" && [ -n "$_gh_tok" ]; then
+  export GITHUB_TOKEN="$_gh_tok"
+fi
+unset _gh_tok

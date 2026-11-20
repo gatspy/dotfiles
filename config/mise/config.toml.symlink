@@ -1,40 +1,61 @@
-# mise configuration file
-# https://mise.jdx.dev/configuration.html
+# 三端通用 mise 配置文件 (Windows x64 / 2019 MBP Intel / Mac mini M6 Silicon)
+# Mac 路径: ~/.config/mise/config.toml
+# Win 路径: C:\Users\<用户名>\.config\mise\config.toml
 
 [settings]
-env_shell_expand = true
 npm.package_manager = "bun"
 cargo.binstall = true
 pipx.uvx = true
 pipx.registry_url = "https://pypi.tuna.tsinghua.edu.cn/simple/{}/"
 python.precompiled_flavor = "install_only_stripped"
+rust.rustup_home = "~/.rustup"
+rust.cargo_home = "~/.cargo"
 task.run_auto_install = false
-minimum_release_age = "1d" # 防上游新包投毒冷却期；若需追当日刚发的新版可随时改回 "0s"
+minimum_release_age = "0s"       # 改回 "0s"，彻底消除 release date / cutoff 等一切烦人警告
+
+[settings.url_replacements]
+"https://storage.googleapis.com/" = "https://storage.flutter-io.cn/"
 
 [tools]
-# ── 1. 核心运行时 (Core runtimes) ─────────────────────────────
-node = "22.16"
+# ── 1. 核心运行时与构建链 (三端严格对齐) ──────────────────────────
+java = "temurin-21"
+maven = "latest"
+cmake = "latest"
+flutter = "3.47.9"
+rust = { version = "stable", components = ["rust-analyzer", "clippy", "rust-src"] }
+node = "22.21"
 python = "3.14"
 go = "latest"
-ruby = "3.4.8"
-rust = "stable"
-java = "temurin-21" # 显式指定开源免费的 Eclipse Temurin 21 LTS，完美兼容 Gradle/Flutter
-bun = "latest"
-uv = "latest"
 zig = "latest"
 deno = "latest"
+bun = "latest"
+pnpm = "latest"
+uv = "latest"
+pixi = "latest"
 codex = "latest"
 claude-code = "latest"
-flutter = "3.47.9"  # 锁定 3.47 成熟稳定分支，无 -stable 后缀，彻底消除版本比对警告
+ruby = { version = "3.4.8", os = ["macos", "linux"] }
 
-# ── 2. 通用 CLI 工具 (内置 Registry 预编译包) ─────────────────
+# ── 2. macOS 专属工具 (Windows 自动静默跳过) ─────────────────────
+xcodegen = { version = "latest", os = ["macos"] }
+"gem:cocoapods" = { version = "latest", os = ["macos"] }
+direnv = { version = "latest", os = ["macos", "linux"] }
+"cargo:sheldon" = { version = "latest", os = ["macos", "linux"] }
+"npm:spoof" = { version = "latest", os = ["macos"] }
+
+# ── 3. 显式指定后端的跨端预编译工具 (已实测通过 MBP19) ─────────────
+"github:atuinsh/atuin" = "latest"
+"aqua:dalance/procs" = "latest"
+"aqua:coder3101/protols" = "latest"
+
+# ── 4. 三端通用 CLI 工具 (内置 Registry 预编译) ──────────────────
 antigravity-cli = "latest"
 bat = "latest"
 bottom = "latest"
 cheat = "latest"
 chezmoi = "latest"
 croc = "latest"
-direnv = "latest"
+duckdb = "latest"
 duf = "latest"
 dust = "latest"
 eza = "latest"
@@ -42,9 +63,10 @@ fd = "latest"
 fzf = "latest"
 gh = "latest"
 git-filter-repo = "latest"
+jq = "latest"
 just = "latest"
 kind = "latest"
-pnpm = "latest"     # 独立预编译二进制，与 Node 版本升级彻底解耦
+lsd = "latest"
 protobuf = "latest"
 ripgrep = "latest"
 rtk = "latest"
@@ -54,55 +76,55 @@ taplo = "latest"
 tealdeer = "latest"
 tokei = "latest"
 usage = "latest"
+vivid = "latest"
 websocat = "latest"
-xcodegen = "latest"
 xh = "latest"
 yazi = "latest"
-yt-dlp = "latest"   # 内置规则自带 SHA256 校验
+yt-dlp = "latest"
+zola = "latest"
 zoxide = "latest"
 
-# ── 3. Cargo 后端工具 (含 Intel Mac 架构兜底与 Rust 子命令) ────
-# 优先通过 cargo-binstall 拉取预编译包；若上游无 darwin/amd64 资产则自动回退本地编译
+# ── 5. Cargo 后端工具 (含 git-delta，Win/Mini6 拉预编译包，MBP19 自动回退编译) ──
 "cargo-binstall" = "latest"
-"cargo:atuin" = "latest"
 "cargo:git-delta" = "latest"
-"cargo:sheldon" = "latest"
-"cargo:fblog" = "latest"
-"cargo:procs" = "latest"
-"cargo:tre-command" = "latest"
-"cargo:eva" = "latest"
-"cargo:rustscan" = "latest"
 "cargo:cargo-audit" = "latest"
-"cargo:cargo-deny" = "latest"
+"cargo:cargo-deny" = { version = "latest", locked = true }
 "cargo:cargo-generate" = "latest"
 "cargo:crm" = "latest"
+"cargo:eva" = "latest"
+"cargo:fblog" = "latest"
+"cargo:rustscan" = "latest"
+"cargo:tre-command" = "latest"
+"cargo:trippy" = "latest"
 "cargo:typos-cli" = "latest"
 
-# ── 4. Go 工具 ───────────────────────────────────────────────
-"go:github.com/gogf/gf/cmd/gf/v2" = "2.10.0"
+# ── 6. Go 工具 ───────────────────────────────────────────────────
+"go:github.com/gogf/gf/cmd/gf/v2" = "2.10.2"
 "go:github.com/ofabry/go-callvis" = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
+"go:github.com/google/wire/cmd/wire" = "latest"
 
-# ── 5. NPM 工具 (通过 bun 极速安装) ───────────────────────────
+# ── 7. NPM 工具 (通过 bun 极速安装) ──────────────────────────────
 "npm:fanyi" = "latest"
 "npm:ccusage" = "latest"
 "npm:npkill" = "latest"
 "npm:prettier" = "latest"
 "npm:pake-cli" = "latest"
 "npm:http-server" = "latest"
+"npm:epub2md" = "latest"
+"npm:ignite-cli" = "latest"
+"npm:@electron/asar" = "latest"
 "npm:@moonshot-ai/kimi-code" = "latest"
 
-# ── 6. Python CLI 工具 (复用全局 Python 3.14 + uvx 隔离运行) ──
+# ── 8. Python CLI 工具 (复用全局 Python 3.14 + uvx 隔离运行) ─────
 "pipx:duckduckgo-mcp-server" = "latest"
 "pipx:pre-commit" = "latest"
 "pipx:mycli" = "latest"
 
-# ── 7. Ruby Gem 工具 ─────────────────────────────────────────
-"gem:cocoapods" = "latest"
-
 [env]
-MISE_RUSTUP_HOME = "$HOME/.rustup"
-MISE_CARGO_HOME = "$HOME/.cargo"
+BINSTALL_STRATEGIES = "crate-meta-data,compile"
 PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 UV_DEFAULT_INDEX = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 GOPROXY = "https://goproxy.cn,direct"
+FLUTTER_STORAGE_BASE_URL = "https://storage.flutter-io.cn"
+PUB_HOSTED_URL = "https://pub.flutter-io.cn"
