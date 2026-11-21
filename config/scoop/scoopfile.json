@@ -1,0 +1,508 @@
+{
+    "buckets": [
+        {
+            "Name": "main",
+            "Source": "https://github.com/ScoopInstaller/Main",
+            "Updated": "2026-11-21T08:41:43+08:00",
+            "Manifests": 1719
+        },
+        {
+            "Name": "extras",
+            "Source": "https://github.com/ScoopInstaller/Extras",
+            "Updated": "2026-11-21T08:41:49+08:00",
+            "Manifests": 2475
+        },
+        {
+            "Name": "versions",
+            "Source": "https://github.com/ScoopInstaller/Versions",
+            "Updated": "2026-11-21T09:37:10+08:00",
+            "Manifests": 651
+        },
+        {
+            "Name": "nirsoft",
+            "Source": "https://github.com/ScoopInstaller/Nirsoft",
+            "Updated": "2026-11-12T19:16:59+08:00",
+            "Manifests": 291
+        },
+        {
+            "Name": "nerd-fonts",
+            "Source": "https://github.com/matthewjberger/scoop-nerd-fonts",
+            "Updated": "2026-11-11T04:21:53+08:00",
+            "Manifests": 367
+        },
+        {
+            "Name": "nonportable",
+            "Source": "https://github.com/ScoopInstaller/Nonportable",
+            "Updated": "2026-11-21T09:35:55+08:00",
+            "Manifests": 135
+        },
+        {
+            "Name": "java",
+            "Source": "https://github.com/ScoopInstaller/Java",
+            "Updated": "2026-11-21T00:59:09+08:00",
+            "Manifests": 338
+        },
+        {
+            "Name": "dorado",
+            "Source": "https://github.com/chawyehsu/dorado",
+            "Updated": "2026-11-21T08:16:23+08:00",
+            "Manifests": 274
+        },
+        {
+            "Name": "freeok",
+            "Source": "https://github.com/freeok/scoop-bucket",
+            "Updated": "2026-11-01T03:40:47+08:00",
+            "Manifests": 2
+        }
+    ],
+    "apps": [
+        {
+            "Name": "7zip",
+            "Version": "26.04",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:37.9883608+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "affine",
+            "Version": "0.27.4",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.0011478+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "bandizip",
+            "Version": "7.47",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.0116604+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "blender",
+            "Version": "5.2.2",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.0337507+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "bruno",
+            "Version": "4.2.1",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.0412562+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "controlmymonitor",
+            "Version": "1.38",
+            "Source": "nirsoft",
+            "Updated": "2026-11-21T11:53:38.0605185+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "cutter",
+            "Version": "2.5.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.0775419+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "deskflow",
+            "Version": "1.27.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.1010901+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "detect-it-easy",
+            "Version": "3.21",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.1076516+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "files-np",
+            "Version": "4.2.9.0",
+            "Source": "nonportable",
+            "Updated": "2026-11-21T11:53:38.1502145+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "frp",
+            "Version": "0.71.1",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.1624601+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "git",
+            "Version": "2.56.0.2",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.1985303+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "Hack-NF-Mono",
+            "Version": "3.5.1",
+            "Source": "nerd-fonts",
+            "Updated": "2026-11-21T11:53:38.2097971+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "heynote",
+            "Version": "2.9.1",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.2223059+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "imhex",
+            "Version": "1.38.1",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.2298145+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "innounp",
+            "Version": "2.71.2",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.241328+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "koodo-reader",
+            "Version": "2.4.6",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.2598084+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "less",
+            "Version": "710",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.2719141+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "llvm",
+            "Version": "23.1.5",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.2784167+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "localsend",
+            "Version": "1.18.2",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.2815191+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "lux",
+            "Version": "0.24.1",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.2945532+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "lz4",
+            "Version": "1.10.0",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3015805+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "make",
+            "Version": "4.4.1",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3035802+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "Maple-Mono",
+            "Version": "7.9",
+            "Source": "nerd-fonts",
+            "Updated": "2026-11-21T11:53:38.3239001+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "mingw",
+            "Version": "16.2.0-rt_v14-rev1",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3454188+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "mole",
+            "Version": "1.41.0",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3593773+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "msys2",
+            "Version": "2025-08-30",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3683806+08:00",
+            "Info": "Held package"
+        },
+        {
+            "Name": "nanazip",
+            "Version": "7.0.1843.0",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3725376+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "neeview",
+            "Version": "46.3",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.3755378+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "nheko",
+            "Version": "0.12.1",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.3820473+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "nmap",
+            "Version": "7.992",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.3941008+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "notion",
+            "Version": "7.39.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4030853+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "obs-studio",
+            "Version": "32.2.2",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4060908+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "ollama-full",
+            "Version": "0.40.6",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4269999+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "openssl",
+            "Version": "4.0.3",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.4420173+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "peazip",
+            "Version": "11.4.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.456259+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "pot",
+            "Version": "3.0.7",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4744297+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "potplayer",
+            "Version": "260819",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4837662+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "powertoys",
+            "Version": "0.101.2362.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.4877084+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "quicklook",
+            "Version": "4.5.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5085827+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "rufus",
+            "Version": "4.15",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5221145+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "rustrover",
+            "Version": "2026.2.4-262.10968.211",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5306309+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "scoop-completion",
+            "Version": "0.3.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5326311+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "sharex",
+            "Version": "21.0.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5429536+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "snipaste",
+            "Version": "2.11.3",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5449541+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "so-novel",
+            "Version": "1.11.0",
+            "Source": "freeok",
+            "Updated": "2026-11-21T11:53:38.5555434+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "solomd",
+            "Version": "5.0.3",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.5637441+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "sudo",
+            "Version": "0.2020.01.26",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.5868266+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "sysinternals",
+            "Version": "20261015",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6023674+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "trafficmonitor",
+            "Version": "1.86",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6204445+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "typora",
+            "Version": "1.14.9",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6315593+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "vnote",
+            "Version": "4.10.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.657614+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "Windhawk",
+            "Version": "1.7.3",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6638355+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "winscp",
+            "Version": "6.7",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6773735+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "wixtoolset",
+            "Version": "7.0.0",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.6803993+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "wiztree",
+            "Version": "4.33",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.6889073+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "workbuddy",
+            "Version": "5.11.4.44121853",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7008913+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "wox-beta",
+            "Version": "2.4.0-beta.3",
+            "Source": "versions",
+            "Updated": "2026-11-21T11:53:38.7144567+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "xmind",
+            "Version": "26.05.01107",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7205197+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "yaak",
+            "Version": "2026.9.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7275775+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "zed",
+            "Version": "1.24.2",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7404435+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "zen-browser",
+            "Version": "1.23.3b",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7521402+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "zettlr",
+            "Version": "4.8.0",
+            "Source": "extras",
+            "Updated": "2026-11-21T11:53:38.7643753+08:00",
+            "Info": ""
+        },
+        {
+            "Name": "zstd",
+            "Version": "1.5.7",
+            "Source": "main",
+            "Updated": "2026-11-21T11:53:38.7884893+08:00",
+            "Info": ""
+        }
+    ]
+}

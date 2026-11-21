@@ -119,12 +119,15 @@ function Repair-UserPath {
         'D:\Program\Develop\mise\shims'
     ) | Where-Object { $_ -and (Test-Path $_) }
     if (-not $candidates) { Write-Warn2 '找不到 mise shims 目录，跳过 PATH 修复'; return }
-    $miseShims = $candidates[0]
-    $current = [Environment]::GetEnvironmentVariable('Path', 'User') -split ';' | Where-Object { $_ }
-    $clean = @($miseShims) + ($current | Where-Object { $_ -ne $miseShims } | Select-Object -Unique)
+    # 注意：管道单元素输出会退化为标量字符串，必须 @() 包一层再取下标，
+    # 否则 $candidates[0] 取到的是字符串首字符（曾因此把裸 'D' 写进 PATH）
+    $miseShims = @($candidates)[0]
+    $current = [Environment]::GetEnvironmentVariable('Path', 'User') -split ';'
+    # 清理无效条目（空串 / 裸盘符）+ 精确去重，保持其余原序
+    $clean = @($miseShims) + ($current | Where-Object { $_ -and ($_ -notmatch '^[A-Za-z]:?$') -and ($_ -ne $miseShims) } | Select-Object -Unique)
     [Environment]::SetEnvironmentVariable('Path', ($clean -join ';'), 'User')
     $env:Path = $clean -join ';'
-    Write-Ok "用户 PATH 已修复：前置 $miseShims，其余去重（共 $($clean.Count) 条）"
+    Write-Ok "用户 PATH 已修复：前置 $miseShims，清理无效条目并去重（共 $($clean.Count) 条）"
 }
 
 if ($FixPath) {

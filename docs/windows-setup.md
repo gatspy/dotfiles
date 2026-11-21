@@ -24,7 +24,7 @@
 | `git/gitconfig.windows.symlink`（BC5/autocrlf=true/GCM） | `~\.gitconfig` | symlink |
 | `git/gitmessage.symlink` | `~\.gitmessage` | symlink |
 | `config/git/ignore.symlink`（修正反斜杠 bug） | `~\.config\git\ignore` | symlink |
-| `config/scoop/scoopfile.json` | `~\.config\scoop\scoopfile.json` | symlink（C 阶段后生成） |
+| `config/scoop/scoopfile.json` | `~\.config\scoop\scoopfile.json` | symlink（2026-11-21 已导出建链） |
 
 纪律：`~\.gitconfig.local`（公司 CA 等）不入仓，靠 gitconfig 的 `[include]` 链生效；profile 内 `reload` 后的改动会写穿回仓库，`git status` 直接可见。
 
@@ -50,16 +50,17 @@ Add-MpPreference -ExclusionPath @(
 # ② Go 代理刻入全局（mise [env] 的 GOPROXY 在 go:* 解析期尚未注入）
 go env -w GOPROXY=https://goproxy.cn,direct
 
-# ③ Scoop 卸载已由 mise/starship/kanata 接管的 28 项（消双装，PATH 恒 mise 优先）
-scoop uninstall bat cmake croc delta duckdb dust eza fd ffmpeg fzf gh jq lsd maven `
-  oh-my-posh pixi powertoys procs protobuf ripgrep starship temurin21-jdk tokei `
+# ③ Scoop 卸载已由 mise/starship/kanata 接管的 CLI（消双装，PATH 恒 mise 优先）
+# 2026-11-21 实测：以下 26 项已卸；ffmpeg/temurin21-jdk 当时已不在 scoop（无需处理）
+scoop uninstall bat cmake croc delta duckdb dust eza fd fzf gh jq lsd maven `
+  oh-my-posh pixi powertoys procs protobuf ripgrep starship tokei `
   trippy vfox vivid zola zoxide
 scoop cleanup *; scoop cache rm *
 
-# ④ mise Roaming 残留（存在才删）
+# ④ mise Roaming 残留（存在才删；2026-11-21 实测本机无残留）
 Remove-Item -Recurse -Force "$env:APPDATA\mise"
 
-# ⑤ 工具收敛
+# ⑤ 工具收敛（2026-11-21 实测：83/83 已装，prune 清掉 8 个旧 fork 孤儿）
 mise reshim --force; mise prune -y
 ```
 
@@ -79,6 +80,7 @@ git config --global --list   # 出自链接文件
 
 ## 已排障实录
 
+- **FixPath 裸盘符事故**（2026-11-21 修复）：`@(...)|Where-Object` 管道单元素输出退化为标量字符串，`$candidates[0]` 取到首字符 `'D'` 被写进 PATH → 改 `@($candidates)[0]` 并顺带清理裸盘符条目。教训：PS 管道单元素必退化，取下标前先 @() 包层。
 - **scoop-completion 静默失效**（2026-11-21 修复）：旧 bootstrap 写死 `USERPROFILE\scoop` 与 `H:\scoop` 两个路径，本机根在 `D:\Program\Scoop\main`，两路全空 → 改为按 PSModulePath 按名导入。
 - **`~\.config\git\ignore` 反斜杠 bug**（2026-11-21 修复）：`**/.claude\settings.local.json` 中 `\s` 是转义，实际匹配 `.claudesettings.local.json`，形同虚设 → 入仓改正斜杠并建链。
 - **mise 配置分叉**（2026-11-21 收敛）：Windows 曾有一份 68 行独立 fork（java 23/flutter 3.38.10/阿里源），与三端正典漂移 → 废弃（bootstrap-bak 留档），统一链接仓库版。
