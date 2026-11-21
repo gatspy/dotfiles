@@ -40,10 +40,15 @@
 ## 一次性动作清单
 
 ```powershell
-# ① Defender 排除（管理员）——编译器/包管理器高频小文件 I/O 的性能杀手位
+# ① Defender 排除（管理员）——工具链热路径（shims 每次调用 + 编译小文件 I/O 都会被实时扫描）
+# 路径逐条实测（2026-11-21）：mise 自定义装在 D:\Program\Develop\mise（doctor: data/shims/installs
+# 全在此），%LOCALAPPDATA%\mise 是死路径不排；~\.cache\mise 是 doctor 的 cache 目录，勿漏
 Add-MpPreference -ExclusionPath @(
-  "$env:LOCALAPPDATA\mise", "D:\Program\Develop\mise",
-  "$env:USERPROFILE\.cargo", "$env:USERPROFILE\.rustup", "D:\Program\Scoop\main"
+  'D:\Program\Develop\mise',
+  "$env:USERPROFILE\.cache\mise",
+  "$env:USERPROFILE\.cargo",
+  "$env:USERPROFILE\.rustup",
+  'D:\Program\Scoop\main'
 )
 
 # ② Go 代理刻入全局（mise [env] 的 GOPROXY 在 go:* 解析期尚未注入）
