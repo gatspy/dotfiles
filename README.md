@@ -47,7 +47,7 @@ mise install                                          # Windows 实装 83 项
 | `git/` | gitconfig（mac + win 双版）、gitignore、gitmessage |
 | `ai/` | AI 服务集成（sbx Docker 沙箱工作流、versor） |
 | `mise/` | mise shell 集成 + GITHUB_TOKEN 注入 |
-| `hammerspoon/` `karabiner/` `iterm/` `kanata/` `capslox/` | macOS 自动化 / 键位 / iTerm2 / Windows 键位（Kanata） |
+| `hammerspoon/` `karabiner/` `iterm/` `capslox/` | macOS 自动化 / 键位 / iTerm2 / Capslox keymap |
 | `homebrew/` | Brewfile.casks 单正典 + brew wrapper 函数 |
 | `k8s/` `python/` `golang/` `rust/` `dart/` `flutter/` `web/` `xcode/` | 语言与栈 topic（按白名单/条件加载） |
 | `functions/` `completions/` | zsh 函数与补全（大补全懒加载） |

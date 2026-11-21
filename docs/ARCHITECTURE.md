@@ -77,7 +77,6 @@ dotfiles/
 ├── tmux/            # git 子模块
 ├── hammerspoon/     # macOS 自动化（~/.hammerspoon 目录链接）
 ├── karabiner/       # macOS 键位（目录即 live 配置目录）
-├── kanata/          # Windows 键位（-Kanata 开关部署，README 有 mac 迁移预案）
 ├── capslox/         # Capslox keymap（win）
 ├── iterm/           # Dynamic Profiles + appearance.sh + 全量快照
 └── macos/ vscode/   # defaults 与 VSCode 安装脚本

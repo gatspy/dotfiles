@@ -6,7 +6,6 @@
   用法:
     pwsh -File script\bootstrap.ps1              # 部署（缺啥建啥，幂等）
     pwsh -File script\bootstrap.ps1 -CheckOnly    # 只检查不改动
-    pwsh -File script\bootstrap.ps1 -Kanata       # 同时部署 kanata 键位（可选）
 
   设计原则（与 script/bootstrap bash 版对齐）:
     - 目标已是正确链接  → 跳过
@@ -17,7 +16,6 @@
 #>
 param(
     [switch]$CheckOnly,
-    [switch]$Kanata,
     [switch]$FixPath
 )
 
@@ -163,11 +161,6 @@ if (Test-Path (Split-Path $wtSettings)) {
 $scoopManifest = "$RepoRoot\config\scoop\scoopfile.json"
 if (Test-Path $scoopManifest) {
     $links += @{ Link = "$U\.config\scoop\scoopfile.json"; Target = $scoopManifest }
-}
-
-# Kanata（可选开关）
-if ($Kanata) {
-    $junctions += @{ Link = "$U\.config\kanata"; Target = "$RepoRoot\kanata" }
 }
 
 # ──────────────────────────────────────────────────────────────────────────

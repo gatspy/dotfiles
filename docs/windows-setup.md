@@ -36,7 +36,6 @@
 4. **装工具**：`mise install`（三端同一份 config.toml，Windows 实装 83 项；含 ffmpeg os=["windows"]）
 5. **PATH 双轨**：`pwsh -File ~\.dotfiles\script\bootstrap.ps1 -FixPath`（mise shims 前置用户 PATH + 去重；第一轨管 IDE/GUI/CMD，$PROFILE 的 `mise activate pwsh` 是第二轨管交互终端）
 6. **一次性动作**（见下节）
-7. **可选 kanata**：`pwsh -File ~\.dotfiles\script\bootstrap.ps1 -Kanata`（junction `~\.config\kanata` → 仓库 kanata/，二进制安装用 `kanata.ps1`）
 
 ## 一次性动作清单
 
@@ -50,7 +49,7 @@ Add-MpPreference -ExclusionPath @(
 # ② Go 代理刻入全局（mise [env] 的 GOPROXY 在 go:* 解析期尚未注入）
 go env -w GOPROXY=https://goproxy.cn,direct
 
-# ③ Scoop 卸载已由 mise/starship/kanata 接管的 CLI（消双装，PATH 恒 mise 优先）
+# ③ Scoop 卸载已由 mise/starship 接管的 CLI（消双装，PATH 恒 mise 优先）
 # 2026-11-21 实测：以下 26 项已卸；ffmpeg/temurin21-jdk 当时已不在 scoop（无需处理）
 scoop uninstall bat cmake croc delta duckdb dust eza fd fzf gh jq lsd maven `
   oh-my-posh pixi powertoys procs protobuf ripgrep starship tokei `

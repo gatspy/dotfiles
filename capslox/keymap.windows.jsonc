@@ -34,7 +34,7 @@
         // N8: physically broken left Ctrl — swallow everything
         "lctl": "noop",
 
-        // ---- Main layer: Win+key delivers Ctrl+key (mirrors kanata cmd layer) ----
+        // ---- Main layer: Win+key delivers Ctrl+key (Cmd-equivalent layer) ----
         "mx-q": "ctrl-q", "mx-w": "ctrl-w", "mx-e": "ctrl-e", "mx-r": "ctrl-r", "mx-t": "ctrl-t",
         "mx-y": "ctrl-y", "mx-u": "ctrl-u", "mx-i": "ctrl-i", "mx-o": "ctrl-o", "mx-p": "ctrl-p",
         "mx-a": "ctrl-a", "mx-s": "ctrl-s", "mx-d": "ctrl-d", "mx-f": "ctrl-f", "mx-g": "ctrl-g",
