@@ -323,13 +323,6 @@
             "Info": ""
         },
         {
-            "Name": "powertoys",
-            "Version": "0.101.2362.0",
-            "Source": "extras",
-            "Updated": "2026-11-21T11:53:38.4877084+08:00",
-            "Info": ""
-        },
-        {
             "Name": "quicklook",
             "Version": "4.5.0",
             "Source": "extras",
