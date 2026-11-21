@@ -12,15 +12,28 @@ $ModulesDir  = Join-Path $ConfigRoot "modules"
 # 2. 核心工具链加载 (实时运行，确保无误)
 # -----------------------------------------------------------------------------
 
-# [Mise]
+# [Mise] activate 必须保留（[env] 注入 + 目录级切换）。输出嵌入了 PATH 快照，
+# 缓存会冻结/破坏 PATH——这 291ms 是 activate 正确性的固定成本，勿缓存。
 $env:MISE_SHELL = "powershell"
 if (Get-Command mise -ErrorAction SilentlyContinue) {
     Invoke-Expression (& mise activate pwsh | Out-String)
 }
 
-# [Starship]
+# [Starship] init 缓存：脚本内容只跟 starship 二进制版本相关（实测 174ms→~5ms）
+# 键 = shim 的 LastWriteTime（reshim/升级即失效重生成）；shim 的 init 输出是二次加载器，
+# 必须用 --print-full-init 拿完整脚本
 if (Get-Command starship -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& starship init powershell | Out-String)
+    $cacheDir = "$HOME\.cache\pwsh-init"
+    New-Item -ItemType Directory -Force $cacheDir | Out-Null
+    $ssKey = (Get-Item (Get-Command starship).Source).LastWriteTimeUtc.Ticks
+    $starshipInitFile = "$cacheDir\starship-init-$ssKey.ps1"
+    if (Test-Path $starshipInitFile) {
+        . $starshipInitFile
+    } else {
+        $starshipInitScript = (& starship init powershell --print-full-init | Out-String)
+        Set-Content -Path $starshipInitFile -Value $starshipInitScript
+        Invoke-Expression $starshipInitScript
+    }
 }
 
 # [Zoxide]
@@ -34,11 +47,23 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
     Import-Module scoop-completion -ErrorAction SilentlyContinue
 }
 
-# [GITHUB_TOKEN] cargo-binstall / gh 生态限流救急；值只留本机进程，绝不入仓
+# [GITHUB_TOKEN] cargo-binstall / gh 生态限流救急；值只留本机进程+缓存文件，绝不入仓
+# 缓存 1h：gh auth token 实测 141ms/次，读缓存 ~5ms；token 变更最多延迟 1h
 if (Get-Command gh -ErrorAction SilentlyContinue) {
-    $_ghToken = gh auth token 2>$null
-    if ($_ghToken) { $env:GITHUB_TOKEN = $_ghToken }
-    Remove-Variable _ghToken -ErrorAction SilentlyContinue
+    if (-not $env:GITHUB_TOKEN) {
+        $ghTokFile = "$HOME\.cache\pwsh-init\gh-token.txt"
+        if ((Test-Path $ghTokFile) -and ((Get-Item $ghTokFile).LastWriteTime -gt (Get-Date).AddHours(-1))) {
+            $env:GITHUB_TOKEN = (Get-Content $ghTokFile -Raw).Trim()
+        } else {
+            $_ghTok = gh auth token 2>$null
+            if ($_ghTok) {
+                New-Item -ItemType Directory -Force (Split-Path $ghTokFile) | Out-Null
+                Set-Content -Path $ghTokFile -Value $_ghTok -NoNewline
+                $env:GITHUB_TOKEN = $_ghTok
+            }
+            Remove-Variable _ghTok -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 # 3. 加载用户主配置
@@ -90,27 +115,22 @@ function Get-WTitle-Icon {
     return "📂" # 默认文件夹
 }
 
-# 3. 获取 Git 信息
+# 3. 获取 Git 信息（单次 spawn：git status -b --porcelain -uno 同时拿分支+脏标记，
+#    -uno 与旧逻辑一致地忽略未跟踪文件；仓库内每次回车省 ~120ms）
 function Get-WTitle-Git {
     try {
-        if (-not (git rev-parse --is-inside-work-tree 2>$null)) { return "" }
-        
-        $branch = git symbolic-ref --short HEAD 2>$null
-        if (-not $branch) { $branch = git rev-parse --short HEAD 2>$null }
-        if (-not $branch) { return "" }
-        
-        # 拆开写，防止报错
-        $dirty = $false
-        git diff --quiet 2>$null
-        if ($LASTEXITCODE -ne 0) { 
-            $dirty = $true 
-        } else {
-            git diff --cached --quiet 2>$null
-            if ($LASTEXITCODE -ne 0) { $dirty = $true }
-        }
-        
+        $st = git status -b --porcelain -uno 2>$null
+        if (-not $st -or $LASTEXITCODE -ne 0) { return "" }
+
+        $head = $st[0]
+        if ($head -match '^## (\S+?)\.\.\.') { $branch = $Matches[1] }
+        elseif ($head -match '^## (\S+)') { $branch = $Matches[1] }
+        else { $branch = git rev-parse --short HEAD 2>$null }  # detached HEAD 兜底
+
+        $dirty = $st.Count -gt 1
+
         # 这里换成了树叶图标，你之前喜欢的
-        $icon = "🌿" 
+        $icon = "🌿"
         if ($dirty) { return " | $icon $branch*" }
         return " | $icon $branch"
     } catch { return "" }

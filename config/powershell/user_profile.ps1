@@ -113,22 +113,29 @@ function ln {
 }
 
 
-# 4. FZF 配置
+# 4. FZF 配置（PSFzf 懒加载：首次按 Ctrl+R/T/Alt+C 才 Import，省 131ms/标签）
 # -----------------------------------------------------------
 if (Get-Command fzf -ErrorAction SilentlyContinue) {
     if (Get-Module -ListAvailable PSFzf) {
-        Import-Module PSFzf -ErrorAction SilentlyContinue
-        
-        Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock { Invoke-FzfPsReadlineHandlerHistory }
-        Set-PSReadLineKeyHandler -Chord 'Ctrl+t' -ScriptBlock { Invoke-FzfPsReadlineHandlerProvider }
-        Set-PSReadLineKeyHandler -Chord 'Alt+c' -ScriptBlock { Invoke-FzfPsReadlineHandlerSetLocation }
-        
         if (Get-Command fd -ErrorAction SilentlyContinue) {
             $env:FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
             $env:FZF_CTRL_T_COMMAND  = $env:FZF_DEFAULT_COMMAND
             $env:FZF_ALT_C_COMMAND   = 'fd --type d --hidden --follow --exclude .git'
         }
         $env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse --border"
+
+        # 首次按键时 Import + 换绑真实处理器，之后与直载行为一致
+        function global:Initialize-PSFzf {
+            if (-not (Get-Module PSFzf)) {
+                Import-Module PSFzf -ErrorAction SilentlyContinue
+                Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock { Invoke-FzfPsReadlineHandlerHistory }
+                Set-PSReadLineKeyHandler -Chord 'Ctrl+t' -ScriptBlock { Invoke-FzfPsReadlineHandlerProvider }
+                Set-PSReadLineKeyHandler -Chord 'Alt+c' -ScriptBlock { Invoke-FzfPsReadlineHandlerSetLocation }
+            }
+        }
+        Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock { Initialize-PSFzf; Invoke-FzfPsReadlineHandlerHistory }
+        Set-PSReadLineKeyHandler -Chord 'Ctrl+t' -ScriptBlock { Initialize-PSFzf; Invoke-FzfPsReadlineHandlerProvider }
+        Set-PSReadLineKeyHandler -Chord 'Alt+c' -ScriptBlock { Initialize-PSFzf; Invoke-FzfPsReadlineHandlerSetLocation }
     }
 }
 
