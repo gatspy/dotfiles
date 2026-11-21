@@ -67,3 +67,6 @@ fi
 #   alias lsa="gls -lah -F --color"
 #   alias lt="gls -lAh --color --time-style=long-iso"
 # fi
+
+# 一键全量升级（dotfiles + brew + mise），与 Windows user_profile.ps1 的 upall 对称
+alias upall='git -C "$HOME/.dotfiles" pull && brew update && brew upgrade && brew cleanup && mise up && mise prune -y'

@@ -131,8 +131,8 @@ check_gitconfig () {
 
   local gitconfig="$DOTFILES_ROOT/git/gitconfig.symlink"
 
-  # 检查是否仍使用占位符
-  if grep -q "AUTHORNAME\|AUTHOREMAIL" "$gitconfig" 2>/dev/null; then
+  # 检查是否仍使用占位符（AUTHORNAME/AUTHOREMAIL 旧占位 + example.com 通用占位）
+  if grep -q "AUTHORNAME\|AUTHOREMAIL\|example\.com" "$gitconfig" 2>/dev/null; then
     log_warning '检测到 Git 配置中使用占位符'
     echo ''
     echo '  请编辑 git/gitconfig.symlink，填写你的用户信息：'

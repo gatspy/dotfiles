@@ -1,0 +1,133 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b\r"
+            },
+            "id": "User.sendInput.ClaudeNewline"
+        }
+    ],
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "initialCols": 140,
+    "initialRows": 45,
+    "keybindings": 
+    [
+        {
+            "id": "User.sendInput.ClaudeNewline",
+            "keys": "shift+enter"
+        },
+        {
+            "id": "Terminal.ClearBuffer",
+            "keys": "alt+k"
+        },
+        {
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+k"
+        },
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
+        }
+    ],
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "bellStyle": "taskbar",
+            "font": 
+            {
+                "face": "Hack Nerd Font Mono",
+                "size": 11
+            }
+        },
+        "list": 
+        [
+            {
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "\u547d\u4ee4\u63d0\u793a\u7b26"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            },
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "closeOnExit": "always",
+                "commandline": "D:\\Program\\Scoop\\main\\apps\\msys2\\current\\msys2_shell.cmd -defterm -here -no-start -ucrt64 -shell zsh",
+                "cursorShape": "bar",
+                "font": 
+                {
+                    "face": "Hack Nerd Font Mono",
+                    "size": 10
+                },
+                "guid": "{99999999-1234-1234-1234-1234567890ab}",
+                "icon": "D:\\Program\\Scoop\\main\\apps\\msys2\\current\\ucrt64.ico",
+                "name": "UCRT64 / MSYS2",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "guid": "{694dfef9-0da8-5a45-9fdc-1e7f132c55dd}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{0f0c2044-d588-5c82-a71c-5b30227caae9}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{66a29db9-b64d-54dd-b686-407a5783197b}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2019",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{1ddbabff-9d0f-5be8-bae9-b158de9ddfbb}",
+                "hidden": true,
+                "name": "Developer PowerShell for VS 2019",
+                "source": "Windows.Terminal.VisualStudio"
+            }
+        ]
+    },
+    "schemes": [],
+    "themes": [],
+    "windowingBehavior": "useAnyExisting"
+}

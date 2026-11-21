@@ -26,3 +26,4 @@ karabiner/karabiner.json
 karabiner/automatic_backups/
 .claude/**
 .serena/**
+.zcode/**

@@ -1,0 +1,136 @@
+# Windows Git Configuration - 整合自macOS配置 + Beyond Compare 5支持
+[user]
+    name = gatspy
+    email = gatspy.if@gmail.com
+[commit]
+    template = ~/.gitmessage
+
+# 核心配置 - Windows适配
+[core]
+    pager = delta --diff-so-fancy
+    excludesfile = ~/.gitignore
+    editor = code --wait  # 使用VS Code作为默认编辑器，Windows更友好
+    autocrlf = true      # Windows推荐设置为true
+    quotepath = false
+
+# Diff工具配置 - Beyond Compare 5 for Windows
+[diff]
+    tool = bc
+    guitool = bc
+
+[difftool "bc"]
+    # 核心路径配置 (注意：这里不要注释掉!)
+    # 使用 $LOCAL 和 $REMOTE 两个参数
+    cmd = \"D:/Program/BeyondCompare5/BCompare.exe\" \"$LOCAL\" \"$REMOTE\"
+
+[difftool]
+    prompt = false
+
+# --- 2. 合并工具配置 (Merge) ---
+[merge]
+    tool = bc
+
+[mergetool "bc"]
+    # 合并需要4个参数，trustExitCode=true 表示信任 BC 的返回值
+    cmd = \"D:/Program/BeyondCompare5/BCompare.exe\" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+    trustExitCode = true
+
+[mergetool]
+    keepBackup = false
+    prompt = false
+
+# 别名配置
+[alias]
+    co = checkout
+    count = !git shortlog -sn
+	# dt = diff tool (directory mode)
+    dt = difftool -d
+    # 对比暂存区 (已 add 但未 commit 的)
+    dts = difftool -d --cached
+    # 对比最近一次提交
+    dtl = difftool -d HEAD~1
+    # 注意：以下别名需要对应脚本，Windows下需要确保这些脚本存在
+    # promote = !$ZSH/bin/git-promote
+    # wtf     = !$ZSH/bin/git-wtf
+    # rank-contributors = !$ZSH/bin/git-rank-contributors
+
+# 颜色配置 - 保持macOS的美观配置
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    ui = auto
+[color "diff"]
+    meta = yellow
+    commit = green
+    frag = magenta
+    old = red
+    new = green
+    whitespace = red reverse
+[color "diff-highlight"]
+    oldNormal = red
+    oldHighlight = "red 52"
+    newNormal = "green"
+    newHighlight = "green 22"
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "status"]
+    untracked = cyan
+
+# Delta配置 - 保持美观的diff显示
+[delta]
+    features = side-by-side line-numbers decorations
+    plus-color = "#012800"
+    minus-color = "#340001"
+    syntax-theme = Monokai Extended
+    side-by-side = true
+    line-numbers-left-format = ""
+    line-numbers-right-format = "│ "
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+[interactive]
+    diffFilter = delta --color-only
+
+# 其他配置
+[apply]
+    whitespace = nowarn
+[help]
+    autocorrect = 1
+[push]
+    default = simple
+[grep]
+    lineNumber = true
+    extendRegexp = true
+[pull]
+    rebase = true
+[hub]
+    protocol = https
+
+# 凭证管理 - Windows使用Git Credential Manager
+[credential]
+[credential "https://github.com"]
+    username = gatspy
+
+# LFS配置
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+# 本地私有配置（可选）
+[include]
+    path = ~/.gitconfig.local
+
+[credential "helperselector"]
+	selected = manager
+	
+[credential "https://git.solan.com"]
+	provider = generic
+
+[http]
+	sslBackend = openssl

@@ -43,6 +43,10 @@ direnv = { version = "latest", os = ["macos", "linux"] }
 "cargo:sheldon" = { version = "latest", os = ["macos", "linux"] }
 "npm:spoof" = { version = "latest", os = ["macos"] }
 
+# ── 2b. Windows 专属工具 (macOS 自动静默跳过) ─────────────────────
+# ffmpeg 走 BtbN 官方预编译秒装；mac 侧由 brew 供满血版（VideoToolbox 硬解 + dylib/头文件）
+ffmpeg = { version = "latest", os = ["windows"] }
+
 # ── 3. 显式指定后端的跨端预编译工具 (已实测通过 MBP19) ─────────────
 "github:atuinsh/atuin" = "latest"
 "aqua:dalance/procs" = "latest"

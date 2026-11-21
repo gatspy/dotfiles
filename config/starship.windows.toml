@@ -1,0 +1,98 @@
+# =================================================================
+#  Starship 配置文件 (Emoji 极简风 - 与 PowerShell 脚本完美配套)
+# =================================================================
+
+add_newline = true
+command_timeout = 5000
+
+# 核心格式编排
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$python\
+$character"""
+
+# -----------------------------------------------------------------
+# 📂 目录组件
+# -----------------------------------------------------------------
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncation_symbol = "…/"
+substitutions = { "\\" = "/" }
+
+# -----------------------------------------------------------------
+# 🚀 提示符箭头 (成功变绿，失败变红)
+# -----------------------------------------------------------------
+[character]
+success_symbol = "[➜](bold green)"   # 成功时显示绿色箭头
+error_symbol = "[✗](bold red)"       # 失败时显示红色叉叉
+vicmd_symbol = "[❮](green bold)"
+
+# -----------------------------------------------------------------
+# 🌿 Git 分支 (为了配合你的窗口标题，这里也用绿叶！)
+# -----------------------------------------------------------------
+[git_branch]
+symbol = "🌿 "
+format = "[$symbol$branch]($style)"
+style = "purple bold"  # 分支名用紫色，显眼又好看
+
+# -----------------------------------------------------------------
+# 📊 Git 状态 (核心修改：全部换成 Emoji)
+# -----------------------------------------------------------------
+[git_status]
+style = "red bold"
+format = '([\[$all_status$ahead_behind\]]($style))'
+
+# ⬇️ 重点在这里！别再用 ? ! + 了，换成 Emoji ⬇️
+up_to_date = "✅ "    # 干净时显示绿勾 (如果你的 format 里包含它)
+conflicted = "🏳 "     # 冲突
+untracked = "🤷 "     # 未追踪 (你之前的 [?] 会变成这个)
+modified = "📝 "      # 有修改
+staged = "➕ "        # 已暂存
+renamed = "👅 "       # 重命名
+deleted = "🗑 "       # 被删除
+stashed = "📦 "       # 有贮藏
+ahead = "🏎💨 "       # 领先远程
+behind = "🐢 "        # 落后远程
+diverged = "😵 "      # 分叉了
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+# -----------------------------------------------------------------
+# ⏱️ 耗时显示
+# -----------------------------------------------------------------
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "yellow"
+
+# -----------------------------------------------------------------
+# 🐍 Python 环境
+# -----------------------------------------------------------------
+[python]
+symbol = "🐍"
+format = '[${symbol}${pyenv_prefix}(${version})($virtualenv)]($style) '
+style = "bright-black"
+
+# -----------------------------------------------------------------
+# 👤 用户名 (通常隐藏，除非是 Root)
+# -----------------------------------------------------------------
+[username]
+style_user = "white bold"
+style_root = "black bold red"
+format = "[$user]($style) "
+show_always = false
+
+[hostname]
+ssh_only = true
+format = "[$ssh_symbol$hostname]($style) "
+style = "bold dimmed green"
