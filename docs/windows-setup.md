@@ -41,14 +41,14 @@
 
 ```powershell
 # ① Defender 排除（管理员）——工具链热路径（shims 每次调用 + 编译小文件 I/O 都会被实时扫描）
-# 路径逐条实测（2026-11-21）：mise 自定义装在 D:\Program\Develop\mise（doctor: data/shims/installs
-# 全在此），%LOCALAPPDATA%\mise 是死路径不排；~\.cache\mise 是 doctor 的 cache 目录，勿漏
+# 路径逐条实测（2026-11-21 v3）：rust/cargo home 以用户 env 为权威
+# （CARGO_HOME/RUSTUP_HOME=D:\Program\Develop\rust\...，config 已撤 pin 不再写 ~\.cargo）
 Add-MpPreference -ExclusionPath @(
-  'D:\Program\Develop\mise',
-  "$env:USERPROFILE\.cache\mise",
-  "$env:USERPROFILE\.cargo",
-  "$env:USERPROFILE\.rustup",
-  'D:\Program\Scoop\main'
+  'D:\Program\Develop\mise',        # 本体+shims+installs+downloads（工具热路径，最关键）
+  "$env:USERPROFILE\.cache\mise",   # mise 下载/registry 缓存
+  'D:\Program\Develop\rust\cargo',  # CARGO_HOME（用户 env 权威）
+  'D:\Program\Develop\rust\rustup', # RUSTUP_HOME（用户 env 权威）
+  'D:\Program\Scoop\main'           # scoop apps（GUI 每次启动的扫描）
 )
 
 # ② Go 代理刻入全局（mise [env] 的 GOPROXY 在 go:* 解析期尚未注入）
@@ -66,6 +66,11 @@ Remove-Item -Recurse -Force "$env:APPDATA\mise"
 
 # ⑤ 工具收敛（2026-11-21 实测：83/83 已装，prune 清掉 8 个旧 fork 孤儿）
 mise reshim --force; mise prune -y
+
+# ⑥ C 盘孤儿清理（config 撤 pin 后 ~\.cargo\~\.rustup 已成孤儿，含 1.15GB registry
+#    与两套 toolchain；删前先跑 mise exec -- rustc --version 确认 toolchain 在
+#    D:\Program\Develop\mise\installs 自足）
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cargo", "$env:USERPROFILE\.rustup"
 ```
 
 保留在 Scoop 的：`git mingw msys2 make openssl wixtoolset 7zip nanazip bandizip peazip lz4 zstd less sudo nmap frp mole scoop-completion aria2` + 全部 GUI 应用 + 字体（Hack-NF-Mono / Maple-Mono，与 mac Brewfile 字体 cask 同名对齐）。同名陷阱：scoop 的 `mole` 是 SSH 隧道，brew 的 `mole` 是清理工具，各自留原地不进 mise。

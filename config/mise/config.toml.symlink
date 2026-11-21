@@ -8,8 +8,10 @@ cargo.binstall = true
 pipx.uvx = true
 pipx.registry_url = "https://pypi.tuna.tsinghua.edu.cn/simple/{}/"
 python.precompiled_flavor = "install_only_stripped"
-rust.rustup_home = "~/.rustup"
-rust.cargo_home = "~/.cargo"
+# rustup/cargo home 不在此钉死（2026-11-21 裁定）：Windows 侧尊重用户 env
+# （CARGO_HOME/RUSTUP_HOME=D:\Program\Develop\rust\...），此前 pin ~/.rustup 曾与
+# 用户 env 冲突，把 1.15GB registry 堆进 C 盘 ~\.cargo；mac 侧由 mise/init.zsh 的
+# MISE_RUSTUP_HOME/MISE_CARGO_HOME env 保持 ~/.rustup 约定
 task.run_auto_install = false
 minimum_release_age = "0s"       # 改回 "0s"，彻底消除 release date / cutoff 等一切烦人警告
 

@@ -195,8 +195,8 @@ Write-Host ' 一次性动作清单（按需人工执行，详见 docs/windows-se
 Write-Host '──────────────────────────────────────────────────────────' -ForegroundColor Cyan
 Write-Host @'
  1. PATH 双轨修复: pwsh -File script\bootstrap.ps1 -FixPath（mise shims 前置 + 去重）
- 2. Defender 排除（管理员 PowerShell；路径已按本机实测核定）:
-    Add-MpPreference -ExclusionPath @("D:\Program\Develop\mise", "$env:USERPROFILE\.cache\mise", "$env:USERPROFILE\.cargo", "$env:USERPROFILE\.rustup", "D:\Program\Scoop\main")
+ 2. Defender 排除（管理员 PowerShell；rust/cargo home 以用户 env 为权威）:
+    Add-MpPreference -ExclusionPath @("D:\Program\Develop\mise", "$env:USERPROFILE\.cache\mise", "D:\Program\Develop\rust\cargo", "D:\Program\Develop\rust\rustup", "D:\Program\Scoop\main")
  3. Go 代理刻入全局（[env] 的 GOPROXY 在 mise 解析期不生效）:
     go env -w GOPROXY=https://goproxy.cn,direct
  4. Scoop 卸载已由 mise 接管的 CLI（28 项，见 docs/windows-setup.md）
