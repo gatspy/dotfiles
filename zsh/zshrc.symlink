@@ -57,7 +57,7 @@ topic_config[reactnative]="$REACT_NATIVE_ROOT"
 topic_config[qt]="$QT_QMAKE_DIR"
 
 # always load these topics
-always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|ai|small-tools|completions|functions|config|script)$"
+always_load_topics="^(system|zsh|web|k8s|golang|rust|python|dart|git|homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|xcode|ai|small-tools|completions|functions|config|script)$"
 
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}; do
   topic=${file:h:t}

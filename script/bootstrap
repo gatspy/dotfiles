@@ -123,6 +123,11 @@ install_configs () {
   if [[ -f "$DOTFILES_ROOT/git/gitmessage.symlink" ]]; then
     symlink_with_backup "$DOTFILES_ROOT/git/gitmessage.symlink" ~/.gitmessage
   fi
+
+  # 私有配置 ~/.zsh.localrc → zsh/zshrc.local（已入 git 随 clone 走；2026-11-21 补上缺失的建链逻辑）
+  if [[ -f "$DOTFILES_ROOT/zsh/zshrc.local" && ! -e "$HOME/.zsh.localrc" ]]; then
+    symlink_with_backup "$DOTFILES_ROOT/zsh/zshrc.local" "$HOME/.zsh.localrc"
+  fi
 }
 
 # 检查 Git 配置

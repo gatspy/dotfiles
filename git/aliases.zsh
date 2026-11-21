@@ -12,7 +12,6 @@ alias gd='git diff'
 
 alias gco='git checkout'
 alias gb='git branch -v'
-alias gcb='git copy-branch-name'
 alias gcl='git clone'
 
 alias ga='git add'

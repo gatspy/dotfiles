@@ -19,7 +19,6 @@ bin/lgxy
 # AI service API keys (sensitive)
 ai/agent.zsh
 *.backup
-*.bak
 
 # Karabiner (GUI auto-modifies these)
 karabiner/karabiner.json

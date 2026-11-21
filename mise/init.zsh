@@ -1,19 +1,7 @@
 #!/usr/bin/env zsh
 
-# Check if 'mise' is a command in $PATH
-if [ $commands[mise] ]; then
-
-  # Placeholder 'mise' shell function:
-  # Will only be executed on the first call to 'mise'
-  mise() {
-
-    # Remove this function, subsequent calls will execute 'mise' directly
-    unfunction "$0"
-
-    # Execute 'mise' binary
-    $0 "$@"
-  }
-fi
+# mise 本体由 zshrc.symlink 末尾的 `mise activate zsh --shims` 统一接管。
+# （懒加载占位函数已裁撤：activate 每次启动都会接管调用，占位函数只剩误导性）
 
 export MISE_RUSTUP_HOME=$HOME/.rustup
 export MISE_CARGO_HOME=$HOME/.cargo

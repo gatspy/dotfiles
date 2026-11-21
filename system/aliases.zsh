@@ -11,7 +11,7 @@ if which eza >/dev/null 2>&1; then
     alias la='eza -laa --git'
     alias ll='eza -l --git'
 else
-    if [ "$PLATFORM_OS" = "Darwin" ]; then
+    if [ "$PLATFORM_OS" = "darwin" ]; then
         alias ls="ls -FG"
     else
         alias ls="ls -F --color"
@@ -38,8 +38,8 @@ alias less="less -r"
 # quick hack to make watch work with aliases
 alias watch='watch '
 
-# open, pbcopy and pbpaste on linux
-if [ "$PLATFORM_OS" != "Darwin" ]; then
+# open, pbcopy and pbpaste on non-darwin platforms
+if [ "$PLATFORM_OS" != "darwin" ]; then
     if [ -z "$(command -v pbcopy)" ]; then
         if command -v xclip >/dev/null 2>&1; then
             alias pbcopy="xclip -selection clipboard"

@@ -52,21 +52,19 @@ if which brew >/dev/null 2>&1; then
             echo ''
             echo "Run 'brew pull' to upgrade all."
             ;;
-        # 新增：运行审计脚本
-        audit)
-            if [ -x ~/.dotfiles/homebrew/bin/brew-audit ]; then
-                ~/.dotfiles/homebrew/bin/brew-audit
-            else
-                echo '[brew] Audit script not found. Run: chmod +x ~/.dotfiles/homebrew/bin/brew-audit'
-            fi
+        # 新增：查看可清理空间（dry-run）
+        reclaim|dry-clean)
+            echo '[brew] Reclaimable space (dry run):'
+            command brew cleanup --dry-run
+            echo ''
+            echo 'Run "brew cleanup" or "brew pull" to reclaim.'
             ;;
-        # 新增：运行周维护
-        maintain)
-            if [ -x ~/.dotfiles/homebrew/bin/brew-maintain ]; then
-                ~/.dotfiles/homebrew/bin/brew-maintain
-            else
-                echo '[brew] Maintain script not found. Run: chmod +x ~/.dotfiles/homebrew/bin/brew-maintain'
-            fi
+        # 新增：快速查看过时包数量
+        outdated|od)
+            echo '[brew] Outdated packages:'
+            command brew outdated
+            echo ''
+            echo "Run 'brew pull' to upgrade all."
             ;;
         *)
             command brew "$@"
@@ -79,5 +77,3 @@ fi
 alias bup='brew pull'               # update + upgrade + cleanup
 alias bclean='brew cleanup'         # deep cleanup
 alias bout='brew outdated'          # check outdated
-alias baudit='brew audit'           # run audit
-alias bmaintain='brew maintain'     # run weekly maintenance

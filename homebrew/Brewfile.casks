@@ -1,24 +1,22 @@
 tap "deskflow/tap", trusted: true
 tap "xo/xo", trusted: true
 
-# Formulae — M6 whitelist v2.4 (2026-10-27): core 7 + on-demand heavyweights 2.
-# grc retired same day: system/grc.zsh deleted; its wrapped-command colorization
+# Formulae — M6 whitelist v2.5 (2026-11-21): core 4 + on-demand heavyweights 2.
+# v2.5 ruling: cmake/jq 上收 mise（config.toml 单源，消除与 mise 的双装），
+# ninja 移除（暂不需要）。git/curl 留 brew（mise 不管系统级 git/curl）。
+# grc retired 2026-10-27: system/grc.zsh deleted; its wrapped-command colorization
 # is fully superseded by mise's native-color tools (eza/dust/duf/procs/fd/delta/btm).
 # 2026-10-27 purge (MBP-evidenced, zero-live-refs): wget/htop/coreutils retired,
 # wireshark retired (formula is CLI-only; user doesn't capture), protobuf retired
 # (protoc now mise-owned). imagemagick/libpq never in M6 scope.
-# gnupg is MBP-only by ruling. jq stays brew (jaq deviates on $ENV etc.).
+# gnupg is MBP-only by ruling.
 # Owned by mise (config.toml) — do not re-add: protobuf, kind, git-filter-repo,
-# xcodegen, antigravity-cli, wire, fblog. (gemini-cli removed 2026-10-29.)
+# xcodegen, antigravity-cli, wire, fblog, cmake, jq. (gemini-cli removed 2026-10-29.)
 # tmux configs kept in dotfiles for painless reinstall if ever needed.
 # All bottled on arm64. App Store apps are installed manually (mas retired).
 # system base
 brew "git"
 brew "curl"
-brew "jq"
-# build
-brew "cmake"
-brew "ninja"
 # retained per dual-machine ruling
 brew "neovim"
 brew "mole"

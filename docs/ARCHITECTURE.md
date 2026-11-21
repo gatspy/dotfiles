@@ -1,8 +1,8 @@
 # Dotfiles Architecture
 
-**版本**: 3.0 (2026-03-08 优化版)
+**版本**: 3.1 (2026-11-21 三端化)
 **作者**: gatspy
-**系统**: macOS (Apple Silicon)
+**系统**: macOS (Intel/Silicon) + Windows x64
 
 ---
 
@@ -15,6 +15,19 @@
 - **按需加载**：支持条件加载，减少启动时间
 - **渐进优化**：保留良好架构，优化内容和性能
 - **可回滚**：所有改动可追溯，支持快速恢复
+- **三端单源**：工具域 mise 一份 config 三端共用（`os` 过滤分流），GUI 归平台原生包管理器
+
+---
+
+## 三端包管理编排（2026-11-21 定稿）
+
+| 管理器 | 职责 | 正典清单 |
+|---|---|---|
+| mise | 跨平台运行时 + 纯二进制 CLI（Win 实装 83 / mac 实装 88） | `config/mise/config.toml.symlink` |
+| Homebrew | macOS GUI cask、字体、动态库（M6 白名单；MBP 存量维保） | `homebrew/Brewfile.casks` v2.5 |
+| Scoop | Windows GUI、字体、编译底座（git/mingw/msys2） | `config/scoop/scoopfile.json` |
+
+优先级保障：mac 端 zshrc 先注入 mise shims 再于末尾 `mise activate zsh --shims`（二者互补：前者供 sheldon/starship eval 提前用上 mise 工具，后者挂 [env] hook）；Windows 双轨见 [windows-setup.md](windows-setup.md)。化石清单入 `archive/`，禁止再跑（根 Brewfile 已归档）。
 
 ---
 
@@ -24,72 +37,58 @@
 
 ```
 dotfiles/
-├── system/          # 系统核心配置
-│   ├── 00-path.zsh  # PATH 设置
-│   ├── aliases.zsh  # 核心别名
-│   └── env.zsh      # 环境变量
-├── zsh/             # Zsh shell 配置
-│   ├── config.zsh   # Zsh 选项配置
-│   ├── vimode.zsh   # Vi 模式配置
-│   └── keybindings.zsh # 键绑定
+├── system/          # 系统核心：00-path / platform / env / aliases / history / keys
+├── zsh/             # zshrc 入口、config、vimode、fpath、completion、zshrc.local（私有）
 ├── config/          # 外部工具配置
-│   ├── sheldon/     # Sheldon 插件管理器
-│   └── mise/        # Mise 版本管理
-├── script/          # 安装和引导脚本
-│   └── lib.sh       # 公共函数库
+│   ├── mise/        # 三端单源 config.toml
+│   ├── sheldon/     # 插件管理器
+│   ├── starship.toml.symlink      # mac 提示符（Nerd Font 幻影风）
+│   ├── starship.windows.toml      # win 提示符（Emoji 极简风）
+│   ├── powershell/  # Windows 引导器 + user_profile + modules/（junction 建链）
+│   ├── windows-terminal/settings.json
+│   ├── scoop/       # scoopfile.json（C 阶段卸载后导出）
+│   ├── git/         # ~/.config/git/ignore
+│   └── zed/         # settings + keymap
+├── script/          # bootstrap（bash + PowerShell 双版）、install、lib.sh
 └── zshrc.symlink    # 主配置文件入口
 ```
 
 ### 开发工具（始终加载）
 
 ```
-├── git/             # Git 版本控制
-│   ├── aliases.zsh
-│   └── install.sh
-├── homebrew/        # Homebrew 包管理
-│   ├── aliases.zsh
-│   └── install.sh
-├── mise/            # 版本管理（懒加载）
-├── fzf/             # 模糊查找器
-├── atuin/           # Shell 历史（懒加载）
-├── completions/     # 命令补全
-│   └── lazy.zsh     # 懒加载机制
-└── functions/       # 自定义 shell 函数
+├── git/             # gitconfig（mac/windows 双版）+ aliases + gitmessage
+├── homebrew/        # brew wrapper + Brewfile.casks
+├── mise/            # GITHUB_TOKEN 注入 + rustup/cargo home 导出
+├── fzf/ atuin/      # 懒加载
+├── completions/     # 懒加载机制（pixi/django/react-native/dotnet）
+└── functions/       # c/h/extract 等
 ```
 
-### 语言和框架（条件加载）
+### 语言和栈（白名单/条件加载）
 
 ```
-├── python/          # Python 开发
-├── golang/          # Go 开发
-├── rust/            # Rust 开发
-├── dart/            # Dart SDK
-├── flutter/         # Flutter 开发
-├── web/             # Web 开发（Node.js, npm）
-└── k8s/             # Kubernetes 工具
+├── python/ golang/ rust/ dart/ flutter/ web/ k8s/ xcode/
+└── （android/qt/reactnative 按 topic_config 环境变量条件加载）
 ```
 
-### 应用配置（条件加载）
+### 应用与键位（平台各异）
 
 ```
-├── tmux/            # Tmux 终端复用器
-├── hammerspoon/     # macOS 自动化
-├── karabiner/       # 键盘自定义
-├── iterm/           # iTerm2 配置
-├── macos/           # macOS 系统设置
-└── xcode/           # Xcode 开发
+├── tmux/            # git 子模块
+├── hammerspoon/     # macOS 自动化（~/.hammerspoon 目录链接）
+├── karabiner/       # macOS 键位（目录即 live 配置目录）
+├── kanata/          # Windows 键位（-Kanata 开关部署，README 有 mac 迁移预案）
+├── capslox/         # Capslox keymap（win）
+├── iterm/           # Dynamic Profiles + appearance.sh + 全量快照
+└── macos/ vscode/   # defaults 与 VSCode 安装脚本
 ```
 
-### 实用工具
+### 其他
 
 ```
-├── ai/              # AI 工具配置
-├── small-tools/     # 小型工具集
-│   ├── aliases.zsh      # zenith, zdns 别名
-│   ├── zdns-funcs.zsh   # zdns 函数
-│   └── antigravity.zsh  # antigravity 配置
-├── bin/             # 自定义可执行脚本
-└── archive/         # 归档目录（不加载）
+├── ai/              # sbx 沙箱工作流（task/work/take）、versor
+├── small-tools/     # zenith/zdns/antigravity
+└── archive/         # 化石清单与历史文档（不加载不部署）
 ```
 
 ---
@@ -100,39 +99,26 @@ dotfiles/
 
 ```
 Priority 1: 核心系统
-  ├─ path.zsh 文件（所有主题的 path.zsh）
+  ├─ */path.zsh 文件（所有主题的 path.zsh）
   ├─ system/, zsh/ 主题
-  └─ compinit（智能缓存）
+  └─ compinit（智能缓存，每日一建）
 
 Priority 2: 开发工具
   ├─ git/, homebrew/, mise/, fzf/, atuin/
   ├─ completions/, functions/
-  └─ config/, script/
+  └─ script/（不参与 shell 加载，仅部署用）
 
 Priority 3: 外部工具
-  ├─ Sheldon 插件（使用 defer）
+  ├─ Sheldon 插件（zsh-defer 延迟）
   ├─ Starship Prompt
   └─ Zoxide 导航
 
 Priority 4: 语言和应用（条件加载）
-  ├─ 基于环境变量：$ANDROID_HOME, $FLUTTER_ROOT 等
-  ├─ 基于命令存在：$commands[python], $commands[go] 等
-  └─ 基于平台检测：$OSTYPE, $TERM_PROGRAM 等
-```
-
-### 条件加载配置
-
-```zsh
-# 始终加载的主题
-always_load_topics="^(system|zsh|git|homebrew|fzf|mise|...|small-tools)$"
-
-# 条件加载的主题
-topic_config=(
-  [android]="$ANDROID_HOME"         # Android 开发
-  [flutter]="$FLUTTER_ROOT"         # Flutter 开发
-  [reactnative]="$REACT_NATIVE_ROOT" # React Native
-  [qt]="$QT_QMAKE_DIR"             # Qt 开发
-)
+  ├─ always_load_topics 白名单（system|zsh|web|k8s|golang|rust|python|dart|git|
+  │   homebrew|fzf|mise|atuin|tmux|hammerspoon|karabiner|xcode|ai|small-tools|
+  │   completions|functions|config|script）
+  ├─ topic_config 环境变量（android/flutter/reactnative/qt）
+  └─ 注意：glob 只匹配 $DOTFILES/*/*.zsh 一层，子目录 topic 需显式 source
 ```
 
 ---
@@ -141,45 +127,20 @@ topic_config=(
 
 ### 已实现的优化
 
-1. **智能 compinit**：每日仅重建一次
-   ```zsh
-   if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump '+%j') ]; then
-     compinit
-   else
-     compinit -C
-   fi
-   ```
-
-2. **懒加载机制**：大型补全按需加载
-   ```zsh
-   # completions/lazy.zsh
-   pixi() {
-     unfunction "$0"
-     source "$DOTFILES/completions/pixi.completion.zsh"
-     pixi "$@"
-   }
-   ```
-
-3. **Sheldon defer**：所有非核心插件延迟加载
-   ```toml
-   [plugins.zsh-autosuggestions]
-   apply = ["defer"]
-   ```
-
-4. **补全系统优化**：跳过懒加载的补全文件
-   ```zsh
-   lazy_completions=(pixi django react-native dotnet)
-   ```
+1. **智能 compinit**：zcompdump 每日仅重建一次（glob 修饰符判龄）
+2. **懒加载机制**：pixi/django/react-native/dotnet/kubectl/atuin 首调才展开
+3. **Sheldon defer**：全部非核心插件 zsh-defer 延迟
+4. **补全 O(1) 跳过**：关联数组代替线性扫描
 
 ### 性能基准
 
-| 版本 | 启动时间 | 优化 |
-|------|---------|------|
-| 优化前 | ~817ms | - |
-| v2.0 | ~500ms | 39% ↓ |
-| v3.0 | ~490ms | 40% ↓ |
+| 版本 | 启动时间 |
+|------|---------|
+| 优化前 | ~817ms |
+| v2.0 | ~500ms |
+| v3.0 | ~490ms |
 
-**当前基准**: **0.49s** (稳定后)
+**当前基准**: **0.49s**（详见 [performance-baseline.md](performance-baseline.md)）
 
 ---
 
@@ -187,52 +148,27 @@ topic_config=(
 
 ### 添加新主题
 
-1. 创建主题目录：
-   ```bash
-   mkdir ~/.dotframes/my-theme
-   ```
-
-2. 创建配置文件：
-   ```bash
-   # my-theme/path.zsh      # PATH 设置（可选）
-   # my-theme/aliases.zsh    # 别名定义
-   # my-theme/init.zsh       # 初始化脚本
-   # my-theme/completion.zsh # 补全定义（可选）
-   ```
-
-3. 更新 `zsh/zshrc.symlink`：
-   ```zsh
-   # 始终加载
-   always_load_topics="^(...|my-theme)$"
-
-   # 或条件加载
-   topic_config+=([my-theme]="$MY_TOOL_HOME")
-   ```
+1. 创建主题目录与文件（path.zsh / *.zsh / completion.zsh）
+2. 更新 `zsh/zshrc.symlink` 的 `always_load_topics` 或 `topic_config`
+3. `zsh -n ~/.zshrc` 语法自检
 
 ### 删除主题
 
-1. **优先移至 archive/**（而非直接删除）：
-   ```bash
-   mv ~/.dotfiles/my-theme ~/.dotfiles/archive/
-   ```
+1. **优先移至 archive/**（而非直接删除）
+2. 更新 zshrc 引用
+3. `zsh -n ~/.zshrc` 复检
 
-2. 更新 `zsh/zshrc.symlink`，移除引用
+### Windows 侧维护
 
-3. 测试配置：
-   ```bash
-   zsh -n ~/.zshrc
-   ```
+- 改 profile/modules → 编辑仓库 `config/powershell/`（live 是 junction，写穿回仓库）
+- 改完 `reload` 重载；WT settings 同理（symlink 写穿）
+- 环境动作与验收见 [windows-setup.md](windows-setup.md)
 
 ### 性能监控
 
 ```bash
-# 启动时间
 time zsh -i -c exit
-
-# 性能分析
 zsh -i -x -c exit 2>&1 | tee /tmp/zsh-profile.log
-
-# 语法检查
 zsh -n ~/.zshrc
 ```
 
@@ -240,97 +176,49 @@ zsh -n ~/.zshrc
 
 ## 外部工具集成
 
-### Sheldon - 插件管理器
+### Sheldon — 插件管理器
 
-**配置文件**: `config/sheldon/plugins.toml.symlink`
+`config/sheldon/plugins.toml.symlink`：zsh-defer 立即加载，其余补全/功能插件全部 defer。
 
-**插件类型**：
-- 补全插件：npm, docker, rust（defer 加载）
-- 功能插件：autosuggestions, history-search, syntax-highlighting（defer 加载）
-- 核心插件：zsh-defer（立即加载）
+### Starship — 提示符
 
-### Starship - 提示符
+双版制：mac 用 `config/starship.toml.symlink`（Nerd Font），Windows 用 `config/starship.windows.toml`（Emoji）。bootstrap 按 OS 建链。
 
-**配置文件**: `~/.config/starship.toml`
+### Mise — 版本管理
 
-**集成点**: `zsh/zshrc.symlink:33`
-- 读取 `VI_KEYMAP` 变量（由 `zsh/vimode.zsh` 设置）
-- 显示 Git 状态（由 Sheldon 插件提供）
-
-### Mise - 版本管理
-
-**配置文件**: `config/mise/config.toml.symlink`
-
-**懒加载**: `mise/init.zsh`
-```zsh
-mise() {
-  unfunction "$0"
-  eval "$(mise activate zsh)"
-  mise "$@"
-}
-```
+`config/mise/config.toml.symlink` 三端单源。加载机制：zshrc 第 27 行预注入 shims（供 sheldon/starship/zoxide eval 使用），末尾 `mise activate zsh --shims` 挂 [env] hook——**不是懒加载**，占位函数已裁撤（2026-11-21）。`mise/init.zsh` 负责 rustup/cargo home 导出与 GITHUB_TOKEN 注入（gh auth token，值只留本机）。
 
 ---
 
 ## 故障排查
 
 ### 启动慢
-
-1. 检查加载的文件：
-   ```bash
-   zsh -i -x -c exit 2>&1 | grep source
-   ```
-
-2. 验证懒加载：
-   ```bash
-   type pixi  # 应显示 "is a shell function"
-   ```
-
-3. 更新 Sheldon：
-   ```bash
-   sheldon lock --update
-   ```
+```bash
+zsh -i -x -c exit 2>&1 | grep source
+type pixi          # 应显示 shell function（懒加载生效）
+```
 
 ### 补全失效
-
-1. 检查命令是否存在：
-   ```bash
-   which <command>
-   ```
-
-2. 检查 lazy.zsh：
-   ```bash
-   grep <command> ~/.dotfiles/completions/lazy.zsh
-   ```
-
-3. 强制重新加载：
-   ```bash
-   exec zsh
-   ```
+```bash
+grep <command> ~/.dotfiles/completions/lazy.zsh
+exec zsh
+```
 
 ### 配置错误
-
-1. 语法检查：
-   ```bash
-   zsh -n ~/.zshrc
-   ```
-
-2. 逐行加载：
-   ```bash
-   zsh -i -x -c exit 2>&1 | tail
-   ```
-
-3. Git bisect：
-   ```bash
-   git bisect start HEAD HEAD~10
-   git bisect run zsh -i -c exit
-   ```
+```bash
+zsh -n ~/.zshrc
+git bisect start HEAD HEAD~10
+git bisect run zsh -i -c exit
+```
 
 ---
 
 ## 相关文档
 
-- **性能基准**: [docs/performance-baseline.md](performance-baseline.md)
+- **双机 mac runbook**: [new-mac-setup.md](new-mac-setup.md)
+- **Windows runbook**: [windows-setup.md](windows-setup.md)
+- **链接清单**: [symlinks.md](symlinks.md)
+- **性能基准**: [performance-baseline.md](performance-baseline.md)
 - **脚本库**: [script/lib.sh](../script/lib.sh)
 - **主配置**: [zsh/zshrc.symlink](../zsh/zshrc.symlink)
 
@@ -340,6 +228,7 @@ mise() {
 
 | 版本 | 日期 | 主要变更 |
 |------|------|---------|
-| 1.0 | - | 初始版本 |
-| 2.0 | - | 添加 Sheldon/Starship/Zoxide |
-| 3.0 | 2026-03-08 | 渐进式优化：删除遗留、扩展懒加载、合并微型主题 |
+| 1.0 | - | 初始版本（holman 血统） |
+| 2.0 | - | Sheldon/Starship/Zoxide 现代化 |
+| 3.0 | 2026-03-08 | 渐进式优化：懒加载扩展、微型主题合并 |
+| 3.1 | 2026-11-21 | 三端化：Windows 全量入仓、mise/brew/scoop 编排定稿、化石归档、mise 初始化收敛 |

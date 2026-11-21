@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
 #
 # Run all dotfiles installers.
+#
+# brew 层单正典裁定（2026-11-21）：根 Brewfile 已归档为化石
+# （archive/Brewfile.mbp-2026-05.fossil，与 2026-10 白名单终态相反，禁止再跑）。
+# macOS 的 brew 安装走各机自己的正典清单，本脚本只跑各主题 install.sh。
 
 set -e
 
 cd "$(dirname $0)"/..
 
-# Run Homebrew through the Brewfile
-echo "› brew bundle"
-brew bundle
+case "$(uname -s)" in
+  Darwin)
+    echo "› brew 层策略提示（按机器裁定，不自动安装）"
+    echo "  - Mac mini M6 : brew bundle --file=homebrew/Brewfile.casks（白名单单正典）"
+    echo "  - MBP 2019    : 存量维保——禁裸 brew upgrade / bundle，退役走手动精准卸载"
+    ;;
+  Linux)
+    echo "› Linux: 无 brew 层清单，工具域一律 mise"
+    ;;
+esac
 
-# find the installers and run them iteratively
-find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+# find the installers and run them iteratively (archive/ 不参与部署)
+find . -name install.sh -not -path './archive/*' | while read installer ; do sh -c "${installer}" ; done

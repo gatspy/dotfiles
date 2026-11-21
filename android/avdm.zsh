@@ -1,14 +1,7 @@
 # 模拟器动态版本交互管理工具 (Zsh 官方语法修正版)
 avdm() {
-    # 1. 自动定位 SDK 主路径
-    local sdk_path=""
-    if [ -d "${HOME}/Users/gatspy/Applications/android/sdk" ]; then
-        sdk_path="${HOME}/Users/gatspy/Applications/android/sdk"
-    elif [ -d "/Users/gatspy/Applications/android/sdk" ]; then
-        sdk_path="/Users/gatspy/Applications/android/sdk"
-    else
-        sdk_path="${HOME}/Library/Android/sdk"
-    fi
+    # 1. 自动定位 SDK 主路径（ANDROID_HOME 优先，回落默认路径）
+    local sdk_path="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
 
     # 2. 动态搜寻真正的 avdmanager 路径（精准命中您的 8.0 版本）
     local avdmanager_cmd=$(find "$sdk_path/cmdline-tools" -type f -name "avdmanager" 2>/dev/null | head -n 1)

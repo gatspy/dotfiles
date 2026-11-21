@@ -157,7 +157,7 @@ git_log_month () {
   local after=$(date "+%Y-%m-%d" --date="$1 month ago")
   print "after = $after"
 
-  local git_command=gl
+  local git_command=glg
   if [[ -n "$2" ]]; then
     git_command=$2
   fi

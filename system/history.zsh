@@ -35,38 +35,6 @@ setopt HIST_BEEP
 
 # }}}
 
-# {{{ History Ignore Patterns
-
-# Define commands to ignore in history (using zsh array)
-typeset -ga HIST_IGNORE_PATTERNS
-HIST_IGNORE_PATTERNS=(
-  # Basic navigation and status
-  'l' 'l *' 'ls' 'ls *' 'cd' 'cd -' 'cd ..' 'pwd' 'exit' 'st' 'st *'
-
-  # Git related (keep useful commands like git log)
-  'gs'
-  'git status'
-  'git add *'
-  'git commit*'
-  'git push*'
-  'git pull*'
-  'gac'
-  '*git add*&& git commit*'
-
-  # Development tools and env managers
-  'code *' 'zed *' 'cursor *' 'qoder *'
-  'npm *' 'mise *' 'node *' 'fvm *' 'fnm *' 'goenv *' 'pyenv *' 'adb *'
-
-  # Network and system tools
-  'ping *' 'echo *' 'export *' 'open *' 'which *' 'where *'
-
-  # AI tools
-  'atuin *' 'cloud-reno *' 'fanyi *' 'fy *' 'mkp *'
-  'ai-tool *' 'trae *' 'claude *' 'gemini *' 'ai *'
-)
-
-# }}}
-
 # Enable cd history (optional)
 #setopt AUTO_PUSHD
 #setopt PUSHD_IGNORE_DUPS
