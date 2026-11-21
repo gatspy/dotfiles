@@ -48,3 +48,4 @@
 2. 文件在仓库 ≠ 在机器生效（install 脚本跑过才算部署）
 3. 验证必须用 `env -i` 最小环境，继承环境的"正常"是假象
 4. `~/.local/golang/bin` 的工具（wire/dlv/air 等）不在 git：Brewfile go 段 + 项目 clone 后 `go install` 重建
+5. **brew 卸载前必须 `mise ls` 双确认**（2026-11-21 cmake/ninja 事件）：`brew uses --installed` 只能护住 brew 依赖链，护不住 mise 侧缺装——config 声明 ≠ mise 已装，卸 brew 前先 `mise install` 补齐、`mise ls` 确认无 (missing)，否则命令会真空断档
