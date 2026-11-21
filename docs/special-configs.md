@@ -53,45 +53,15 @@ echo "zsh/zshrc.local" >> .gitignore
 ## 2. karabiner - Karabiner-Elements 键盘映射
 
 ### 当前状态
-- **配置文件**: `karabiner/karabiner.json`
-- **目标位置**: `~/.config/karabiner/karabiner.json`
-- **大小**: 266 行 JSON 配置
-- **安装脚本**: `karabiner/install.sh`
+- **生效配置**: `~/.config/karabiner/karabiner.json`（目录链接 → 仓库 `karabiner/`，由 `script/bootstrap` 的 `install_configs()` 建立）
+- **入仓文件**: `karabiner/karabiner.json.example`（样本）+ `.gitignore`（GUI 自动改写的 `karabiner.json` 与 `automatic_backups/` 不入库）
+- **历史化石**: `karabiner/install.sh` 已不存在，安装由 bootstrap 统一完成
 
 ### 加载机制
 
-**手动安装**:
-```bash
-# 运行安装脚本
-cd ~/.dotfiles
-./karabiner/install.sh
-```
-
-**自动安装**:
-```bash
-# bootstrap 脚本不会自动安装 karabiner
-# 需要手动运行或添加到 bootstrap
-```
-
-### 安装脚本逻辑
-
-```bash
-#!/usr/bin/env zsh
-# Karabiner-Elements 配置安装脚本
-
-# 1. 检查 Karabiner-Elements 是否已安装
-if [[ ! -d "/Applications/Karabiner-Elements.app" ]]; then
-  log_warning "Karabiner-Elements not found, skipping"
-  exit 0
-fi
-
-# 2. 备份现有配置
-KARABINER_CONFIG="$HOME/.config/karabiner"
-backup_file "$KARABINER_CONFIG/karabiner.json"
-
-# 3. 复制配置文件
-cp "$DOTFILES/karabiner/karabiner.json" "$KARABINER_CONFIG/karabiner.json"
-```
+1. `script/bootstrap` → `install_configs()` → 目录链接 `~/.config/karabiner` → 仓库 `karabiner/`
+2. Karabiner GUI 每次改动直接写穿回仓库目录（`git status` 即见）
+3. 修改键位后 GUI 内 "Reload XML" 生效
 
 ### 配置内容
 
@@ -115,10 +85,8 @@ cp "$DOTFILES/karabiner/karabiner.json" "$KARABINER_CONFIG/karabiner.json"
 
 2. **安装配置**
    ```bash
-   cd ~/.dotfiles
-   source karabiner/install.sh
-   # 或
-   ./karabiner/install.sh
+   # bootstrap 幂等建链（karabiner 目录 → ~/.config/karabiner）
+   cd ~/.dotfiles && script/bootstrap
    ```
 
 3. **启用配置**
@@ -137,7 +105,7 @@ cp "$DOTFILES/karabiner/karabiner.json" "$KARABINER_CONFIG/karabiner.json"
 | 配置 | 加载方式 | 自动安装 | 更新频率 |
 |------|---------|---------|---------|
 | `zsh/zshrc.local` | 符号链接 + source | ✅ 是 | 经常（开发工具） |
-| `karabiner/` | 复制文件 | ❌ 否 | 很少（稳定配置） |
+| `karabiner/` | 目录链接（bootstrap） | ✅ 是 | 很少（稳定配置） |
 
 ---
 
@@ -145,33 +113,11 @@ cp "$DOTFILES/karabiner/karabiner.json" "$KARABINER_CONFIG/karabiner.json"
 
 ### zsh/zshrc.local
 
-**问题**: 包含敏感信息和机器特定路径
-
-**方案 1: 移出仓库**
-```bash
-# 将本地配置移到真正的本地文件
-mv zsh/zshrc.local ~/.zsh.localrc.real
-ln -sf ~/.zsh.localrc.real ~/.zsh.localrc
-```
-
-**方案 2: 拆分配置**
-```bash
-# 创建模板文件
-mv zsh/zshrc.local zsh/zshrc.local.template
-# 用户复制并修改
-cp zsh/zshrc.local.template ~/.zsh.localrc
-```
+**2026-11-21 现状**：已由 `script/bootstrap` 自动建链 `~/.zsh.localrc` → `zsh/zshrc.local`；该文件按用户裁定保留入 git（私有仓库），敏感别名建议仍优先放本机 `~/.zsh.localrc` 本体之外的真正本地文件。
 
 ### karabiner
 
-**建议**: 添加到 bootstrap 自动安装
-
-```bash
-# 在 script/bootstrap 的 install_configs() 中添加：
-if [ -d "$DOTFILES_ROOT/karabiner" ]; then
-  bash "$DOTFILES_ROOT/karabiner/install.sh"
-fi
-```
+**2026-11-21 现状**：已由 `install_configs()` 目录链接接管，无需额外安装脚本。
 
 ---
 
@@ -206,6 +152,6 @@ ls -la ~/.config/karabiner/karabiner.json
 # 3. 检查配置是否被 Karabiner-Elements 加载
 # 打开应用 → Complex Modifications → 查看是否启用
 
-# 4. 重新安装配置
-cd ~/.dotfiles && ./karabiner/install.sh
+# 4. 链接损坏时重建（幂等）
+cd ~/.dotfiles && script/bootstrap
 ```

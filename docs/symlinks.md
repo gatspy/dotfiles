@@ -1,7 +1,7 @@
 # Dotfiles 符号链接清单
 
 **更新日期**: 2026-11-02
-**总计**: 13 个符号链接
+**总计**: 16 个符号链接（macOS 侧；Windows 侧另有 9 条，见 [windows-setup.md](windows-setup.md)）
 
 ---
 
@@ -48,6 +48,10 @@
 | `tmux/.tmux.conf` | `~/.tmux.conf` | 符号链接 | Tmux 配置（来自子模块） |
 | `tmux/.tmux.conf.local` | `~/.tmux.conf.local` | 复制 | Tmux 本地配置（仅首次） |
 | `hammerspoon/` | `~/.hammerspoon` | 目录链接 | Hammerspoon 配置目录 |
+| `karabiner/` | `~/.config/karabiner` | 目录链接 | Karabiner 配置目录（GUI 写穿回仓库） |
+| `git/gitmessage.symlink` | `~/.gitmessage` | 符号链接 | Commit 模板 |
+| `git/gitconfig.local.symlink` | `~/.gitconfig.local` | 符号链接 | 机器私有配置（仅本地存在） |
+| `zsh/zshrc.local` | `~/.zsh.localrc` | 符号链接 | 私有 shell 配置（2026-11-21 补链，已入 git） |
 
 **处理函数**: `install_configs()`
 
